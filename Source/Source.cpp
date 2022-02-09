@@ -62,7 +62,7 @@
 //        //рисуем красный прямоугольник
 //        r.top = 300;
 //        r.left = 300;
-//        r.right = 60
+//        r.right = 60;
 //        r.bottom = 200;
 //        FillRect(hdc, &r, HBRUSH(CreateSolidBrush(RGB(0, 255, 255))));
 //
