@@ -31,6 +31,10 @@ GREEN ("Зелёный")
 AZURE ("Голубой")
 ![изображение](https://user-images.githubusercontent.com/47190179/158247879-71f2ee2a-0c93-4b46-bb5a-5e114e8041b9.png)
 
+BLUE ("Синий")
+![изображение](https://user-images.githubusercontent.com/47190179/158254438-ee51a26d-3240-44d7-ab67-05a8fd1e7449.png)
+
+
 VIOLET ("Фиолетовый")
 ![изображение](https://user-images.githubusercontent.com/47190179/158247944-c27843f8-c843-403a-9d44-efc9826fa12d.png)
 
@@ -88,6 +92,7 @@ You can change color too.
 ![изображение](https://user-images.githubusercontent.com/47190179/158250803-49c90859-1820-4996-969d-bade8f5f4586.png)
 ![изображение](https://user-images.githubusercontent.com/47190179/158250828-682642d8-5891-4d8d-86b7-7683b2f0e935.png)
 ![изображение](https://user-images.githubusercontent.com/47190179/158250859-0e35d16a-daf9-487d-9506-44ed8b05a6e9.png)
+![изображение](https://user-images.githubusercontent.com/47190179/158254511-a96d7193-5175-405e-ae8c-6b7c5739f093.png)
 ![изображение](https://user-images.githubusercontent.com/47190179/158250900-3123efe7-c283-4b0b-b5cc-1b35ef490311.png)
 
 
