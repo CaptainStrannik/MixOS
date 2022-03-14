@@ -1,4 +1,7 @@
 #pragma once
+#include<Mmeapi.h>
+
+
 #define ID_BUTTON 1
 #define STRANNIK 4
 #define DEVUSHKA 5
@@ -71,7 +74,7 @@
 #define RESTART 75
 #define EDU 76
 #define TERMINAL 77
-
+#define COLORS 211
 
 
 
@@ -109,3 +112,73 @@
 #define CMDOD 101
 #define PIANINO 102
 #define CONVERTER 103
+
+#define VISUAL 104
+#define VISUALSTUDIO 105
+#define PANEL 106
+#define VIDEO 107
+#define RAMRAM 108
+#define GTX745 201
+#define WIN311 202
+#define OBS 203
+#define VEGAS 204
+#define HW 205
+#define EMULATE 206
+
+
+
+#define DENDY 207
+#define SMS 208
+#define SG1000 209
+#define ATARI7800 210  //212 следующий
+#define GAMEBOYORIG 212
+
+
+
+
+
+
+#define COLORSRED 214
+#define MEGADRIVE 215
+#define PS1 216
+#define PS2 217
+#define EMULATOR3000 218
+#define TITLE 219
+#define TITLESTOP 220
+#define SATURN 221
+#define W311 222
+#define ABOUTEMUL 223
+#define W95 224
+#define PSP 225
+#define GBA 226
+#define SNES 227
+#define treeDS 228
+#define Download 229
+#define HAHAHA 230
+#define Download1 231
+#define WINXP 232
+#define FineWorkType 233
+#define WIN86 234
+
+
+
+#define RED 235
+#define ORANGE 236
+#define YELLOW 237
+#define GREEN 238
+#define AZURE 239
+#define BLUE 240
+#define VIOLET 241
+#define STANDART 242
+
+
+
+
+#define REDA 243
+#define ORANGEA 244
+#define YELLOWA 245
+#define GREENA 246
+#define AZUREA 247
+#define BLUEA 248
+#define VIOLETA 249
+#define STANDARTA 250
