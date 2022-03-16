@@ -7,14 +7,14 @@ my player. Such as Terminal, Piano, "Shashnahme Quest". And so much interesting 
 
 The first of all. This is program for Windows VISTA-11. On linux you must to install WINE. 
 
-What functions does have my player. 
+What functions does have my player? 
 Well
 ![изображение](https://user-images.githubusercontent.com/47190179/158247217-265d050b-cead-4647-ae97-915b0cc09486.png)
 
 This is standart color. But you have so much colors. You need to click on the "Да" button. And you'll see player.
 ![изображение](https://user-images.githubusercontent.com/47190179/158247442-4e678c61-470f-4fc0-a4ac-0e32ca1887a8.png)
 
-You have change the color on menu "Сменить Цвет". You can choose:
+You can change the color on menu "Сменить Цвет". You can choose:
 
 RED ("Красный") 
 ![изображение](https://user-images.githubusercontent.com/47190179/158247622-a3e9c364-4d1e-40fb-853c-2520d8b51433.png)
