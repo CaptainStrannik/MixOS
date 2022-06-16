@@ -1,4 +1,4 @@
-# MusicPlayer/MixPlayer
+# MixOS/MixOS
 MixOS (MixOS)
 
 
