@@ -31,8 +31,9 @@
 //HSTREAM NOTESOLDI;
 //HSTREAM NOTELADI;
 //HSTREAM NOTEDO2;
-//
-//
+//HDC hdc;
+//PAINTSTRUCT ps;
+//HBRUSH hBrush = CreateSolidBrush(RGB(0, 76, 153));
 //
 //#pragma comment(linker,"/manifestdependency:\"type='win32' \
 //                        name='Microsoft.Windows.Common-Controls' \
@@ -50,15 +51,17 @@
 //
 //
 //        int a = 120;
-//        SetWindowText(hWnd, (""));
+//        
 //
 //        HMENU hMenubar = CreateMenu();
 //
 //        HMENU hAbout = CreateMenu();
+//        HMENU hColor = CreateMenu();
 //
-//        SetWindowText(hWnd, ("Пианино"));
+//        
 //
 //        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hAbout, "Справка");
+//        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hColor, "Сменить цвет");
 //
 //        CreateWindow(TEXT("BUTTON"), TEXT("До"), WS_VISIBLE | WS_CHILD, 10+a, 75, 40, 25, hWnd, (HMENU)DO, NULL, NULL);
 //        CreateWindow(TEXT("BUTTON"), TEXT("До#"), WS_VISIBLE | WS_CHILD, 35+a, 50, 40, 25, hWnd, (HMENU)DO1, NULL, NULL);
@@ -80,7 +83,7 @@
 //
 //
 //        AppendMenu(hAbout, MF_STRING, STRANNIK, "О программе");
-//
+//        AppendMenu(hColor, MF_STRING, MYCOLOR, "Мой цвет");
 //
 //
 //
@@ -219,11 +222,36 @@
 //            BASS_ChannelPlay(NOTEDO2, false); // проигрывание файла
 //
 //        }
+//        if (LOWORD(wParam) == MYCOLOR)
+//        {
 //
+//            CHOOSECOLOR cc;
+//            static COLORREF acrCustClr[16]; // массив доп. цветов
+//            static DWORD rgbCurrent;        // начальный выбранный цвет
+//
+//            ZeroMemory(&cc, sizeof(CHOOSECOLOR));
+//            cc.lStructSize = sizeof(CHOOSECOLOR);
+//            cc.hwndOwner = hWnd;
+//            cc.lpCustColors = (LPDWORD)acrCustClr;
+//            cc.rgbResult = rgbCurrent;
+//            cc.Flags = CC_FULLOPEN | CC_RGBINIT;
+//
+//            if (ChooseColor(&cc) == TRUE) {
+//                hBrush = CreateSolidBrush(cc.rgbResult);
+//                rgbCurrent = cc.rgbResult;
+//            }
+//
+//            InvalidateRect(hWnd, NULL, FALSE);   // ТО АХРИНЕТЬ ОХУЕТЬ ТОЧНЕЕ. Теперь надо такое же добавить в Терминал... И в Пианино... И еще много куда...
+//        }
 //        break;
 //    }
 //
-//
+//    case WM_PAINT: {
+//            hdc = BeginPaint(hWnd, &ps);
+//            FillRect(hdc, &ps.rcPaint, hBrush);
+//            EndPaint(hWnd, &ps);
+//            return 0;
+//        }
 //    case WM_DESTROY: {
 //        PostQuitMessage(0);
 //        return 0;
@@ -248,11 +276,11 @@
 //    op.hInstance = GetModuleHandle(NULL);
 //    op.lpszClassName = "test32cls";
 //    op.hCursor = LoadCursor(NULL, IDC_ARROW);
-//    op.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
+//    //op.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
 //    RegisterClass(&op);
 //
 //
-//    CreateWindowA(op.lpszClassName, "Title", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 640, 360, NULL, NULL, op.hInstance, NULL);
+//    CreateWindowA(op.lpszClassName, "Пианино", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX| WS_VISIBLE, 100, 100, 640, 360, NULL, NULL, op.hInstance, NULL);
 //    MSG msg;
 //    while (GetMessage(&msg, NULL, 0, 0)) {
 //        TranslateMessage(&msg);

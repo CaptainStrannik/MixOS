@@ -1,7 +1,7 @@
 //#include <windows.h>
 //#include <cstring>
 //#include <cstdlib>
-//#include <cstdio>
+//#include <cstdio>   
 //#include <tchar.h>
 //#include <wchar.h>
 //#include "resource.h"
@@ -32,6 +32,10 @@
 //HSTREAM TITLED;
 //HSTREAM HAHA;
 //HSTREAM ROBOCOP;
+//HBRUSH hBrush = CreateSolidBrush(RGB(72, 161, 139));
+//HDC hdc;
+//PAINTSTRUCT ps;
+//HWND hTrack;
 //
 //static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 //    switch (uMsg) {
@@ -67,9 +71,10 @@
 //
 //        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hWindows, "Windows");
 //        AppendMenu(hWindows, MF_STRING, W311, "Windows 3.11/DOS");
+//        AppendMenu(hWindows, MF_STRING, WIN86, "Windows NT 3.51");
 //        AppendMenu(hWindows, MF_STRING, W95, "Windows 95");
 //        AppendMenu(hWindows, MF_STRING, WINXP, "Windows XP");
-//        AppendMenu(hWindows, MF_STRING, WIN86, "Windows NT 3.51");
+//        AppendMenu(hWindows, MF_STRING, WIN8, "Windows 8");
 //
 //        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hPortable, "Портативки");
 //        AppendMenu(hPortable, MF_STRING, PSP, "PSP");
@@ -86,13 +91,15 @@
 //            AppendMenu(hColor, MF_STRING, BLUEA, "Синий");
 //            AppendMenu(hColor, MF_STRING, VIOLETA, "Фиолетовый");
 //            AppendMenu(hColor, MF_STRING, STANDARTA, "Стандартный");
+//            AppendMenu(hColor, MF_STRING, STRACOLOR, "Strannik");
+//            AppendMenu(hColor, MF_STRING, COLOREMU,"Мой цвет");
 //
 //        SetClassLong(hWnd, GCL_STYLE, GetClassLong(hWnd, GCL_STYLE));
-//        CreateWindow(TEXT("STATIC"), TEXT("Список эмуляторов версия 1.0"), WS_VISIBLE | WS_CHILD, 500, 18, 210, 18, hWnd, (HMENU)NULL, NULL, NULL);
+//        CreateWindow(TEXT("STATIC"), TEXT("Список эмуляторов версия 2.0."), WS_VISIBLE | WS_CHILD, 500, 18, 210, 18, hWnd, (HMENU)NULL, NULL, NULL);
 //        SetMenu(hWnd, hMenubar);
 //        BASS_Init(-1, 44100, 0, 0, NULL);
-//        SetWindowText(hWnd, ("Эмуляторы"));
-//        CreateWindow(TEXT("STATIC"), TEXT("Программы от подписчиков v.1.0"), WS_VISIBLE | WS_CHILD, 500, 600, 228, 18, hWnd, (HMENU)NULL, NULL, NULL);
+//
+//        CreateWindow(TEXT("STATIC"), TEXT("Программы от подписчиков v.1.1"), WS_VISIBLE | WS_CHILD, 500, 600, 228, 18, hWnd, (HMENU)NULL, NULL, NULL);
 //
 //        CreateWindow(TEXT("STATIC"), TEXT("Приставки 8 BIT"), WS_VISIBLE | WS_CHILD, 220, 70, 110, 18, hWnd, (HMENU)NULL, NULL, NULL);
 //        CreateWindow(TEXT("STATIC"), TEXT("Приставки 8/16 BIT/(SEGA)"), WS_VISIBLE | WS_CHILD, 445, 70, 190, 18, hWnd, (HMENU)NULL, NULL, NULL);
@@ -133,7 +140,7 @@
 //        CreateWindow(TEXT("BUTTON"), TEXT("Включить музыку"), WS_VISIBLE | WS_CHILD, 15, 15, 150, 20, hWnd, (HMENU)TITLE, NULL, NULL);
 //        CreateWindow(TEXT("BUTTON"), TEXT("Выключить музыку"), WS_VISIBLE | WS_CHILD, 15, 15, 150, 20, hWnd, (HMENU)TITLESTOP, NULL, NULL);
 //        TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title.mp3", 0, 0, 0);
-//        ROBOCOP = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\Robocop.mp3", 0, 0, 0);
+//
 //        BASS_ChannelPlay(TITLED, false);
 //        CreateWindow(TEXT("BUTTON"), TEXT("PlayStation 1"), WS_VISIBLE | WS_CHILD, 700, 110, 120, 20, hWnd, (HMENU)PS1, NULL, NULL);
 //        CreateWindow(TEXT("BUTTON"), TEXT("PlayStation 2"), WS_VISIBLE | WS_CHILD, 700, 135, 120, 20, hWnd, (HMENU)PS2, NULL, NULL);
@@ -146,9 +153,16 @@
 //        CreateWindow(TEXT("BUTTON"), TEXT("ШАШНАХМЕ ВСЕХ В ТАРКВАРУ"), WS_VISIBLE | WS_CHILD, 735, 400, 420, 167, hWnd, (HMENU)HAHAHA, NULL, NULL);
 //        CreateWindow(TEXT("BUTTON"), TEXT("WINDOWS XP BROWSER EDITION WTF IS GOING ON?!!!"), WS_VISIBLE | WS_CHILD, 180, 270, 900, 35, hWnd, (HMENU)WINXP, NULL, NULL);
 //        CreateWindow(TEXT("BUTTON"), TEXT("86box+Windows NT 3.51"), WS_VISIBLE | WS_CHILD, 180, 310, 900, 35, hWnd, (HMENU)WIN86, NULL, NULL);
+//        CreateWindow(TEXT("BUTTON"), TEXT("Windows 8 [IGORPC]"), WS_VISIBLE | WS_CHILD, 180+360, 640, 150, 35, hWnd, (HMENU)WIN8, NULL, NULL);
+//        CreateWindow(TEXT("BUTTON"), TEXT("GENERATOR [ERTOR]"), WS_VISIBLE | WS_CHILD, 180 + 360, 640+40, 150, 35, hWnd, (HMENU)ERTOR, NULL, NULL);
 //
-//        CreateWindow(TEXT("BUTTON"), TEXT("FineWorkType (MK32)"), WS_VISIBLE | WS_CHILD, 500, 625, 228, 21, hWnd, (HMENU)FineWorkType, NULL, NULL);
+//        //hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND|WS_VISIBLE, 20, 350, 320, 30, hWnd, (HMENU)LENMUSIC, NULL, NULL);
+//        hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS| TBS_VERT | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND | WS_VISIBLE, 1100, 80, 25, 170, hWnd, (HMENU)LENMUSIC, NULL, NULL);
+//        CreateWindow(TEXT("STATIC"), TEXT("Громкость"), WS_VISIBLE | WS_CHILD, 1140, 130, 70, 18, hWnd, (HMENU)MAKEMAKE, NULL, NULL);    //Это не бегунок, а текст      //MAX VOLUME почему-то внизу.
 //
+//        // Не...
+//        // Можешь тогда сделать так, чтобы окно по центру экрана спавнилось?
+//        // покажи   ОООЛ ПОЛУЧИЛОСЬ   Вот только звук и его громкость не меняется
 //        ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
 //        ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_SHOW);
 //        break;
@@ -159,11 +173,19 @@
 //        BASS_Init(-1, 44100, 0, 0, NULL);
 //        if (LOWORD(wParam) == ABOUTEMUL)
 //        {
-//            MessageBoxA(hWnd,"Это сборник эмуляторов и игр. Для вашего удобства =)" ,"О программе",MB_OK );
+//            MessageBoxA(hWnd, "Это сборник эмуляторов и игр. Для вашего удобства =)", "О программе", MB_OK);
 //        }
 //        if (LOWORD(wParam) == DENDY)
 //        {
 //            system("start MusicPlayer\\Emulators\\8BIT\\NES-FAMICOM\\fceux64.exe MusicPlayer\\Emulators\\8BIT\\NES-FAMICOM\\Coolgirl.nes");
+//        }
+//        if (LOWORD(wParam) == ERTOR)
+//        {
+//            system("start MusicPlayer\\SUBS\\ERTOR\\gen.exe");
+//        }
+//        if (LOWORD(wParam) == WIN8)
+//        {
+//            system("start MusicPlayer\\SUBS\\IGOR2677\\Win8\\F\\GoogleChromePortable.exe file://C://WIN//WIN8//index.html");
 //        }
 //        if (LOWORD(wParam) == ATARI7800)
 //        {
@@ -177,7 +199,7 @@
 //        if (LOWORD(wParam) == PS1)
 //        {
 //            system("start MusicPlayer\\Emulators\\32BIT\\PlayStation1\\PSXeven_v0.19.exe");
-//            
+//
 //        }
 //        if (LOWORD(wParam) == PS2)
 //        {
@@ -250,7 +272,7 @@
 //        {
 //            system("start MusicPlayer\\Emulators\\OLDPC\\WIN95\\windows95.exe");
 //        }
-//        if (LOWORD(wParam) == Download) 
+//        if (LOWORD(wParam) == Download)
 //        {
 //            system("start https://archive.org/download/3dsdecrypted");
 //        }
@@ -276,65 +298,201 @@
 //            HAHA = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\i.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(HAHA, false);
 //        }
-//        if (LOWORD(wParam) == FineWorkType)
-//        {
-//            system("start MusicPlayer\\SUBS\\MARK\\FineWorkType.exe");
-//        }
 //        if (LOWORD(wParam) == WIN86)
 //        {
 //            system("start MusicPlayer\\Emulators\\OLDPC\\WINNT\\Win351\\86box.exe MusicPlayer\\Emulators\\OLDPC\\WINNT\\Win351\\86Box.cfg");
 //        }
 //
 //        if (LOWORD(wParam) == REDA)
-//                    {
-//                        system("start MusicPlayer\\COLORSA\\RED.EXE");
-//                        PostQuitMessage(0);
-//                        return 0;
-//                    }
-//                    if (LOWORD(wParam) == ORANGEA)
-//                    {
-//                        system("start MusicPlayer\\COLORSA\\ORANGE.EXE");
-//                        PostQuitMessage(0);
-//                        return 0;
-//                    }
-//                    if (LOWORD(wParam) == YELLOWA)
-//                    {
-//                        system("start MusicPlayer\\COLORSA\\YELLOW.EXE");
-//                        PostQuitMessage(0);
-//                        return 0;
-//                    }
-//                    if (LOWORD(wParam) == GREENA)
-//                    {
-//                        system("start MusicPlayer\\COLORSA\\GREEN.EXE");
-//                        PostQuitMessage(0);
-//                        return 0;
-//                    }
-//                    if (LOWORD(wParam) == AZUREA)
-//                    {
-//                        system("start MusicPlayer\\COLORSA\\AZURE.EXE");
-//                        PostQuitMessage(0);
-//                        return 0;
-//                    }
-//                    if (LOWORD(wParam) == BLUEA)
-//                    {
-//                        system("start MusicPlayer\\COLORSA\\BLUE.EXE");
-//                        PostQuitMessage(0);
-//                        return 0;
-//                    }
-//                    if (LOWORD(wParam) == VIOLETA)
-//                    {
-//                        system("start MusicPlayer\\COLORSA\\VIOLET.EXE");
-//                        PostQuitMessage(0);
-//                        return 0;
-//                    }
-//                    if (LOWORD(wParam) == STANDARTA)
-//                    {
-//                        system("start MusicPlayer\\COLORSA\\STANDART.EXE");
-//                        PostQuitMessage(0);
-//                        return 0;
-//                    }
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//        BASS_Stop();
+//        BASS_Start();
+//        BASS_StreamFree(TITLED);
+//        BASS_ChannelStop(TITLED);
+//        BASS_SampleFree(TITLED);
+//        BASS_Start();
+//        TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title7.mp3", 0, 0, 0);
+//        BASS_ChannelPlay(TITLED, false);
+//        hBrush = CreateSolidBrush(RGB(204, 0, 0));
+//        InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == ORANGEA)
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title1.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            hBrush = CreateSolidBrush(RGB(255, 128, 0));
+//            InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == YELLOWA)
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title6.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            hBrush = CreateSolidBrush(RGB(255, 255, 0));
+//            InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == GREENA)
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title2.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            hBrush = CreateSolidBrush(RGB(0, 153, 0));
+//            InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == AZUREA)
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title3.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            hBrush = CreateSolidBrush(RGB(0, 255, 255));
+//            InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == BLUEA)
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title5.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            hBrush = CreateSolidBrush(RGB(0, 0, 200));
+//            InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == VIOLETA)
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title4.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            hBrush = CreateSolidBrush(RGB(51, 0, 102));
+//            InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == STANDARTA)
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_SHOW);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_SHOW);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            hBrush = CreateSolidBrush(RGB(72, 161, 139));
+//            InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == STRACOLOR)
+//        {
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\HTM.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            hBrush = CreateSolidBrush(RGB(142, 97, 38));
+//            InvalidateRect(hWnd, NULL, FALSE);
+//        }
+//        if (LOWORD(wParam) == COLOREMU)
+//        {
+//
+//            CHOOSECOLOR cc;
+//            static COLORREF acrCustClr[16]; // массив доп. цветов
+//            static DWORD rgbCurrent;        // начальный выбранный цвет
+//
+//            ZeroMemory(&cc, sizeof(CHOOSECOLOR));
+//            cc.lStructSize = sizeof(CHOOSECOLOR);
+//            cc.hwndOwner = hWnd;
+//            cc.lpCustColors = (LPDWORD)acrCustClr;
+//            cc.rgbResult = rgbCurrent;
+//            cc.Flags = CC_FULLOPEN | CC_RGBINIT;
+//
+//            if (ChooseColor(&cc) == TRUE)
+//            {
+//                hBrush = CreateSolidBrush(cc.rgbResult);
+//                rgbCurrent = cc.rgbResult;
+//            }
+//
+//            InvalidateRect(hWnd, NULL, FALSE);   // ТО АХРИНЕТЬ ОХУЕТЬ ТОЧНЕЕ. Теперь надо такое же добавить в Терминал... И в Пианино... И еще много куда...
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\Youtube.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            
+//        }
 //        break;
 //
+//        case WM_VSCROLL: {    //Короче, бегунок работает, но макс громкость та, что внизу... надо поменять, как-то...
+//            if (hTrack == (HWND)lParam)
+//            {
+//                //Потому что недавно вышла статья, которая запрещает как-либо критиковать тот пиздец, что происходит... И если ее нарушить, то это минимум 15 лет тюрьмы. А я не хочу жизнь ломать свою...
+//
+//                BASS_ChannelSetAttribute(TITLED, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 80, 100)); //ПРОБОВАТЬ?
+//                /*BASS_ChannelSetAttribute(ROBOCOP, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 80, 100));*/
+//                //Типа это в целом не обязательно, учитывая, что до конца композициивсё равно никто не дожидается.. Но тип.. так чист на досуге посмотреть. А сейчас всё работает, просто координаты надо подобрать
+//
+//            }
+//        
+//    } break;
+//
+//        case WM_PAINT: {
+//    hdc = BeginPaint(hWnd, &ps);
+//    FillRect(hdc, &ps.rcPaint, hBrush);
+//    EndPaint(hWnd, &ps);
+//
+//}
+//             break;
 //    case WM_DESTROY: {
 //        PostQuitMessage(0);
 //        return 0;
@@ -345,7 +503,7 @@
 //
 //
 //    default:
-//        return DefWindowProc(hWnd, uMsg, wParam, lParam);
+//        return DefWindowProc(hWnd, uMsg, wParam, lParam);        
 //    }
 //                   return 0;
 //    }
@@ -360,11 +518,13 @@
 //    op.lpszClassName = "test32cls";
 //    op.hCursor = LoadCursor(NULL, IDC_ARROW);
 //    op.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
-//    op.hbrBackground = CreateSolidBrush(RGB(72, 61, 139));     //72 61 139
+//    //op.hbrBackground = CreateSolidBrush(RGB(72,161 , 139));     //72 61 139      204 0 0             255 128 0        51 255 255      0 153 0
 //    RegisterClass(&op);
 //
 //
-//    CreateWindowA(op.lpszClassName, "Title", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 1280, 800, NULL, NULL, op.hInstance, NULL);
+//    //Вот тут видишь, всё работает исправно, и цвет меняется и всё остальное. И при этом звук не дублируется. По-любому, где- то в Youtube.cpp мы забыли BassSTOP
+//
+//    CreateWindowA(op.lpszClassName, "Эмуляторы", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 1280, 800, NULL, NULL, op.hInstance, NULL);
 //    MSG msg;
 //    while (GetMessage(&msg, NULL, 0, 0)) {
 //        TranslateMessage(&msg);

@@ -37,6 +37,9 @@
 //HSTREAM LIRIKAHOI;
 //HSTREAM LJSPQK;
 //HSTREAM AEZAKMI;
+//HDC hdc;
+//HBRUSH hBrush = CreateSolidBrush(RGB(0, 153, 0)); 
+//PAINTSTRUCT ps;
 //#pragma comment(linker,"/manifestdependency:\"type='win32' \
 //                        name='Microsoft.Windows.Common-Controls' \
 //                        version='6.0.0.0' processorArchitecture='*'\
@@ -60,11 +63,12 @@
 //        HMENU hMenubar = CreateMenu();
 //
 //        HMENU hAbout = CreateMenu();
+//        HMENU hColor = CreateMenu();
 //
-//        SetWindowText(hWnd, ("Терминал StrannikCorp ver 1.1"));
+//        SetWindowText(hWnd, ("Терминал StrannikCorp ver 1.2"));
 //
 //        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hAbout, "Справка");
-//
+//        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hColor, "Сменить цвет");
 //        BASS_Init(-1, 44100, 0, 0, NULL);
 //
 //
@@ -72,6 +76,7 @@
 //
 //
 //        AppendMenu(hAbout, MF_STRING, STRANNIK, "О программе");
+//        AppendMenu(hColor, MF_STRING, MYCOLOR, "Свой цвет");
 //        SetMenu(hWnd, hMenubar);
 //        
 //        CreateWindowA(TEXT("BUTTON"), TEXT("Ввести команду"), WS_VISIBLE | WS_CHILD  , 400, 230, 150, 35, hWnd, (HMENU)COMMANDA, NULL, NULL);
@@ -88,6 +93,30 @@
 //        int len5;
 //        TCHAR StrC[1200];
 //        len5 = GetWindowText(COM, StrC, 1200);
+//
+//
+//        if (LOWORD(wParam) == MYCOLOR)
+//        {
+//            
+//                        CHOOSECOLOR cc;
+//                        static COLORREF acrCustClr[16]; // массив доп. цветов
+//                        static DWORD rgbCurrent;        // начальный выбранный цвет
+//            
+//                        ZeroMemory(&cc, sizeof(CHOOSECOLOR));
+//                        cc.lStructSize = sizeof(CHOOSECOLOR);
+//                        cc.hwndOwner = hWnd;
+//                        cc.lpCustColors = (LPDWORD) acrCustClr;
+//                        cc.rgbResult = rgbCurrent;
+//                        cc.Flags = CC_FULLOPEN | CC_RGBINIT;
+//                        
+//                        if (ChooseColor(&cc)==TRUE) {
+//                            hBrush = CreateSolidBrush(cc.rgbResult);
+//                            rgbCurrent = cc.rgbResult;
+//                        }
+//            
+//                        InvalidateRect(hWnd, NULL, FALSE);   // ТО АХРИНЕТЬ ОХУЕТЬ ТОЧНЕЕ. Теперь надо такое же добавить в Терминал... И в Пианино... И еще много куда...
+//        }
+//
 //        if (LOWORD (wParam) == STRANNIK)
 //        
 //        {
@@ -102,12 +131,13 @@
 //        if (LOWORD(wParam) == GTX745)
 //        {
 //            MessageBoxA(hWnd, "Читы захотел? А тебе мама в GTA разрешила играть? Нет, ну так, пока она ушла, введи чит код на 6 звезд из GTA san andreas", "ЧИТЕР! БЛ!!!!", MB_OK);
-//
+//            ShowWindow(GetDlgItem(hWnd,GTX745), SW_HIDE);
 //        }
 //       
 //        if (LOWORD(wParam) == WIN311)
 //        {
 //            MessageBoxA(hWnd, "Вы хотите запустить Windows 3.11? Тогда напишите команду запуска винды =)", "А комп то потянет?", MB_OK);
+//            ShowWindow(GetDlgItem(hWnd, WIN311), SW_HIDE);
 //        }
 //        
 //        
@@ -806,6 +836,14 @@
 //                MessageBoxA(hWnd, "Верно, вот ее обзор", "Молодец", MB_ICONINFORMATION);
 //                system("start https://www.youtube.com/watch?v=900cJATeGQU");
 //            }
+//            if (text == "PORN" || "ПОРНУХА" || "ПОРНО")
+//            {
+//                system("start https://www.xvideos.com");
+//            }
+//            if (text == "" || "ПОРНУХА" || "ПОРНО")
+//            {
+//                system("start https://www.xvideos.com");
+//            }
 //            if (text == "WIN" || text == "Win" || text == "win")
 //            {
 //                system("start MusicPlayer\\W311\\dosbox.exe -conf MusicPlayer\\W311\\dosbox.conf -noconsole");
@@ -819,7 +857,13 @@
 //        
 //        break;
 //    }
+//    case WM_PAINT: {
+//    hdc = BeginPaint(hWnd, &ps);
+//    FillRect(hdc, &ps.rcPaint, hBrush);
+//    EndPaint(hWnd, &ps);
 //
+//}
+//             break;
 //
 //    case WM_DESTROY: {
 //        PostQuitMessage(0);
@@ -845,7 +889,7 @@
 //    op.hInstance = GetModuleHandle(NULL);
 //    op.lpszClassName = "test32cls";
 //    op.hCursor = LoadCursor(NULL, IDC_ARROW);
-//    op.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
+//    //op.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
 //    RegisterClass(&op);
 //
 //

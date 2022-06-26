@@ -43,7 +43,7 @@
 //        hdc = BeginPaint(hWnd, &ps);
 //
 //        //Создаём свой шрифт
-//        strcpy_s(lf.lfFaceName, "Times New Roman"); //копируем в строку название шрифта
+//        strcpy_s(lf.lfFaceName, "Segoe UI"); //копируем в строку название шрифта
 //        lf.lfHeight = 20;
 //        lf.lfItalic = 1;
 //        lf.lfStrikeOut = 0;

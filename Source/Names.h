@@ -157,7 +157,7 @@
 #define HAHAHA 230
 #define Download1 231
 #define WINXP 232
-#define FineWorkType 233
+#define WIN8 233
 #define WIN86 234
 
 
@@ -182,3 +182,58 @@
 #define BLUEA 248
 #define VIOLETA 249
 #define STANDARTA 250
+#define DEFDEF 251
+#define DEFDEF1 252
+
+#define Emulators 253
+
+
+
+
+
+#define BREAKPC 254
+#define BOMB 255
+#define SPY 256
+
+#define DONTTOUCHME 257
+#define DONTTOUCHME1 258
+#define DONTTOUCHME2 259
+#define DONTTOUCHME3 260
+#define DONTTOUCHME4 261
+#define DONTTOUCHME5 262
+#define BREAKPC1 263
+#define MENUMAKER 264
+
+#define MAKEMAKE 265
+#define YOUTUBE 267
+#define MYCOLOR 268
+#define COLORASTA 269
+#define MYFONT 270
+#define SAVEINI 271
+#define COLOREMU 272
+#define COLORYT 273
+#define LENMUSIC 274
+#define COLORMENUMAKE 275
+#define LENMUSIC1 276
+#define VOLUMASTA 277
+#define ROSTE 278
+#define DUSHA 279
+#define POL 280
+#define ERTOR 281
+#define STRACOLOR 282
+#define CLEANMGR 283
+#define DELMAKE 284
+#define DELMAKE1 285
+#define MAKEMAKENAMES 286
+#define LENMUSIC2 287
+#define VOLUMASTA1 289
+#define MENUMENUMENUMENU 290
+#define NULLA 291
+#define NULLAS 292
+#define NULLASA 293
+#define NULLASAS 294
+#define XAI 295
+#define XAI1 295
+#define XAI2 295
+#define XAI3 295
+#define XAI4 295
