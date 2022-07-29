@@ -2,6 +2,9 @@
 #include<Mmeapi.h>
 
 
+//Peece of shit list of my defines...
+/*---------------------------------------------------------------------------------------------------------*/
+
 #define ID_BUTTON 1
 #define STRANNIK 4
 #define DEVUSHKA 5
@@ -137,7 +140,7 @@
 
 
 
-
+                                                      
 #define COLORSRED 214
 #define MEGADRIVE 215
 #define PS1 216
@@ -209,7 +212,7 @@
 #define MYCOLOR 268
 #define COLORASTA 269
 #define MYFONT 270
-#define SAVEINI 271
+#define SAVEINI 271 // на заметку
 #define COLOREMU 272
 #define COLORYT 273
 #define LENMUSIC 274
@@ -222,18 +225,219 @@
 #define ERTOR 281
 #define STRACOLOR 282
 #define CLEANMGR 283
-#define DELMAKE 284
-#define DELMAKE1 285
-#define MAKEMAKENAMES 286
-#define LENMUSIC2 287
+#define DELMAKE 284   
+#define DELMAKE1 285 
+#define MAKEMAKENAMES 286   
+#define LENMUSIC2 287 
 #define VOLUMASTA1 289
 #define MENUMENUMENUMENU 290
 #define NULLA 291
-#define NULLAS 292
+#define NULLAS 292  
 #define NULLASA 293
 #define NULLASAS 294
-#define XAI 295
+#define XAI 295    
 #define XAI1 295
 #define XAI2 295
 #define XAI3 295
 #define XAI4 295
+#define SKINSSTRO 296   
+//#define SEARCHH 297
+
+#define CHB1 297
+#define PHOTOVIEWER 298
+#define SETBKG 299
+#define LOADDLL 300
+#define FASTRESTART 301
+#define INSTBKG 302
+
+#define DO2D 303
+#define RE2 304
+#define RE2D 305
+#define MI2 306
+#define FA2 307
+#define FA2D 308
+#define SOL2 309
+#define SOL2D 310
+#define LA2 311
+#define LA2D 312
+#define SI2 314
+#define DO3 315
+
+
+#define PC_SPEAKER 316
+#define NORMALAUDIO 317
+
+
+#define PCRE2 319
+#define PCRE2D 320
+#define PCMI2 321
+#define PCFA2 322
+#define PCFA2D 323
+#define PCSOL2 324
+#define PCSOL2D 325
+#define PCLA2 326
+#define PCLA2D 327
+#define PCSI2 328
+#define PCDO3 329
+
+
+
+
+#define PCDO 330
+#define PCDO1 331
+#define PCRE 332
+#define PCRE1 333
+#define PCMI 334 
+#define PCFA 335
+#define PCFA1 336
+#define PCSOL 337
+#define PCSOL1 338
+#define PCLA 339
+#define PCLA1 340
+#define PCSI 341
+#define PCDO2D 318
+#define PCDO2 342
+
+
+#define PC_SPEAK_BUT 343
+
+#define LOOP1 344
+#define LOOPSTOP 345
+
+#define PCDO0 358
+#define PCDO01 359
+#define PCRE0 360
+#define PCRE01 361
+#define PCMI0 362
+#define PCFA0 363
+#define PCFA01 364
+#define PCSOL0 365
+#define PCSOL01 366
+#define PCLA0 367
+#define PCLA01 368
+#define PCSI0 369
+
+#define DO0 346
+#define DO01 347
+#define RE0 348
+#define RE01 349
+#define MI0 350
+#define FA0 351
+#define FA01 352
+#define SOL0 353
+#define SOL01 354
+#define LA0 355
+#define LA01 356
+#define SI0 357
+
+#define LOOPDRUM 370
+#define LOOPSTOP2 371
+#define LOOP2 372
+#define STRANKEY 373
+
+#define LOOP3 374
+#define LOOPSTOP3 375
+
+#define MIDIC 376
+
+#define TURNOFF 377
+#define POWER_ON_TIMER 378
+#define PLAY 379
+
+#define SKIN1 380
+#define SKIN2 390
+#define SKIN3 391
+#define SKIN4 392
+#define SKIN5 393
+#define SKIN6 394
+#define SKIN7 395
+#define SKIN8 396
+#define SKIN9 397
+#define CLEARSKIN 398     
+#define SKINEMU 399
+
+#define SKINEMU1 400
+#define SKINEMU2 401
+#define SKINEMU3 402
+#define SKINEMU4 403
+#define SKINEMU5 404
+#define SKINEMU6 405
+#define PIANOVID 406
+
+
+
+
+
+
+//#define DO0W 407
+//#define DO01W 408
+//#define RE0W 409
+//#define RE01W 410
+//#define MI0W 411
+//#define FA0W 412
+//#define FA01W 413
+//#define SOL0W 414
+//#define SOL01W 415
+//#define LA0W 416
+//#define LA01W 417
+//#define SI0W 418
+//#define DOW 419
+//#define DO1W 420
+//#define REW 421
+//#define RE1W 422
+//#define MIW 423
+//#define FAW 424
+//#define FA1W 425
+//#define SOLW 426
+//#define SOL1W 427
+//#define LAW 428
+//#define LA1W 429
+//#define SIW 430
+//#define DO2W 431
+//#define DO2DW 431
+//#define RE2W 432
+//#define RE2DW 433
+//#define MI2W 434
+//#define FA2W 435
+//#define FA2DW 436
+//#define SOL2W 437
+//#define SOL2DW 438
+//#define LA2W 439
+//#define LA2DW 440
+//#define SI2W 441
+//#define DO3W 442
+
+
+#define text1 443
+#define COMP4 444
+#define text11 445
+#define LENMUSIC4 446
+#define OLDVER13 447   
+#define OLDVER15 448 
+#define VERIFIER 449    
+#define MSPAINT 450
+#define TELEPORT 451  
+#define MRT 452
+//#define KORZINA 453
+#define PRINTER 454
+#define WM_USER_SHELLICON (WM_USER + 1)
+#define TRANSLATE 455
+
+
+
+
+#define GIRLNAME 456
+#define QUESTION1 457
+#define QUESTION2 457
+#define QUESTION3 457
+#define QUESTION4 457
+#define QUESTION5 457
+#define polupon 458
+#define polupoff 459
+#define SELFUP 460
+            //tray.cbSize = sizeof(tray);
+            //tray.uFlags = NIF_INFO | NIF_REALTIME|NIF_TIP;
+            //tray.hWnd = hWnd;
+            //tray.hIcon = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Youtube.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+            //tray.uID = 1;
+            //tray.hBalloonIcon = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Youtube.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
