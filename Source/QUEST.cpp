@@ -10,14 +10,14 @@
 //#include "targetver.h"
 //#include <conio.h>
 //#include <shlobj.h>
-//#include <ks.h>
-//#include <string>
-//#include<mciapi.h>
+//#include <ks.h>     
+//#include <string>    
+//#include<mciapi.h>                 
 //#include<Mmsystem.h>
 //#include "Names.h"
-//#include "bass.h"
+//#include "bass.h"  
 //#include "LoveInQuest.h"
-//#define STRANNI 90
+//#define STRANNI 90     
 //
 //#pragma comment(lib, "winmm.lib")
 //#pragma comment(lib, "bass")
@@ -34,37 +34,118 @@
 //HSTREAM SVOBODA;
 //HSTREAM SCREAM;
 //HSTREAM REMIX;
-//
-//
-//
+//HSTREAM KAVINSKY;
+//HSTREAM ROSB;
+//HSTREAM MODEL;
+//HSTREAM PUTIN;
+//HSTREAM KAVUL;
+//HSTREAM JACKSON;
+//HICON progicon;
+//int skins;
+//TCHAR StrT[MAX_PATH];
+//HANDLE bmpwall;
+//HANDLE bmpwall1;
+//HWND hwall;
+//static COLORREF acrCustClr[16];
+//HBRUSH hBrush = CreateSolidBrush(RGB(255, 128, 0));
+//static DWORD rgbCurrent = RGB(255, 128, 0);
+//HWND hTrack;
+//HDC hdc;
+//PAINTSTRUCT ps;
+//const TCHAR progname[] = _T("Шашнахме квест");
+//HWND tardis;
+////bool key_pressed = false;
+//HINSTANCE hInst;
 //
 //static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 //    switch (uMsg) {
 //
 //    case WM_CREATE: {
 //        
+//
+//        SetLayeredWindowAttributes(hWnd, NULL, 255, LWA_ALPHA);
+//
+//        NOTIFYICONDATA data;
+//        ZeroMemory(&data, sizeof(NOTIFYICONDATA));
+//
+//
+//        data.cbSize = sizeof(data);
+//        data.hWnd = hWnd;
+//        data.uID = 1;          // Можно поставить любой идентификатор, всё равно иконка только одна
+//        data.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+//        data.uCallbackMessage = WM_USER_SHELLICON;
+//        data.hIcon = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\quest.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        data.uVersion = NOTIFYICON_VERSION;
+//
+//        /*     strcpy(data.szInfoTitle, "Загрузчик видео с Youtube");*/
+//        strcpy(data.szTip, "Шашнахме квест");
+//
+// 
+//        Shell_NotifyIcon(NIM_ADD, &data);
+//
+//
+//
 //        HMENU hMenubar = CreateMenu();
 //        HMENU hAbout = CreateMenu();
+//        HMENU hOptions = CreateMenu();
+//
+//
 //        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hAbout, "Справка");
+//        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hOptions, "Настройки");
+//
+//
+//
 //        SetClassLong(hWnd, GCL_STYLE, GetClassLong(hWnd, GCL_STYLE));
 //        AppendMenu(hAbout, MF_STRING, STRANNIK, "О программе");
 //        AppendMenu(hAbout, MF_STRING, STRANNI, "Шашнахме");
+//
+//
+//        AppendMenu(hOptions, MF_STRING, MYCOLOR, "Сменить цвет");
+//        AppendMenu(hOptions, MF_SEPARATOR, NULL, NULL);
+//        AppendMenu(hOptions, MF_STRING, polupon, "Включить полупрозрачность");
+//        AppendMenu(hOptions, MF_STRING, polupoff, "Выключить полупрозрачность");
+//
 //        SetMenu(hWnd, hMenubar);
 //        BASS_Init(-1, 44100, 0, 0, NULL);
-//        SetWindowText(hWnd, ("Шашнахме квест"));
 //        CreateWindow(TEXT("BUTTON"), TEXT("Начать игру"), WS_VISIBLE | WS_CHILD, 200, 100, 250, 150, hWnd, (HMENU)ID_BUTTON, NULL, NULL);
+//
+//
+//        
+//        
 //        break;
+//        
+//
 //    }
 //    case WM_COMMAND: {
+//        
+//        //ShowWindow(GetDlgItem(hWnd, LENMUSIC), SW_SHOW);
+//
+//
+//
+//        if (LOWORD(wParam) == polupon)
+//        {
+//
+//            SetLayeredWindowAttributes(hWnd, NULL, 230, LWA_ALPHA);
+//        }
+//        if (LOWORD(wParam) == polupoff)
+//        {
+//
+//            SetLayeredWindowAttributes(hWnd, NULL, 255, LWA_ALPHA);
+//        }
+//
+//
+//
+//
 //        if (LOWORD(wParam) == STRANNIK)
 //        {
+//            ShellAbout(hWnd, progname, "Разработчик: Captain Strannik, Помощник: Z_Kraf1er_Z", progicon);
 //            MessageBoxA(hWnd, "Этот квест является всего лишь больной фантазией автора. Не воспринимайте всерьез. У вас же толстая кость?", "О программе", MB_OK);
 //        }
 //        if (LOWORD(wParam) == STRANNI)
 //        {
-//            HSTREAM SCREAM = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\skrimer.mp3", 0, 0, 0);
+//            SCREAM = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\skrimer.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(SCREAM, false);
-//            HSTREAM REMIX = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\REMIX.mp3", 0, 0, 0);
+//            REMIX = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\REMIX.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(REMIX, false);
 //            MessageBoxA(hWnd, "ШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕ", "ШАШНАХМЕ", MB_ICONERROR);
 //            MessageBoxA(hWnd, "ШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕШАШНАХМЕ", "ШАШНАХМЕ", MB_ICONERROR);
@@ -91,11 +172,19 @@
 //            BASS_Start();
 //            BASS_ChannelPlay(QUEST_THEME, false);
 //            ShowWindow(GetDlgItem(hWnd, ID_BUTTON), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)NULL, NULL, NULL);
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы находитесь в темном переулке, впереди от вас светит свет,сзади тьма, справа от вас лестница, ведущая наверх.                                                     Куда пойдем?      "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 50, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)text1, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы находитесь в темном переулке, впереди от вас светит свет,сзади тьма, справа от вас лестница, ведущая наверх.\nКуда пойдем?"), WS_VISIBLE | WS_CHILD | SS_CENTER, 100, 10, 450, 50, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Вперед "), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)FIRST, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Назад "), WS_VISIBLE | WS_CHILD, 230, 115, 165, 35, hWnd, (HMENU)SECOND, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Подняться по лестнице "), WS_VISIBLE | WS_CHILD, 230, 155, 165, 35, hWnd, (HMENU)THIRD, NULL, NULL);
+//
+//            CreateWindow(TEXT("STATIC"), TEXT("Громкость"), WS_VISIBLE | WS_CHILD, 210+60, 180+80+30-10, 200, 20, hWnd, (HMENU)text1, NULL, NULL);
+//            hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | WS_VISIBLE, 210, 180+80-20, 200, 20, hWnd, (HMENU)LENMUSIC, NULL, NULL);
+//
+//            //SetWindowLong(hWnd, GWL_STYLE, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE);
+//            //CreateWindow(_T("STATIC"), _T("Не для шашнахме"), WS_VISIBLE | WS_CHILD, 650, 60, 150, 20, hWnd, (HMENU)text1, NULL, NULL);
+//            //tardis = CreateWindow(_T("LISTBOX"), _T("Телепортер 3000"), WS_CHILD | LBS_HASSTRINGS | LBS_WANTKEYBOARDINPUT | WS_VSCROLL|WS_VISIBLE, 650, 100, 120, 150, hWnd, NULL, NULL, NULL);
+//            //CreateWindow(_T("BUTTON"), _T("Телепортация"), WS_CHILD | WS_VISIBLE, 650, 270, 120, 22, hWnd, (HMENU)TELEPORT, NULL, NULL);
 //        }
 //        if (LOWORD(wParam) == FIRST)
 //        {
@@ -106,8 +195,8 @@
 //            ShowWindow(GetDlgItem(hWnd, SECOND), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD), SW_HIDE);
 //
-//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)NULL, NULL, NULL);
-//            CreateWindow(TEXT("STATIC"), TEXT("Пройдя 32 шага вы попали в комнату, где стоят три машины: BMW X5, LADA VESTA, Toyota Camri. И все они открыты, Забирай не хочу!    "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)text1, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Пройдя 32 шага вы попали в комнату, где стоят три машины: BMW X5, LADA VESTA, Toyota Camri. И все они открыты, Забирай не хочу!                                                                                     "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //
 //
 //            CreateWindow(TEXT("BUTTON"), TEXT("Сесть в Toyota"), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)FIRST2, NULL, NULL);
@@ -124,11 +213,11 @@
 //            ShowWindow(GetDlgItem(hWnd, FIRST), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SECOND), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)NULL, NULL, NULL);
-//            CreateWindow(TEXT("STATIC"), TEXT("К сожалению вы упали в пропасть, с жизнью у вас все шашнахме... Игра окончена =( Мораль: Никогда не ходите назад. Даже по жизни двигайтесь только вперед. И получится все, что захотите =)"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)text1, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("К сожалению вы упали в пропасть, с жизнью у вас все шашнахме... Игра окончена =( Мораль: Никогда не ходите назад. Даже по жизни двигайтесь только вперед. И получится все, что захотите =)"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
 //            BASS_ChannelStop(LADAV);
-//            HSTREAM KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
+//            KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KILL, false);
 //
 //        }
@@ -147,8 +236,7 @@
 //            ShowWindow(GetDlgItem(hWnd, HELICOPTER), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, MASHINA), SW_HIDE);
 //
-//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)NULL, NULL, NULL);
-//            CreateWindow(TEXT("STATIC"), TEXT("Поднявшись по лестнице вы поднялись на крышу здания. На которой стоит вертолет, машина и велосипед. Куда сядем?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Поднявшись по лестнице вы поднялись на крышу здания. На которой стоит вертолет, машина и велосипед. Куда сядем?                                                                                              "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //
 //
 //            CreateWindow(TEXT("BUTTON"), TEXT("Сесть в велосипед"), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)VELOSIPED, NULL, NULL);
@@ -168,7 +256,7 @@
 //            ShowWindow(GetDlgItem(hWnd, HELICOPTER), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, MASHINA), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("                Сев на велосипед вы увидели трамплин"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("                Сев на велосипед вы увидели трамплин                                                                                                                                                             "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Поехать на велосипеде"), WS_VISIBLE | WS_CHILD, 220, 75, 185, 35, hWnd, (HMENU)VELOSIPED1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Слезть с велосипеда"), WS_VISIBLE | WS_CHILD, 220, 115, 185, 35, hWnd, (HMENU)VELOSIPED2, NULL, NULL);
 //        }
@@ -185,10 +273,10 @@
 //            ShowWindow(GetDlgItem(hWnd, HELICOPTER), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, MASHINA), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы что? Совсем шашнахме? Понятно почему. Вы пересмотрели Голливудские фильмы. Вы сертезно думали, что проехав на велике и спрыгнув с крыши вы выживете? Мда.... Мораль: <<Учите науку, чтобы в жизни не попадать в подобные ситуации, ведь жизнь это вам не игра!>>"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы что? Совсем шашнахме? Понятно почему. Вы пересмотрели Голливудские фильмы. Вы серьёзно думали, что проехав на велике и спрыгнув с крыши вы выживете? Мда.... Мораль: <<Учите науку, чтобы в жизни не попадать в подобные ситуации, ведь жизнь это вам не игра!>>"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
 //            BASS_ChannelStop(LADAV);
-//            HSTREAM KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
+//            KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KILL, false);
 //
 //        }
@@ -204,8 +292,7 @@
 //            ShowWindow(GetDlgItem(hWnd, VELOSIPED), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, HELICOPTER), SW_SHOW);
 //            ShowWindow(GetDlgItem(hWnd, MASHINA), SW_SHOW);
-//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)NULL, NULL, NULL);
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы все же решили слезть с велосипеда и сесть в другой транспорт"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы все же решили слезть с велосипеда и сесть в другой транспорт"), WS_VISIBLE | WS_CHILD, 100, 10, 470, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Сесть в велосипед"), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)VELOSIPED3, NULL, NULL);
 //
 //
@@ -224,8 +311,8 @@
 //            ShowWindow(GetDlgItem(hWnd, SECOND), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, VELOSIPED3), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)NULL, NULL, NULL);
-//            CreateWindow(TEXT("STATIC"), TEXT("Делая нелогичные действия в игре, вы дали понять разработчику, что вы шашнахме, поэтому он удалил велосипед, чтобы вы не делали тупые действия"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            /*CreateWindow(TEXT("STATIC"), TEXT(""), WS_VISIBLE | WS_CHILD, 225, 10, 450, 12, hWnd, (HMENU)text1, NULL, NULL);*/
+//            CreateWindow(TEXT("STATIC"), TEXT("Делая нелогичные действия в игре,вы дали понять разработчику, что вы шашнахме, поэтому он удалил велосипед, чтобы вы не делали тупые действия"), WS_VISIBLE | WS_CHILD, 100, 10, 480, 80, hWnd, (HMENU)text1, NULL, NULL);
 //
 //        }
 //        if (LOWORD(wParam) == MASHINA)
@@ -240,7 +327,7 @@
 //            ShowWindow(GetDlgItem(hWnd, VELOSIPED), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, HELICOPTER), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, MASHINA), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Это оказалась машина времени. В ней куча кнопочек и циферблатов. А также потоковый накопитель =). В общем, в какое время полетим?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Это оказалась машина времени. В ней куча кнопочек и циферблатов. А также потоковый накопитель =). В общем, в какое время полетим?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("В далекое будущее"), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)FUTURE, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("В далекое прошлое"), WS_VISIBLE | WS_CHILD, 230, 115, 165, 35, hWnd, (HMENU)BACK, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Понажимать кнопки"), WS_VISIBLE | WS_CHILD, 230, 155, 165, 35, hWnd, (HMENU)SUDBA, NULL, NULL);
@@ -265,9 +352,9 @@
 //            ShowWindow(GetDlgItem(hWnd, BACK), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SUDBA), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, FLY), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы попали в далекое будущее, Где Земля была чистая, все следили за природой. И все было хорошо. Мораль:<<Следите за природой, не будьте шашнахме>> "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы попали в далекое будущее, где Земля была чистая, все следили за природой. И все было хорошо.  Мораль:<<Следите за природой, не будьте шашнахме>> "), WS_VISIBLE | WS_CHILD, 100, 10, 480, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
-//            HSTREAM MODEL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\Model.mp3", 0, 0, 0);
+//            MODEL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\Model.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(MODEL, false);
 //
 //        }
@@ -289,10 +376,10 @@
 //            ShowWindow(GetDlgItem(hWnd, BACK), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SUDBA), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, FLY), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы попали в далекое прошлое и попали в лес. В котором через 10 минут вас убил динозавр. Игра окончена. Мораль: <<Не ходите дети в лес одни. Тем более в доисторический>>. "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы попали в далекое прошлое и попали в лес. В котором через 10 минут вас убил динозавр. Игра окончена. Мораль:                       <<Не ходите дети в лес одни. Тем более в доисторический>>. "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
 //            BASS_ChannelStop(LADAV);
-//            HSTREAM KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
+//            KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KILL, false);
 //
 //        }
@@ -314,10 +401,10 @@
 //            ShowWindow(GetDlgItem(hWnd, BACK), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SUDBA), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, FLY), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Потыкав пару кнопок вы случайно нажали на кнопку деактивации машины, которая просто активировала взрывчатку. И через 5 секунд вы взорвались. Мораль: <<Не играйте дети незнакомой вам техникой. Читайте документацию>>."), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Потыкав пару кнопок вы случайно нажали на кнопку деактивации машины, которая просто активировала взрывчатку. И через 5 секунд вы взорвались. Мораль: <<Не играйте дети c незнакомой вам техникой. Читайте документацию>>."), WS_VISIBLE | WS_CHILD, 100, 10, 480, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
 //            BASS_ChannelStop(LADAV);
-//            HSTREAM KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
+//            KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KILL, false);
 //        }
 //        if (LOWORD(wParam) == FLY)
@@ -338,9 +425,9 @@
 //            ShowWindow(GetDlgItem(hWnd, BACK), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SUDBA), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, FLY), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы включили трек Kavinsky - Testarossa Autodrive и умчались вперед =). Мораль..  А какая тут может быть мораль? Вы сломали систему!"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы включили трек Kavinsky - Testarossa Autodrive и умчались вперед =). Мораль..  А какая тут может быть мораль? Вы сломали систему!      "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
-//            HSTREAM KAVUL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\Testarossa Autodrive.mp3", 0, 0, 0);
+//            KAVUL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\Testarossa Autodrive.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KAVUL, false);
 //
 //        }
@@ -356,7 +443,7 @@
 //            ShowWindow(GetDlgItem(hWnd, VELOSIPED), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, HELICOPTER), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, MASHINA), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("За всю жизнь вы летали на вертолете всего 1 раз, и то, это было в игре GTA VICE CITY. Но ничего, со временем вы смогли завести. Куда полетим?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("За всю жизнь вы летали на вертолете всего 1 раз, и то, это было в игре GTA VICE CITY. Но ничего, со временем вы смогли его завести. Куда полетим?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("К родителям на дачу"), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)PARENTS, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Врезаться в Кремль"), WS_VISIBLE | WS_CHILD, 230, 115, 165, 35, hWnd, (HMENU)CREMLIN, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("В США"), WS_VISIBLE | WS_CHILD, 230, 155, 165, 35, hWnd, (HMENU)USA, NULL, NULL);
@@ -367,8 +454,8 @@
 //            ShowWindow(GetDlgItem(hWnd, USA), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, PARENTS), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, CREMLIN), SW_HIDE);
-//
-//            CreateWindow(TEXT("STATIC"), TEXT("Укажите пол"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("                                                                                                                                                                                                                                                                                                                                                   "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 400, hWnd, (HMENU)text1, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("                                         Укажите пол"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Мужской"), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)BOY, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Женский"), WS_VISIBLE | WS_CHILD, 230, 115, 165, 35, hWnd, (HMENU)GIRLOCHKA, NULL, NULL);
 //
@@ -380,8 +467,8 @@
 //            ShowWindow(GetDlgItem(hWnd, PARENTS), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, CREMLIN), SW_HIDE);
 //            BASS_ChannelStop(QUEST_THEME);
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы попытались прилететь в США. И по какой-то причине вас не остановили на границе, удивительно, хотя нет, через 5 минут за вами прилетел самолет ФБР. И вежливо стрельнул ракетами в ваш вертолет. Вы шашнахме. Мораль: <<Не пересекайте дети границу, а то будет шашнахме>> "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
-//            HSTREAM JACKSON = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\Stranger in Moscow.mp3", 0, 0, 0);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы попытались прилететь в США. И по какой-то причине вас не остановили на границе, удивительно, хотя нет, через 5 минут за вами прилетел самолет ФБР. И вежливо стрельнул ракетами в ваш вертолет. Вы шашнахме. Мораль: <<Не пересекайте дети границу, а то будет шашнахме>> "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
+//            JACKSON = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\Stranger in Moscow.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(JACKSON, false);
 //        }
 //        if (LOWORD(wParam) == CREMLIN)
@@ -390,8 +477,8 @@
 //            ShowWindow(GetDlgItem(hWnd, PARENTS), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, CREMLIN), SW_HIDE);
 //            BASS_ChannelStop(QUEST_THEME);
-//            CreateWindow(TEXT("STATIC"), TEXT("Прилетев к Кремлю, вы встретили широкого Путина, который вам сделал такой шашнахме, что вам вашей худой кости не хватило, чтобы его повалить =). Мораль: <<Если вы слабее, даже не пытайтесь лезть в драку, а то получите шашнахме в глаз>> "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
-//            HSTREAM PUTIN = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\WIDE.mp3", 0, 0, 0);
+//            CreateWindow(TEXT("STATIC"), TEXT("Прилетев к Кремлю, вы встретили широкого Путина, который вам сделал такой шашнахме, что вам вашей худой кости не хватило, чтобы его повалить =). Мораль: <<Если вы слабее, даже не пытайтесь лезть в драку, а то получите шашнахме в глаз>> "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
+//            PUTIN = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\WIDE.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(PUTIN, false);
 //        }
 //
@@ -403,7 +490,7 @@
 //            ShowWindow(GetDlgItem(hWnd, BOY), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, GIRLOCHKA), SW_HIDE);
 //
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы приехали на дачу к родителям. Что будете делать?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы приехали на дачу к родителям. Что будете делать?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Помогать родителям"), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)HELP1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Пойти в душ"), WS_VISIBLE | WS_CHILD, 230, 115, 165, 35, hWnd, (HMENU)SHOWER, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Пойти к парню"), WS_VISIBLE | WS_CHILD, 230, 155, 165, 35, hWnd, (HMENU)BOYFRIEND1, NULL, NULL);
@@ -418,7 +505,7 @@
 //            ShowWindow(GetDlgItem(hWnd, BOY), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, GIRLOCHKA), SW_HIDE);
 //
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы приехали на дачу к родителям. Что будете делать?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы приехали на дачу к родителям. Что будете делать?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Помогать родителям"), WS_VISIBLE | WS_CHILD, 230, 75, 165, 35, hWnd, (HMENU)HELP1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Пойти в душ"), WS_VISIBLE | WS_CHILD, 230, 115, 165, 35, hWnd, (HMENU)SHOWER, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Пойти к девушке"), WS_VISIBLE | WS_CHILD, 230, 155, 165, 35, hWnd, (HMENU)DEVA1, NULL, NULL);
@@ -432,7 +519,7 @@
 //            ShowWindow(GetDlgItem(hWnd, HELP1), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SHOWER), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, DEVA1), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("ДА ОТ ВАС ЖЕ ПАСЕТ НА МИЛЛИОН КИЛОМЕТРОВ! ПАРЕНЬ УБЕЖАЛ! ИГРА ОКОНЧЕНА! ВЫ ЛОШАШ И ШАШНАХМЕ! Мораль: <<Следите за гигиеной, не будьте вонючками!>>"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("ДА ОТ ВАС ЖЕ ПАСЕТ НА МИЛЛИОН КИЛОМЕТРОВ! ПАРЕНЬ УБЕЖАЛ! ИГРА ОКОНЧЕНА! ВЫ ЛОШАШ И ШАШНАХМЕ! Мораль: <<Следите за гигиеной, не будьте вонючками!>>"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //        }
 //        if (LOWORD(wParam) == DEVA1)
 //
@@ -442,7 +529,7 @@
 //            ShowWindow(GetDlgItem(hWnd, HELP1), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SHOWER), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, DEVA1), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("ДА ОТ ВАС ЖЕ ПАСЕТ НА МИЛЛИОН КИЛОМЕТРОВ! ДЕВУШКА УБЕЖАЛА В СЛЕЗАХ!! ИГРА ОКОНЧЕНА! ВЫ ЛОШАШ И ШАШНАХМЕ! Мораль: <<Следите за гигиеной, не будьте вонючками!>>"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("ДА ОТ ВАС ЖЕ ПАСЕТ НА МИЛЛИОН КИЛОМЕТРОВ! ДЕВУШКА УБЕЖАЛА В СЛЕЗАХ!! ИГРА ОКОНЧЕНА! ВЫ ЛОШАШ И ШАШНАХМЕ! Мораль: <<Следите за гигиеной, не будьте вонючками!>>"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //        }
 //        if (LOWORD(wParam) == HELP1)
 //        {
@@ -451,7 +538,7 @@
 //            ShowWindow(GetDlgItem(hWnd, BOYFRIEND1), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, HELP1), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, LOVING), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Правильно вы поступаете, помогаете родителям. Вы в жизни надеюсь также поступаете? Если да, то молодцы. Поступайте так всегда! В этом и мораль: <<Помогайте близким>>"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Правильно вы поступаете, помогаете родителям. Вы в жизни надеюсь также поступаете? Если да, то молодцы. Поступайте так всегда! В этом и мораль: <<Помогайте близким>>"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //        }
 //        if (LOWORD(wParam) == SHOWER)
 //        {
@@ -467,8 +554,8 @@
 //        {
 //            ShowWindow(GetDlgItem(hWnd, HELP1), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, LOVING), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Найдя свою любовь вы стали жить долго и счастливо. Мораль:<<Нет в жизни ничего важнее здоровья и счастья>>."), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
-//            MessageBoxA(hWnd, "Ждите продолжения в MixOS BETA 2.2", "Вы прошли квест на хорошую концовку!", MB_ICONASTERISK);
+//            CreateWindow(TEXT("STATIC"), TEXT("Найдя свою любовь вы стали жить долго и счастливо. Мораль:<<Нет в жизни ничего важнее здоровья и счастья>>."), WS_VISIBLE | WS_CHILD, 100, 10, 470, 80, hWnd, (HMENU)text1, NULL, NULL);
+//            MessageBoxA(hWnd, "Попробуйте поиграть в исторический квест, и узнаете много нового для себя =)","Привет из MixOS Beta 2.2", MB_ICONASTERISK);
 //
 //        }
 //        //if (LOWORD(wParam) == LOVING1)
@@ -504,13 +591,13 @@
 //            ShowWindow(GetDlgItem(hWnd, FIRST2), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SECOND2), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD2), SW_HIDE);                                                                                                           
-//            CreateWindow(TEXT("STATIC"), TEXT("Сев в toyota вы разогнались и пробили стенку, потом удачно выехали и ехали бы еще долго, если бы ближайший гаишник не остановил вас с вопросом: <<ЭЙ ВЫ СОВСЕМ ШАШНАХМЕ ЧТО ЛИ?>>. Игра окончена.Мораль: не садитесь дети в машину без прав, тем более в чужую машину. Не подвергайте риску себя и окружающих.     "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 480, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Сев в toyota вы разогнались и пробили стенку, потом удачно выехали и ехали бы еще долго, если бы ближайший гаишник не остановил вас с вопросом: <<ЭЙ ВЫ СОВСЕМ ШАШНАХМЕ ЧТО ЛИ?>>. Игра окончена.Мораль: не садитесь дети в машину без прав, тем более в чужую машину. Не подвергайте риску себя и окружающих.     "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 480, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
 //            BASS_ChannelStop(LADAV);
 //            BASS_Stop();
 //            BASS_Start();
 //
-//            HSTREAM ROSB = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\RASB.mp3", 0, 0, 0);
+//            ROSB = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\RASB.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(ROSB, false);
 //
 //
@@ -525,9 +612,9 @@
 //            ShowWindow(GetDlgItem(hWnd, SECOND2), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD2), SW_HIDE);
 //            BASS_ChannelStop(QUEST_THEME);
-//            HSTREAM KAVINSKY = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kav.mp3", 0, 0, 0);
+//            KAVINSKY = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kav.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KAVINSKY, false);
-//            CreateWindow(TEXT("STATIC"), TEXT("Сев в BMW, вы включили трек Kavinsky-Nightcall и умчались со стилем!!!    "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Сев в BMW, вы включили трек Kavinsky-Nightcall и умчались со стилем!!!                                                                                                                                   "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //        }
 //        if (LOWORD(wParam) == THIRD2)
 //        {
@@ -538,18 +625,18 @@
 //            ShowWindow(GetDlgItem(hWnd, SECOND2), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD2), SW_HIDE);
 //            BASS_ChannelPause(QUEST_THEME);
-//            HSTREAM LADAV = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\trombone.mp3", 0, 0, 0);
+//            LADAV = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\trombone.mp3", 0, 0, 0);
 //            
 //            BASS_ChannelPlay(LADAV, false);
 //            BASS_ChannelPlay(QUEST_THEME, false);
-//            CreateWindow(TEXT("STATIC"), TEXT("Попытавшись завести машину, спустя 50 минут, вы таки смогли выехать за пределы места где вы застряли, но спустя 100 метров машина застряла в ближайшем болоте. Вы смогли выбраться, и пройдя 5 метров нашли телефон, на котором 1% зарядки, так что позвонить можно только 1 раз. Кому позвоним?    "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Попытавшись завести машину, спустя 50 минут, вы таки смогли выехать за пределы места где вы застряли, но спустя 100 метров машина застряла в ближайшем болоте. Вы смогли выбраться, и пройдя 5 метров нашли телефон, на котором 1% зарядки, так что позвонить можно только 1 раз. Кому позвоним?    "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Позвонить маме"), WS_VISIBLE | WS_CHILD, 220,115, 185, 35, hWnd, (HMENU)FIRST3, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Позвонить Разработчику"), WS_VISIBLE | WS_CHILD, 220, 155, 185, 35, hWnd, (HMENU)SECOND3, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Поиграть в Geometry Dash"), WS_VISIBLE | WS_CHILD, 220, 195, 185, 35, hWnd, (HMENU)THIRD3, NULL, NULL);
 //        }
 //        if (LOWORD(wParam) == FIRST3)
 //        {
-//            CreateWindow(TEXT("STATIC"), TEXT("Привет мой ребенок, как ты там? Почему не звонишь? В деревне по тебе твоя любовь скучает, так и сидит у окна дома каждый день. Надо нам помочь, мы с папой уже старенькие, а работы в деревне выше крыши. Как ты там?"), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Привет мой ребенок, как ты там? Почему не звонишь? В деревне по тебе твоя любовь скучает, так и сидит у окна дома каждый день. Надо нам помочь, мы с папой уже старенькие, а работы в деревне выше крыши. Как ты там?                                                                                                                                         "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            ShowWindow(GetDlgItem(hWnd, ID_BUTTON), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, FIRST3), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SECOND3), SW_HIDE);
@@ -559,7 +646,7 @@
 //        }
 //        if (LOWORD(wParam) == EDU)
 //        {
-//            CreateWindow(TEXT("STATIC"), TEXT("Вы успели сказать маме эти слова, потом телефон отключился. Вы успешно пешком добежали до лестницы, поднялись по ней и увидели велосипед, машину и вертолет. Куда сядем? "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Вы успели сказать маме эти слова, потом телефон отключился. Вы успешно пешком добежали до лестницы, поднялись по ней и увидели                        велосипед, машину и вертолет.                                                                                 Куда сядем?"), WS_VISIBLE | WS_CHILD, 100, 10, 480, 108, hWnd, (HMENU)text1, NULL, NULL);
 //            ShowWindow(GetDlgItem(hWnd, MOTHER), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, EDU), SW_HIDE);
 //
@@ -594,10 +681,10 @@
 //            ShowWindow(GetDlgItem(hWnd, FIRST3), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, SECOND3), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD3), SW_HIDE);
-//            CreateWindow(TEXT("STATIC"), TEXT("Звонить разработчику вредно для здоровья. Вы тут же умерли, потому что у вас не толстая кость. И разработчик поразил вас великим шашнахмемским мечом."), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)NULL, NULL, NULL);
+//            CreateWindow(TEXT("STATIC"), TEXT("Звонить разработчику вредно для здоровья. Вы тут же умерли, потому что у вас не толстая кость. И разработчик поразил вас великим шашнахмемским мечом."), WS_VISIBLE | WS_CHILD, 100, 10, 450, 80, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
 //            BASS_ChannelStop(LADAV);
-//            HSTREAM KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
+//            KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KILL, false);
 //
 //        }
@@ -608,11 +695,11 @@
 //            ShowWindow(GetDlgItem(hWnd, SECOND3), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, THIRD3), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, MOTHER), SW_HIDE);
-//
-//            CreateWindow(TEXT("STATIC"), TEXT("<<Опять ты по переулкам шляешься и бухаешь! Хотя я тебе запретила пить! Это все друзья твои, очень плохо на тебя влияют. Ну, ничего дома поговорим! Небось еще и куришь? Отец с тебя всю шкуру снимет!>> - Все что успела сказать мама. Потом телефон отключился. Мораль такова: Не пейте и ведите здоровый образ жизни, тогда по переулкам шляться не придется =( "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 480, hWnd, (HMENU)NULL, NULL, NULL);
+//            ShowWindow(GetDlgItem(hWnd, EDU), SW_HIDE);
+//            CreateWindow(TEXT("STATIC"), TEXT("<<Опять ты по переулкам шляешься и бухаешь! Хотя я тебе запретила пить! Это все друзья твои, очень плохо на тебя влияют. Ну, ничего дома поговорим! Небось еще и куришь? Отец с тебя всю шкуру снимет!>> - Все что успела сказать мама. Потом телефон отключился. Мораль такова: Не пейте и ведите здоровый образ жизни, тогда по переулкам шляться не придется =( "), WS_VISIBLE | WS_CHILD, 100, 10, 450, 480, hWnd, (HMENU)text1, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
 //            BASS_ChannelStop(LADAV);
-//            HSTREAM KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
+//            KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KILL, false);
 //        }
 //        if (LOWORD(wParam) == THIRD3)
@@ -625,11 +712,127 @@
 //            CreateWindow(TEXT("STATIC"), TEXT("Поиграв каких-то 5 минут и не пройдя даже один уровень в игре, вы разбили телефон. Конец игры =). Мораль: не тратьте свою жизнь впустую. Развлечения это хорошо, но в меру. Ровно также, как и работа."), WS_VISIBLE | WS_CHILD, 100, 10, 450, 480, hWnd, (HMENU)NULL, NULL, NULL);
 //            BASS_ChannelStop(QUEST_THEME);
 //            BASS_ChannelStop(LADAV);
-//            HSTREAM KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
+//            KILL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\quest\\kill.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(KILL, false);
 //        }
-//        break;
 //
+//
+//
+//        if (LOWORD(wParam) == MYCOLOR)
+//        {
+//            
+//            CHOOSECOLOR cc;
+//
+//            ZeroMemory(&cc, sizeof(CHOOSECOLOR));
+//            cc.lStructSize = sizeof(CHOOSECOLOR);
+//            cc.hwndOwner = hWnd;
+//            cc.lpCustColors = (LPDWORD)acrCustClr;
+//            cc.rgbResult = rgbCurrent;
+//            cc.Flags = CC_FULLOPEN | CC_RGBINIT;
+//
+//            if (ChooseColor(&cc) == TRUE) {
+//                bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+//                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+//
+//                hBrush = CreateSolidBrush(cc.rgbResult);
+//                rgbCurrent = cc.rgbResult;
+//
+//
+//            }
+//            else
+//            {
+//
+//                /*   bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+//                   SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);*/
+//                hBrush = CreateSolidBrush(RGB(0, 76, 153));
+//                rgbCurrent = RGB(0, 76, 153);
+//                return 0;
+//            };
+//
+//
+//            InvalidateRect(hWnd, NULL, FALSE);
+//
+//              // ТО АХРИНЕТЬ ОХУЕТЬ ТОЧНЕЕ. Теперь надо такое же добавить в Терминал... И в Пианино... И еще много куда...
+//        }
+//
+//    case WM_HSCROLL:
+//    {
+//        if (hTrack == (HWND)lParam)
+//        {
+//
+//            BASS_ChannelSetAttribute(QUEST_THEME, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(LADAV, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(REMIX, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(SVOBODA, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(KILL, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(KAVINSKY, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(ROSB, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(MODEL, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(PUTIN, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75)); 
+//            BASS_ChannelSetAttribute(JACKSON, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//            BASS_ChannelSetAttribute(KAVUL, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
+//        }
+//    } break;
+//
+//
+//    case WM_CTLCOLORSTATIC:
+//    {
+//        if (GetDlgCtrlID((HWND)lParam) == text1)
+//        {
+//            HDC hdcStatic = (HDC)wParam;
+//            // or obtain the static handle in some other way
+//            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+//
+//            SetBkColor(hdcStatic, rgbCurrent);
+//
+//            return (LRESULT)GetStockObject(NULL_BRUSH);
+//
+//        }
+//        if (GetDlgCtrlID((HWND)lParam) == LENMUSIC)
+//        {
+//            HDC hdcStatic = (HDC)wParam;
+//            // or obtain the static handle in some other way
+//            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+//
+//            SetBkColor(hdcStatic, RGB(255,255,255));
+//
+//
+//            return (LRESULT)(COLOR_WINDOW + 1);
+//
+//        }
+//
+//    }break;
+//
+//            case WM_PAINT: {
+//                hdc = BeginPaint(hWnd, &ps);
+//                //ТАК, слушай, , я щас некоторое время не буду говорить, но скоро начну.Но я тут подумал, что смену скинов надо добавить и в остальные подпрограммы.Хотя бы в список эмуляторов
+//                FillRect(hdc, &ps.rcPaint, hBrush);
+//                /*SetBkMode(hdc, TRANSPARENT);*/
+//
+//                //BitBlt(hdc, 0, 0, bm., 720, memBit, 0, 0, SRCCOPY);
+//
+//                EndPaint(hWnd, &ps);
+//                //return 0;
+//
+//            } break;
+//
+//    //case WM_KEYDOWN:
+//    //    switch (lParam)
+//    //    {
+//    //        case VK_NUMPAD5:
+//    //            if (key_pressed == false)
+//    //            {
+//    //                ShowWindow(tardis, SW_SHOW);
+//    //                key_pressed = true;
+//    //            }
+//    //            else if (key_pressed == true)
+//    //            {
+//    //                ShowWindow(tardis, SW_HIDE);
+//    //                key_pressed = false;
+//    //            };
+//    //            break;
+//    //    }
+//    //    break;
 //
 //    case WM_DESTROY: {
 //        PostQuitMessage(0);
@@ -638,28 +841,33 @@
 //        break;
 //
 //    }
-//
+// 
 //
 //    default:
 //        return DefWindowProc(hWnd, uMsg, wParam, lParam);
 //    }
-//                   return 0;
+//                   return 0; 
 //    }
 //}
 //
 //int WINAPI main()
 //{
+// 
+//    SetProcessDPIAware();
 //    WNDCLASS op;
 //    ZeroMemory(&op, sizeof(WNDCLASS));
 //    op.lpfnWndProc = wnd_proc;
 //    op.hInstance = GetModuleHandle(NULL);
 //    op.lpszClassName = "test32cls";
 //    op.hCursor = LoadCursor(NULL, IDC_ARROW);
-//    op.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
+//    progicon = (HICON)LoadImage(op.hInstance, "MusicPlayer\\BMP\\ico\\quest.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//    op.hIcon = progicon;
+//
+//    //op.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
 //    RegisterClass(&op);
 //
 //
-//    CreateWindowA(op.lpszClassName, "Title", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 100, 100, 640, 360, NULL, NULL, op.hInstance, NULL);
+//    CreateWindowEx(WS_EX_LAYERED,op.lpszClassName, "Шашнахме квест", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 640, 360, NULL, NULL, op.hInstance, NULL);
 //    MSG msg;
 //    while (GetMessage(&msg, NULL, 0, 0)) {
 //        TranslateMessage(&msg);

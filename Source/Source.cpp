@@ -91,17 +91,17 @@
 //    default:
 //        return(DefWindowProc(hWnd, messg, wParam, lParam)); //освобождаем очередь приложения от нераспознаных
 //    }
-//    return 0;
+//    return 0;  
 //}
 //
+//          
 //
-//
-//int WINAPI main()
+//int WINAPI main()  
 //{
 //    WNDCLASS op;
 //    ZeroMemory(&op, sizeof(WNDCLASS));
-//    op.lpfnWndProc = wnd_proc;
-//    op.hInstance = GetModuleHandle(NULL);
+//    op.lpfnWndProc = wnd_proc;   
+//    op.hInstance = GetModuleHandle(NULL);   
 //    op.lpszClassName = "test32cls";
 //    op.hCursor = LoadCursor(NULL, IDC_ARROW);
 //    op.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);

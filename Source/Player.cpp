@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <tchar.h>
 #include <wchar.h>
-#include "resource.h"
+#include "resource.h"       
 #include "resource1.h"
 #include "resource2.h"
 #include"targetver.h"
@@ -19,7 +19,6 @@
 #include<Mmsystem.h>
 #include <mmeapi.h>
 #include<mmdeviceapi.h>
-
 #include "Names.h"
 #include "bass.h"
 #include "wingdi.h"
@@ -28,9 +27,9 @@
 #include <iostream>
 #include<set>
 #include <algorithm>
-#include <shlwapi.h> 
-#include <filesystem>
-
+//#include <shlwapi.h> 
+//#include <filesystem>
+     
 #pragma comment(linker,"/manifestdependency:\"type='win32' \
                         name='Microsoft.Windows.Common-Controls' \
                         version='6.0.0.0' processorArchitecture='*'\
@@ -38,12 +37,13 @@
 
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "bass")
-#pragma comment(lib, "shlwapi.lib")
+//#pragma comment(lib, "shlwapi.lib")
 
 
 using namespace std;
 HWND eDit;
 HWND eMp3;
+HWND SKIN;
 HWND okno;
 HWND ERRORs;
 char str1[MAX_PATH];
@@ -59,61 +59,272 @@ HSTREAM LONELY;
 HSTREAM GIRL;
 HSTREAM START;
 
+
+
+
+
+
 HDC hdc; //создаём контекст устройства
-PAINTSTRUCT ps; //создаём экземпляр структуры графического вывода
+HDC hcdc;
+PAINTSTRUCT ps; //создаём экземпляр структуры графического вывода   
 LOGFONT lf;
 RECT r;
 HPEN hPen;
 HBRUSH hBrush = CreateSolidBrush(RGB(0, 76, 153));
 HFONT hFont;
-HWND hTrack;
+HWND hTrack;       
 HWND hTrack1;
 HWND FOR6COMPOSIT;
 
+int skins;
+TCHAR StrT[MAX_PATH];
+HANDLE bmpwall;
+HANDLE bmpwall1;
+HWND hwall;
 
-
-HDC hDC, hCompatibleDC;
-PAINTSTRUCT PaintStruct;
-HANDLE hBitmap, hOldBitmap;
-RECT Rect;
-BITMAP Bitmap;
+TCHAR progname[] = _T("MixOS Beta 2.2");
+HICON progicon;
+HINSTANCE hInst;
+//HDC hDC, hCompatibleDC;
+//PAINTSTRUCT PaintStruct;
+//HANDLE hBitmap, hOldBitmap;
+//RECT Rect;
+static HDC memBit;
+static HBITMAP hBitmap;
+static BITMAP bm;
+//static HBITMAP strbmp;
 
 static COLORREF acrCustClr[16]; // массив доп. цветов
-static DWORD rgbCurrent;        // начальный выбранный цвет
 
+static DWORD rgbCurrent1 = RGB(0,76,153);        // начальный выбранный цвет
+static DWORD rgbCurrent = RGB(0, 76, 153);
+
+inline void free_samples_all();
+inline void without_stro();
 
 static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
 
+
+
     case WM_CREATE: {
-        SendMessage(hWnd, WM_SETICON, ICON_BIG, ICON_SMALL);
+        
+        /*rgbCurrent1 = RGB(255, 255, 255);*/
+  
+
+        SetLayeredWindowAttributes(hWnd, NULL, 255, LWA_ALPHA);
+
+
+
+
+        NOTIFYICONDATA data;
+        ZeroMemory(&data, sizeof(NOTIFYICONDATA));
+
+         
+
+
+
+
+        data.cbSize = sizeof(data);
+        data.hWnd = hWnd;
+        data.uID = 1;          // Можно поставить любой идентификатор, всё равно иконка только одна
+        data.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+        data.uCallbackMessage = WM_USER_SHELLICON;
+        data.hIcon = progicon;
+        data.uVersion = NOTIFYICON_VERSION;
+
+        /*     strcpy(data.szInfoTitle, "Загрузчик видео с Youtube");*/
+        strcpy(data.szTip, progname);
+
+        Shell_NotifyIcon(NIM_ADD, &data);
+
+
+
+        SetBkMode(hdc, OPAQUE);
         BASS_Init(-1, 44100, 0, 0, NULL);
-        CreateWindow(TEXT("STATIC"), TEXT("Что желаете запустить?"), WS_VISIBLE | WS_CHILD, 550, 20, 160, 15, hWnd, (HMENU)NULL, NULL, NULL);
-        CreateWindow(TEXT("BUTTON"), TEXT("Плеер"), WS_VISIBLE | WS_CHILD, 120, 200, 500, 300, hWnd, (HMENU)ID_BUTTON, NULL, NULL);
-        CreateWindow(TEXT("BUTTON"), TEXT("Эмуляторы"), WS_VISIBLE | WS_CHILD, 650, 200, 500, 300, hWnd, (HMENU)Emulators, NULL, NULL);
-        CreateWindow(TEXT("BUTTON"), TEXT("Контекстменюмейкер"), WS_VISIBLE | WS_CHILD, 120, 530, 500, 100, hWnd, (HMENU)MENUMAKER, NULL, NULL);
-        CreateWindow(TEXT("BUTTON"), TEXT("Квест"), WS_VISIBLE | WS_CHILD, 650, 530, 500, 100, hWnd, (HMENU)QUEST, NULL, NULL);
-        CreateWindow(TEXT("BUTTON"), TEXT("Пианино"), WS_VISIBLE | WS_CHILD, 650, 80, 500, 100, hWnd, (HMENU)PIANINO, NULL, NULL);
-        CreateWindow(TEXT("BUTTON"), TEXT("Терминал"), WS_VISIBLE | WS_CHILD, 120, 80, 500, 100, hWnd, (HMENU)TERMINAL, NULL, NULL);
-        CreateWindow(TEXT("BUTTON"), TEXT("Скачать ролик с Youtube"), WS_VISIBLE | WS_CHILD, 120, 650, 1030, 25, hWnd, (HMENU)YOUTUBE, NULL, NULL);
+
+        HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
+        HICON hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        CreateWindow(TEXT("STATIC"), TEXT("Что желаете запустить?"), WS_VISIBLE | WS_CHILD, 550, 20, 160, 15, hWnd, (HMENU)text1, NULL, NULL);
+        CreateWindow(TEXT("BUTTON"), TEXT("Плеер (Num2)"), WS_VISIBLE | WS_CHILD | WS_TABSTOP, 120, 200, 500, 300, hWnd, (HMENU)ID_BUTTON, NULL, NULL);
+
+        SendMessage(GetDlgItem(hWnd, ID_BUTTON), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+        CreateWindow(TEXT("BUTTON"), TEXT("Эмуляторы (Num5)"), WS_VISIBLE | WS_CHILD | WS_TABSTOP, 650, 200, 500, 300, hWnd, (HMENU)Emulators, NULL, NULL);
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Emulate.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, Emulators), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+        CreateWindow(TEXT("BUTTON"), TEXT("Контекстменюмейкер (Num3)"), WS_VISIBLE | WS_CHILD | WS_TABSTOP, 120, 530, 500, 100, hWnd, (HMENU)MENUMAKER, NULL, NULL);
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\menumaker.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, MENUMAKER), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
+        CreateWindow(TEXT("BUTTON"), TEXT("Квест (Num6)"), WS_VISIBLE | WS_CHILD | WS_TABSTOP, 650, 530, 500, 100, hWnd, (HMENU)QUEST, NULL, NULL);
+
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\quest.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, QUEST), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);     //Иконка нормально смотрится теперь..
+
+
+        CreateWindow(TEXT("BUTTON"), TEXT("Пианино (Num4)"), WS_VISIBLE | WS_CHILD | WS_TABSTOP, 650, 80, 500, 100, hWnd, (HMENU)PIANINO, NULL, NULL);
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\piano.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, PIANINO), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
+        CreateWindow(TEXT("BUTTON"), TEXT("Терминал (Num1)"), WS_VISIBLE | WS_CHILD | WS_TABSTOP, 120, 80, 500, 100, hWnd, (HMENU)TERMINAL, NULL, NULL);
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\terminal.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, TERMINAL), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
+
+        CreateWindow(TEXT("BUTTON"), TEXT("Скачать ролик с Youtube (Num7)"), WS_VISIBLE | WS_CHILD | WS_TABSTOP, 120, 650, 1030, 25, hWnd, (HMENU)YOUTUBE, NULL, NULL);
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\youtube.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, YOUTUBE), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll); // а ты в войс впустишь?   да щас поговорю и продолжим кодить. я щас.
+        
+
+        CreateWindow(_T("BUTTON"), _T("Запустить все подпрограммы MixOS при нажатии на кнопку \"Плеер\""), WS_VISIBLE | WS_CHILD | BS_CHECKBOX | BS_AUTOCHECKBOX,
+            120 + 600, 20, 450 + 50 - 20, 16, hWnd, (HMENU)CHB1, NULL, NULL);
         BASS_Start();
         START = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\Mozart.mp3", 0, 0, 0);
         BASS_ChannelPlay(START, false);
-        hTrack1 = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND, 10, 20, 100, 30, hWnd, (HMENU)LENMUSIC1, NULL, NULL);
-        ShowWindow(GetDlgItem(hWnd, LENMUSIC1), SW_SHOW);
-        CreateWindow(TEXT("STATIC"), TEXT("Громкость"), WS_VISIBLE | WS_CHILD, 25, 60, 70, 18, hWnd, (HMENU)MAKEMAKE, NULL, NULL);
         
+
+        hTrack1 = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS |WS_VISIBLE, 10, 20, 100, 20, hWnd, (HMENU)LENMUSIC4, NULL, NULL);
+        /*ShowWindow(GetDlgItem(hWnd, LENMUSIC1), SW_SHOW);*/
+        CreateWindow(TEXT("STATIC"), TEXT("Громкость"), WS_VISIBLE | WS_CHILD, 25, 60-20, 70, 18, hWnd, (HMENU)text11, NULL, NULL);
+
+        eMp3 = CreateWindow(TEXT("Edit"), NULL, WS_EX_CLIENTEDGE | WS_BORDER | WS_CHILD | WS_VISIBLE, 120, 50, 1000+30, 20, hWnd, (HMENU)SKINSSTRO, NULL, 0);
+        ShowWindow(GetDlgItem(hWnd, SKINSSTRO), SW_HIDE);
+        SendMessageW(eMp3, EM_SETCUEBANNER, FALSE, (LPARAM)L"Путь до картинки BMP, например MusicPlayer\\BMP\\st.bmp");
+
+
+
+
+        CreateWindow("BUTTON", "Установить скин", WS_VISIBLE | WS_CHILD, 120, 80-30-30, 150, 20, hWnd, (HMENU)SETBKG, NULL, NULL);
+
+
+
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\instskin.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, SETBKG), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
+
+
+        CreateWindow("BUTTON", "Установить полупрозрачность", WS_VISIBLE | WS_CHILD, 120, 80 - 30 - 30+30, 320, 20, hWnd, (HMENU)polupon, NULL, NULL);
+
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\desktop.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, polupon), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
+        CreateWindow("BUTTON", "Выключить полупрозрачность", WS_CHILD, 120, 80 - 30 - 30 + 30, 320, 20, hWnd, (HMENU)polupoff, NULL, NULL);
+
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\computer.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, polupoff), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="uMsg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+
+        
+
+        //Че это? это описание функции для генерации документации   а ок
+        CreateWindow("BUTTON", "Удалить скин", WS_VISIBLE | WS_CHILD, 120+150+20, 80 - 30 - 30, 150, 20, hWnd, (HMENU)CLEARSKIN, NULL, NULL);
+        
+        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\delete.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+        SendMessage(GetDlgItem(hWnd, CLEARSKIN), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+        //SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_ACCEPTFILES);
+
+        //SendMessage(hWnd, WM_COMMAND, ID_BUTTON, 0);
+
+
 
     }
 
                   break;
 
     case WM_COMMAND: {
-        
+        //ShowWindow(GetDlgItem(hWnd, SKINSSTRO), SW_HIDE);
 
         if (LOWORD(wParam) == ID_BUTTON)
-        {
-            ShowWindow(GetDlgItem(hWnd, MAKEMAKE), SW_HIDE);
+        {           
+            //HANDLE hIcon2 = LoadImage(NULL, "MusicPlayer\\BMP\\ico\\MixPlayer.ico", IMAGE_ICON, 0, 0,
+            //    LR_LOADFROMFILE | LR_LOADTRANSPARENT /*| LR_DEFAULTSIZE*/);
+           /* SendMessage(hWnd, WM_SETICON, NULL, (LPARAM)hIcon2);*/
+            DestroyWindow(hwall);
+            //progname = "MixOS Beta 2.2";
+            TCHAR progname[] = _T("MixPlayer из MixOS Beta 2.2");
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
+            HICON hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            if (SendMessage(GetDlgItem(hWnd, CHB1), BM_GETCHECK, 0, 0) == BST_CHECKED)
+            {
+
+                SendMessage(hWnd, WM_COMMAND, QUEST, 0);
+                SendMessage(hWnd, WM_COMMAND, TERMINAL, 0);
+                SendMessage(hWnd, WM_COMMAND, PIANINO, 0);
+                SendMessage(hWnd, WM_COMMAND, ERTOR, 0);
+                SendMessage(hWnd, WM_COMMAND, Emulators, 0);
+                SendMessage(hWnd, WM_COMMAND, YOUTUBE, 0);
+                SendMessage(hWnd, WM_COMMAND, MENUMAKER, 0);
+                SendMessage(hWnd, WM_COMMAND, SELFUP, 0);
+                SendMessage(hWnd, WM_COMMAND, CONVERTER, 0);
+                SendMessage(hWnd, WM_COMMAND, VIDEO, 0);
+                SendMessage(hWnd, WM_COMMAND, PHOTOVIEWER, 0);
+                SendMessage(hWnd, WM_COMMAND, TRANSLATE, 0);
+
+            }
+            DestroyWindow(GetDlgItem(hWnd, CHB1));
+            DestroyWindow(GetDlgItem(hWnd, SETBKG));
+            DestroyWindow(GetDlgItem(hWnd, CLEARSKIN));
+            DestroyWindow(GetDlgItem(hWnd, polupoff));
+            DestroyWindow(GetDlgItem(hWnd, polupon));
+            //DestroyWindow(GetDlgItem(hWnd, SKINSSTRO));
+            ShowWindow(GetDlgItem(hWnd, SKINSSTRO), SW_HIDE);
+            DestroyWindow(GetDlgItem(hWnd, LENMUSIC4));
+            DestroyWindow(GetDlgItem(hWnd, SEARCH));                     //Главное правило инженера: Работает - не трогай!  =)
+            //ShowWindow(GetDlgItem(hWnd, SEARCH), SW_HIDE);
+            //ShowWindow(eMp3, SW_HIDE);
+            skins = GetWindowText(eMp3, StrT, MAX_PATH);
+            bmpwall = LoadImage(NULL, StrT, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+            }
+
+            //hBitmap = (HBITMAP)LoadImage(NULL, str1, IMAGE_BITMAP,
+            //    0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+            ////if (hBitmap == NULL)
+            ////{
+            ////MessageBox(hWnd,_T("Файл не найден"),_T("Загрузка изображения"),
+            ////    MB_OK | MB_ICONHAND);
+            ////}
+            //GetObject(hBitmap, sizeof(bm), &bm);
+            //hdc = GetDC(hWnd);
+            //memBit = CreateCompatibleDC(hdc);
+            //SelectObject(memBit, hBitmap);
+            ////ReleaseDC(hWnd, hdc);
+            
+            ShowWindow(GetDlgItem(hWnd, text11), SW_HIDE);
             BASS_SampleFree(START);
             BASS_ChannelFree(START);
             BASS_StreamFree(START);
@@ -122,7 +333,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             VISTA = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\Vista.mp3", 0, 0, 0);
             BASS_ChannelPlay(VISTA, false);
 
-            SetBkMode(hdc, OPAQUE);
+            
+            //SetBkMode(hdc, TRANSPARENT);
             ShowWindow(GetDlgItem(hWnd, Emulators), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, LENMUSIC1), SW_HIDE);
 
@@ -132,7 +344,7 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             //    hBrush = (HBRUSH)atoi(settings.c_str());
             //}
            /* Proga1.close();*/
-            InvalidateRect(hWnd, NULL, FALSE);
+            //InvalidateRect(hWnd, NULL, FALSE);
 
             HMENU hMenubar = CreateMenu();
             HMENU hFile = CreateMenu();
@@ -145,6 +357,7 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             HMENU hOptions = CreateMenu();
             HMENU hChangeFont = CreateMenu();
             HMENU hChangeColor = CreateMenu();
+            HMENU hWhat = CreateMenu();
 
             AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hFile, "Файл");
             AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hAbout, "Справка");
@@ -154,8 +367,9 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hInstall, "Установка полезного софта");
             AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hRasvl, "Развлечения");
             AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hOptions, "Настройки");
+            AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hWhat, "С чего начиналась разработка?");
+            
 
-            AppendMenu(hOptions, MF_STRING, MYCOLOR, "Сменить цвет");
             //AppendMenu(hOptions, MF_STRING, SAVEINI, "Сохранить настройки");
 
 
@@ -166,10 +380,13 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
             AppendMenu(hFile, MF_STRING, IU_STR, "Выход");
             AppendMenu(hFile, MF_SEPARATOR, NULL, NULL);
-            AppendMenu(hFile, MF_STRING, MENUMENUMENUMENU, "Вернуться в меню");
+            AppendMenu(hFile, MF_STRING /*| MF_OWNERDRAW*/, MENUMENUMENUMENU, "Вернуться в меню");
+
             AppendMenu(hFile, MF_STRING, SOURCE, "Исходный код");
+            AppendMenu(hFile, MF_STRING, FASTRESTART, _T("Быстрая перезагрузка Windows"));
 
             AppendMenu(hAbout, MF_STRING, STRANNIK, "О программе");
+            
 
 
             AppendMenu(hCreator, MF_STRING, WOZRAST, "Возраст");
@@ -193,16 +410,22 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
             AppendMenu(hHelp, MF_STRING, TERMINAL, "Открыть терминал");
             AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
-
             AppendMenu(hHelp, MF_STRING, CONVERTER, "Открыть конвертер валют");
             AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
-            //AppendMenu(hHelp, MF_STRING, VIDEO, "Открыть видеоплеер (бета)");
-            //AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
+
             AppendMenu(hHelp, MF_STRING, MENUMAKER, "Открыть контекстменюмейкер для Windows");
             AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
             AppendMenu(hHelp, MF_STRING, YOUTUBE, "Открыть загрузчик видосов с ютуба");
             AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL); 
             AppendMenu(hHelp, MF_STRING, ERTOR, "Открыть генератор случайных чисел");
+            AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hHelp, MF_STRING, VIDEO, "Открыть видеоплеер");
+            AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hHelp, MF_STRING, PHOTOVIEWER, "Открыть просмотрщик фотографий");
+            AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hHelp, MF_STRING, TRANSLATE, "Открыть руингтранслит");
+            //AppendMenu(hHelp, MF_SEPARATOR, NULL, NULL);
+            //AppendMenu(hHelp, MF_STRING, SELFUP, "Открыть помощник по повышению самооценки (для девушек).");
 
             AppendMenu(hUtils, MF_STRING, NOTEPAD, "Открыть блокнот");
             AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
@@ -216,14 +439,15 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
             AppendMenu(hUtils, MF_STRING, CALC, "Открыть калькулятор");
             AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
-            AppendMenu(hUtils, MF_STRING, RESMON, "Открыть монитор ресурсов");
+            AppendMenu(hUtils, MF_STRING, RESMON, "Открыть монитор ресурсов");     
             AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
-            AppendMenu(hUtils, MF_STRING, CLEANMGR, "Открыть очистку диска");
-            AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hUtils, MF_STRING, CLEANMGR, "Открыть очистку диска"); 
+            AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);     
             AppendMenu(hUtils, MF_STRING, PANEL, "Открыть панель управления");
             AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
             AppendMenu(hUtils, MF_STRING, PERSONALIZE, "Открыть персонализацию");
             AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
+
             AppendMenu(hUtils, MF_STRING, GPEDIT, "Открыть редактор групповых политик");
             AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
             AppendMenu(hUtils, MF_STRING, REGEDIT, "Открыть редактор реестра");
@@ -235,6 +459,16 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             AppendMenu(hUtils, MF_STRING, MSCONFIG, "Открыть msconfig");
             AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
             AppendMenu(hUtils, MF_STRING, MSINFO32, "Открыть msinfo32");
+            AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hUtils, MF_STRING, MSPAINT, "Открыть paint");
+            AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hUtils, MF_STRING, VERIFIER, "Открыть verifier");
+            AppendMenu(hUtils, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hUtils, MF_STRING, MRT, "Открыть MRT");
+
+
+
+
 
 
             AppendMenu(hInstall, MF_STRING, VISUAL, "Установить Visual C++ редисты");
@@ -252,6 +486,33 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
 
             AppendMenu(hRasvl, MF_STRING, EMULATE, "Эмуляторы");
+            AppendMenu(hRasvl, MF_STRING, COMP4, "Компьютерная эволюция 4");
+
+
+            AppendMenu(hOptions, MF_STRING, MYCOLOR, "Сменить цвет");
+            //AppendMenu(hOptions, MF_STRING, MYFONT, "Сменить шрифт");
+            AppendMenu(hOptions, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hOptions, MF_STRING, SETBKG, "Сменить фон на картинку");
+            AppendMenu(hOptions, MF_STRING, SKIN1, "Картинка 1");
+            AppendMenu(hOptions, MF_STRING, SKIN2, "Картинка 2");
+            AppendMenu(hOptions, MF_STRING, SKIN3, "Картинка 3");
+            AppendMenu(hOptions, MF_STRING, SKIN4, "Картинка 4");
+            AppendMenu(hOptions, MF_STRING, SKIN5, "Картинка 5");
+            AppendMenu(hOptions, MF_STRING, SKIN6, "Картинка 6");
+            AppendMenu(hOptions, MF_STRING, SKIN7, "Картинка 7");
+            AppendMenu(hOptions, MF_STRING, SKIN8, "Картинка 8");
+            AppendMenu(hOptions, MF_STRING, SKIN9, "Картинка 9");
+            AppendMenu(hOptions, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hOptions, MF_STRING, polupon, "Включить полупрозрачность");
+            AppendMenu(hOptions, MF_STRING, polupoff, "Выключить полупрозрачность");
+            AppendMenu(hOptions, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hOptions, /*WS_DISABLED|*/ MF_STRING | MF_DISABLED, LOADDLL, "Загрузить плагины...");
+
+
+
+            AppendMenu(hWhat, MF_STRING, OLDVER13, "MusicPlayer Beta 1.3");
+            AppendMenu(hWhat, MF_SEPARATOR, NULL, NULL);
+            AppendMenu(hWhat, MF_STRING, OLDVER15, "MusicPlayer Beta 1.5");
 
 
             SetMenu(hWnd, hMenubar);
@@ -263,46 +524,115 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             ShowWindow(GetDlgItem(hWnd, YOUTUBE), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, QUEST), SW_HIDE);
 
-            CreateWindow(TEXT("STATIC"), TEXT("MixPlayer Version Beta 2.1, copyright ©StrannikCorp. All rights reserved"), WS_VISIBLE | WS_CHILD, 400, 20, 475, 25, hWnd, (HMENU)NULLA, NULL, NULL);
-            CreateWindow(TEXT("STATIC"), TEXT("*************************************Привет, этот плеер проигрывает музыку в любых форматах*********************************************"), WS_VISIBLE | WS_CHILD, 200, 40, 899, 25, hWnd, (HMENU)NULLAS, NULL, NULL);
-            CreateWindow(TEXT("STATIC"), TEXT("Но расширение надо указывать обязательно!"), WS_VISIBLE | WS_CHILD, 480 - 25, 60, 312, 20, hWnd, (HMENU)NULLASA, NULL, NULL);
-            CreateWindow(TEXT("STATIC"), TEXT("Тут уже имеется пара композиций"), WS_VISIBLE | WS_CHILD, 500, 100, 230, 20, hWnd, (HMENU)NULLASAS, NULL, NULL);
+            CreateWindow(TEXT("STATIC"), TEXT("MixPlayer Version Beta 2.2. copyright ©StrannikCorp. All rights reserved"), WS_VISIBLE | WS_CHILD , 400, 20, 475, 25, hWnd, (HMENU)text1, NULL, NULL);
+
+            CreateWindow(TEXT("STATIC"), TEXT("*************************************Привет, этот плеер проигрывает музыку в любых форматах*********************************************"), WS_VISIBLE | WS_CHILD, 200, 40, 899, 25, hWnd, (HMENU)text1, NULL, NULL);
+            CreateWindow(TEXT("STATIC"), TEXT("Но расширение надо указывать обязательно!"), WS_VISIBLE | WS_CHILD , 480 - 25, 60, 312, 20, hWnd, (HMENU)text1, NULL, NULL);
+            CreateWindow(TEXT("STATIC"), TEXT("Тут уже имеется пара композиций"), WS_VISIBLE | WS_CHILD , 500, 100, 230, 20, hWnd, (HMENU)text1, NULL, NULL);
 
 
 
-
+            
 
 
 
             CreateWindow(TEXT("BUTTON"), TEXT("Headless Nick - Morning "), WS_VISIBLE | WS_CHILD, 150, 150, 300, 70, hWnd, (HMENU)DEVUSHKA, NULL, NULL);
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\music.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, DEVUSHKA), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
             CreateWindow(TEXT("BUTTON"), TEXT("Headless Nick - UFO "), WS_VISIBLE | WS_CHILD, 460, 150, 300, 70, hWnd, (HMENU)LETO, NULL, NULL);
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\music.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, LETO), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
             CreateWindow(TEXT("BUTTON"), TEXT("Headless Nick - Sample Adventures "), WS_VISIBLE | WS_CHILD, 770, 150, 300, 70, hWnd, (HMENU)SHAG, NULL, NULL);
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\music.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, SHAG), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
             CreateWindow(TEXT("BUTTON"), TEXT("Deteez - Above the Sky"), WS_VISIBLE | WS_CHILD, 150, 230, 300, 70, hWnd, (HMENU)SLOVO, NULL, NULL);
-            CreateWindow(TEXT("BUTTON"), TEXT("Violet S - Lonely "), WS_VISIBLE | WS_CHILD, 460, 230, 300, 70, hWnd, (HMENU)CIGARET, NULL, NULL);
-            CreateWindow(TEXT("BUTTON"), TEXT("Deteez - Waxie "), WS_VISIBLE | WS_CHILD, 770, 230, 300, 70, hWnd, (HMENU)PEREMEN, NULL, NULL);
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\music.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, SLOVO), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
+            CreateWindow(TEXT("BUTTON"), TEXT("Violet S - Lonely "), WS_VISIBLE | WS_CHILD, 770, 230, 300, 70, hWnd, (HMENU)CIGARET, NULL, NULL);
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\music.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, CIGARET), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+    
+
+            CreateWindow(TEXT("BUTTON"), TEXT("Captain Strannik - Hard Thing"), WS_VISIBLE | WS_CHILD, 460, 230, 300, 70, hWnd, (HMENU)PEREMEN, NULL, NULL);
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\music.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, PEREMEN), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
+
+
             CreateWindow(TEXT("BUTTON"), TEXT("Остановить музыку "), WS_VISIBLE | WS_CHILD, 770, 500, 300, 70, hWnd, (HMENU)STOPS, NULL, NULL);
+
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\instskin.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, STOPS), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
             CreateWindow(TEXT("BUTTON"), TEXT("Открыть свой файл"), WS_VISIBLE | WS_CHILD, 150, 500, 300, 70, hWnd, (HMENU)FILEY2, NULL, NULL);
+
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\instskin.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, FILEY2), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+            /*  Слушай, как сделать так, чтобы текст был без фона белого?  */
+            
+
             CreateWindow(TEXT("BUTTON"), TEXT("Продолжить"), WS_VISIBLE | WS_CHILD, 460, 500, 300, 70, hWnd, (HMENU)PAUSE2, NULL, NULL);
+
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\play.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, PAUSE2), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
             CreateWindow(TEXT("BUTTON"), TEXT("Пауза"), WS_VISIBLE | WS_CHILD, 460, 500, 300, 70, hWnd, (HMENU)PAUSE1, NULL, NULL);
+
+
+            hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\pause.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+
+            SendMessage(GetDlgItem(hWnd, PAUSE1), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+
+
             ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, PAUSE2), SW_HIDE);
            // ShowWin
              //CreateWindow(TEXT("BUTTON"), TEXT("Очистить RAM"), WS_VISIBLE | WS_CHILD, 550, 600, 110, 20, hWnd, (HMENU)RAMRAM, NULL, NULL);
             
-
-            eMp3 = CreateWindow(TEXT("Edit"), NULL, WS_EX_CLIENTEDGE | WS_BORDER | WS_CHILD | WS_VISIBLE, 40, 430, 1175, 20, hWnd, (HMENU)YOUMUSIC, NULL, 0);
-            CreateWindow("BUTTON", "...", WS_VISIBLE | WS_CHILD, 1220, 430, 20, 20, hWnd, (HMENU)SEARCH, NULL, NULL);
+            
+            eMp3 = CreateWindow(TEXT("Edit"), NULL, WS_EX_CLIENTEDGE | WS_BORDER | WS_CHILD | WS_VISIBLE, 40, 430, 1175-30, 20, hWnd, (HMENU)YOUMUSIC, NULL, 0);
+            CreateWindow("BUTTON", "Поиск", WS_VISIBLE | WS_CHILD, 1220-30, 430, 20+30, 20, hWnd, (HMENU)SEARCH, NULL, NULL);
             SendMessageW(eMp3, EM_SETCUEBANNER, FALSE, (LPARAM)L"Путь до вашей музыки, в любом формате =) (С расширением) Например:  MusicPlayer\\Violet S\\Lonely.mp3");
-            SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_ACCEPTFILES);
+            //SetWindowLongPtr(hWnd, GWL_EXSTYLE, WS_EX_ACCEPTFILES);
+            /*hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND | WS_VISIBLE, 150, 250, 320, 30, hWnd, (HMENU)LENMUSIC, NULL, NULL);*/
 
-            hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND, 450, 590, 320, 30, hWnd, (HMENU)LENMUSIC, NULL, NULL);
+
+
+            hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND , 450, 590, 320, 30, hWnd, (HMENU)LENMUSIC, NULL, NULL);
+
+
             FOR6COMPOSIT = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND, 450, 590-270, 320, 30, hWnd, (HMENU)LENMUSIC2, NULL, NULL);
+
+
+
             //hTrack1 = CreateWindow(TRACKBAR_CLASS, "LENGTH", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND, 150, 390, 923, 30, hWnd, (HMENU)LENMUSIC1, NULL, NULL);
             //SendMessageA(hWnd, TBM_SETPOS, TRUE, 50);
             CreateWindow(TEXT("STATIC"), TEXT("Изменить громкость музыки"), WS_CHILD, 510, 620, 195, 20, hWnd, (HMENU)VOLUMASTA, NULL, NULL);
             CreateWindow(TEXT("STATIC"), TEXT("Громкость"), WS_CHILD, 570, 590-240, 70, 20, hWnd, (HMENU)VOLUMASTA1, NULL, NULL);
             ShowWindow(GetDlgItem(hWnd, LENMUSIC2), SW_SHOW);
             ShowWindow(GetDlgItem(hWnd, VOLUMASTA1), SW_SHOW);
+
+
+
            //if (PathFileExistsA(str1))
            //{
            //    SetWindowText(eMp3, str1);
@@ -312,13 +642,263 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             // а как проверить наличие файла?       Нуууу
             // без winapi&        можно попробовать через else.  типа
 
+
             
         }
-       
 
+        if (LOWORD(wParam) == COMP4)
+        {
+            system("start C:\\WIN\\GAMES\\COMP4\\1.bat");
+
+
+        }
+        if (LOWORD(wParam) == TRANSLATE)
+        {
+            system("start MusicPlayer\\SUBS\\NBR\\ru4en.hta");
+
+
+        }
+
+
+
+
+        if (LOWORD(wParam) == polupon)
+        {
+            ShowWindow(GetDlgItem(hWnd, polupon), SW_HIDE);
+            ShowWindow(GetDlgItem(hWnd, polupoff), SW_SHOW);
+            SetLayeredWindowAttributes(hWnd, NULL, 230, LWA_ALPHA);
+        }
+        if (LOWORD(wParam) == polupoff)
+        {
+            ShowWindow(GetDlgItem(hWnd, polupon), SW_SHOW);
+            ShowWindow(GetDlgItem(hWnd, polupoff), SW_HIDE);
+            SetLayeredWindowAttributes(hWnd, NULL, 255, LWA_ALPHA);
+        }
+
+
+
+
+
+        if (LOWORD(wParam) == SETBKG)
+        {
+            
+          
+            ShowWindow(GetDlgItem(hWnd, SKINSSTRO), SW_HIDE);
+            OPENFILENAME ofnn;
+
+            ZeroMemory(&ofnn, sizeof(OPENFILENAME));
+            ofnn.lStructSize = sizeof(OPENFILENAME);
+            ofnn.hwndOwner = hWnd;
+            ofnn.lpstrFile = str1;
+            ofnn.nMaxFile = sizeof(str1);
+            
+            ofnn.nFilterIndex = 1;
+            ofnn.lpstrFileTitle = NULL;
+            ofnn.nMaxFileTitle = 0;
+            //ofn.lpstrInitialDir = ".";
+            ofnn.lpstrInitialDir = "MusicPlayer\\BMP\\MIXSKIN";
+            ofnn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_DONTADDTORECENT | OFN_NOCHANGEDIR;   //Бага больше нет!  А я пока отойду.
+
+            if (GetOpenFileName(&ofnn) == TRUE)
+            {
+                SetWindowText(eMp3, str1);
+
+                DestroyWindow(hwall);
+                DestroyWindow(GetDlgItem(hWnd, INSTBKG));
+                ShowWindow(GetDlgItem(hWnd, SKINSSTRO), SW_HIDE);
+
+                ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_SHOW);
+
+                skins = GetWindowText(eMp3, StrT, MAX_PATH);
+                bmpwall = LoadImage(NULL, StrT, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+                bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+                if (bmpwall != NULL);
+                {
+
+                    hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                    SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                    SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+                }
+                /*CreateWindow(TEXT("BUTTON"), TEXT("Установить"), WS_VISIBLE | WS_CHILD, 460, 500, 300, 70, hWnd, (HMENU)INSTBKG, NULL, NULL);*/
+            }
+            ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_HIDE);
+            
+        }
+
+
+        if (LOWORD(wParam) == SKIN1)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == SKIN2)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image2.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == SKIN3)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image3.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == SKIN4)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image4.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == SKIN5)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image5.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == SKIN6)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image6.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == SKIN7)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image7.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == SKIN8)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image8.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == SKIN9)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\image9.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
+
+            }
+        }
+        if (LOWORD(wParam) == CLEARSKIN)
+
+        {
+            DestroyWindow(hwall);
+
+            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+
+            if (bmpwall != NULL);
+            {
+
+                hwall = CreateWindow("STATIC", NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP | WS_BORDER, 0, 0, 0, 0, hWnd, NULL, NULL, NULL);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+
+            }
+        }
         if (LOWORD(wParam) == MYCOLOR)
         {
-
+            
             CHOOSECOLOR cc;
 
             ZeroMemory(&cc, sizeof(CHOOSECOLOR));
@@ -329,11 +909,28 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             cc.Flags = CC_FULLOPEN | CC_RGBINIT;
 
             if (ChooseColor(&cc) == TRUE) {
+                bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+                SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);
+
                 hBrush = CreateSolidBrush(cc.rgbResult);
                 rgbCurrent = cc.rgbResult;
-            }
 
-            InvalidateRect(hWnd, NULL, FALSE);   // ТО АХРИНЕТЬ ОХУЕТЬ ТОЧНЕЕ. Теперь надо такое же добавить в Терминал... И в Пианино... И еще много куда...
+
+            }
+            else
+            {
+
+                /*   bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
+                   SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall1);*/
+                hBrush = CreateSolidBrush(RGB(0, 76, 153));
+                rgbCurrent = RGB(0, 76, 153);
+                return 0;
+            };
+
+
+            InvalidateRect(hWnd, NULL, FALSE);
+
+              // ТО АХРИНЕТЬ ОХУЕТЬ ТОЧНЕЕ. Теперь надо такое же добавить в Терминал... И в Пианино... И еще много куда...
         }
         //if (LOWORD(wParam) == SAVEINI)
         //{
@@ -388,7 +985,7 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         //        rgbCurrent = cf.rgbColors;
         //        rgbPrev = SetTextColor(hdc, rgbCurrent);
         //        SendMessage(hWnd, WM_SETFONT, (WPARAM)hfont, FALSE);
-        //        InvalidateRect(hWnd, NULL, TRUE);
+        //       
         //        // ладно
         //    }     
         //}
@@ -406,6 +1003,14 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
             system("start MusicPlayer\\SUBS\\ERTOR\\gen.exe");
             
+        }
+        if (LOWORD(wParam) == PHOTOVIEWER)
+        {
+            system("start MusicPlayer\\PhotoViewer\\CreeperPhotoViewer.exe");
+        }
+        if (LOWORD(wParam) == SELFUP)
+        {
+            system("start MusicPlayer\\love\\helpup.exe");
         }
         if (LOWORD(wParam) == YOUTUBE)
         {
@@ -447,7 +1052,16 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             MessageBoxA(hWnd, "После закрытия этого окна будут переустановлены все VISUAL C++ редисты, если вы не уверены, то отменить это можно чуть позже в консоли.", "Внимание", MB_ICONINFORMATION);
             system("start MusicPlayer\\Install\\Visual\\Visual.bat");
         }
-
+        if (LOWORD(wParam) == OLDVER13)
+        {
+            MessageBoxA(hWnd, "Сейчас будет запущен плеер версии Beta 1.3. По сути это прадедушка MixOS. С него всё и началось.", "MusicPlayer Beta 1.3", MB_ICONINFORMATION);
+            system("start MusicPlayer\\OLD\\1.3.bat");
+        }
+        if (LOWORD(wParam) == OLDVER15)
+        {
+            MessageBoxA(hWnd, "Сейчас будет запущен плеер версии Beta 1.5. Официально это первая графическая версия моего плеера.\nНеофициально это была Beta 1.4. ", "MusicPlayer Beta 1.5", MB_ICONINFORMATION);
+            system("start MusicPlayer\\OLD\\1.5.bat");
+        }
         if (LOWORD(wParam) == TERMINAL)
         {
             system("start MusicPlayer\\TERMINAL\\TERMINAL.EXE");
@@ -464,7 +1078,7 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             system("start MusicPlayer\\CONVERT\\converter.exe");
 
         }
-
+           
         if (LOWORD(wParam) == EMULATE || LOWORD(wParam) == Emulators)
         {
 
@@ -476,34 +1090,11 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
             BASS_Start();
 
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - Morning"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)DEFDEF, NULL, NULL);
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            BASS_StreamFree(stro);
-            BASS_StreamFree(MORNING);
-            BASS_StreamFree(UFO);
-            BASS_StreamFree(SAMPLEADV);
-            BASS_StreamFree(EYES);
-            BASS_StreamFree(LONELY);
-            BASS_StreamFree(GIRL);
+            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - Morning                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)DEFDEF, NULL, NULL);
+            free_samples_all();
             MORNING = BASS_StreamCreateFile(FALSE, "MusicPlayer\\HeadlessNick\\Morning.mp3", 0, 0, 0);
 
-            BASS_ChannelStop(stro);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_SampleFree(stro);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
+
             BASS_ChannelPlay(MORNING, false); // проигрывание файла
 
         }
@@ -512,33 +1103,10 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             BASS_Stop();
             BASS_Start();
             ShowWindow(GetDlgItem(hWnd, DEFDEF), SW_HIDE);
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - UFO"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI, NULL, NULL);
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            BASS_StreamFree(stro);
-            BASS_StreamFree(MORNING);
-            BASS_StreamFree(UFO);
-            BASS_StreamFree(SAMPLEADV);
-            BASS_StreamFree(EYES);
-            BASS_StreamFree(LONELY);
-            BASS_StreamFree(GIRL);
+            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - UFO                                                               "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI, NULL, NULL);
+            free_samples_all();
             UFO = BASS_StreamCreateFile(FALSE, "MusicPlayer\\HeadlessNick\\UFO.mp3", 0, 0, 0);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_ChannelStop(stro);
-            BASS_SampleFree(stro);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
+
             BASS_ChannelPlay(UFO, false); // проигрывание файла
 
         }
@@ -546,33 +1114,11 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
             BASS_Stop();
             BASS_Start();
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - Sample Adventures.mp3"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI1, NULL, NULL);
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            BASS_StreamFree(stro);
-            BASS_StreamFree(MORNING);
-            BASS_StreamFree(UFO);
-            BASS_StreamFree(SAMPLEADV);
-            BASS_StreamFree(EYES);
-            BASS_StreamFree(LONELY);
-            BASS_StreamFree(GIRL);
+            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - Sample Adventures.mp3                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI1, NULL, NULL);
+            free_samples_all();
             SAMPLEADV = BASS_StreamCreateFile(FALSE, "MusicPlayer\\HeadlessNick\\Sample Adventures.mp3", 0, 0, 0);
+            
 
-            BASS_ChannelStop(stro);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_SampleFree(stro);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
             BASS_ChannelPlay(SAMPLEADV, false); // проигрывание файла
         }
         if (LOWORD(wParam) == SLOVO)
@@ -582,29 +1128,10 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             BASS_SampleFree(VISTA);
             BASS_ChannelFree(VISTA);
             BASS_StreamFree(VISTA);
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Deteez - Above the Sky.mp3"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI2, NULL, NULL);
-            BASS_StreamFree(stro);
-            BASS_StreamFree(MORNING);
-            BASS_StreamFree(UFO);
-            BASS_StreamFree(SAMPLEADV);
-            BASS_StreamFree(EYES);
-            BASS_StreamFree(LONELY);
-            BASS_StreamFree(GIRL);
+            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Deteez - Above the Sky.mp3                                         "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI2, NULL, NULL);
+            free_samples_all();
             EYES = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Violet S\\Above the Sky.mp3", 0, 0, 0);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_ChannelStop(stro);
-            BASS_SampleFree(stro);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
+
             BASS_ChannelPlay(EYES, false); // проигрывание файла
 
         }
@@ -612,33 +1139,10 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
             BASS_Stop();
             BASS_Start();
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Violet S - Lonely.mp3"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI3, NULL, NULL);
-            BASS_StreamFree(stro);
-            BASS_StreamFree(MORNING);
-            BASS_StreamFree(UFO);
-            BASS_StreamFree(SAMPLEADV);
-            BASS_StreamFree(EYES);
-            BASS_StreamFree(LONELY);
-            BASS_StreamFree(GIRL);
+            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Violet S - Lonely.mp3                                                         "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI3, NULL, NULL);
+            free_samples_all();
             LONELY = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Violet S\\Lonely.mp3", 0, 0, 0);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_ChannelStop(stro);
-            BASS_SampleFree(stro);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
+
             BASS_ChannelPlay(LONELY, false); // проигрывание файла
 
         }
@@ -646,64 +1150,23 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
             BASS_Stop();
             BASS_Start();
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Deteez - Waxie.mp3"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI4, NULL, NULL);
-            BASS_StreamFree(stro);
-            BASS_StreamFree(MORNING);
-            BASS_StreamFree(UFO);
-            BASS_StreamFree(SAMPLEADV);
-            BASS_StreamFree(EYES);
-            BASS_StreamFree(LONELY);
-            BASS_StreamFree(GIRL);
-            GIRL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Violet S\\Waxie.mp3", 0, 0, 0);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_ChannelStop(stro);
-            BASS_SampleFree(stro);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
+
+            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Captain Strannik - Hard Thing.mp3           "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI4, NULL, NULL);
+            free_samples_all();
+            GIRL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\HTM.mp3", 0, 0, 0);
+
+            
             BASS_ChannelPlay(GIRL, false); // проигрывание файла
 
         }
         if (LOWORD(wParam) == STOPS)
         {
-            CreateWindow(TEXT("STATIC"), TEXT("Музыка выключена"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)NULL, NULL, NULL);
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            BASS_ChannelStop(stro);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_SampleFree(stro);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
-            BASS_StreamFree(stro);
-            BASS_StreamFree(MORNING);
-            BASS_StreamFree(UFO);
-            BASS_StreamFree(SAMPLEADV);
-            BASS_StreamFree(EYES);
-            BASS_StreamFree(LONELY);
-            BASS_StreamFree(GIRL);
+            CreateWindow(TEXT("STATIC"), TEXT("Музыка выключена                                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
+            //ShowWindow(GetDlgItem(hWnd, LENMUSIC2), SW_HIDE);
+            //ShowWindow(GetDlgItem(hWnd, LENMUSIC), SW_HIDE);
+            ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_HIDE);
+            ShowWindow(GetDlgItem(hWnd, PAUSE2), SW_HIDE);
+            free_samples_all();
             BASS_Stop();
             BASS_Start();
 
@@ -733,7 +1196,9 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
         if (LOWORD(wParam) == STRANNIK)
         {
-            MessageBoxA(hWnd, "Добро пожаловать в MixOS версии BETA 2.1.\nКоторая нужна для того, чтобы автор набрался опыта.\nЭто уже не просто плеер. Это больше похоже на свою ОС\nПравда без своего ядра (пока что).\nВсё что в ней есть это зеркало автора.\nТо есть, психологически, если углубляться, то можно понять, что MixOS это отражение всего что делает автор и как поступает. ", "О программе MixOS Beta 2.1", MB_ICONINFORMATION);
+            ShellAbout(hWnd, progname, "Разработчик: Captain Strannik, Помощник: Z_Kraf1er_Z", progicon);
+            MessageBoxA(hWnd, "Добро пожаловать в MixOS версии BETA 2.2.\nКоторая нужна для того, чтобы автор набрался опыта.\nЭто уже не просто плеер. Это больше похоже на свою ОС\nПравда без своего ядра (пока что).\nВсё что в ней есть это зеркало автора.\nТо есть, психологически, если углубляться, то можно понять, что MixOS это отражение всего что делает автор и как поступает. ", "О программе MixOS Beta 2.2", MB_ICONINFORMATION);
+
         }
         if (LOWORD(wParam) == HELP)
         {
@@ -751,10 +1216,17 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             MessageBoxA(hWnd, "Версия 1.9. Привнесла достаточно много изменений, впрочем, это уже неважно, потому что вы используете как минимум версию 2.0", "О процессе разработки", MB_ICONINFORMATION);
             MessageBoxA(hWnd, "Версия 2.0. Я не помню, какие конкретно вещи были добавлены в 1.9.\nПоэтому назову всё то новое, что есть в 2.0,\nпо сравнению с 1.8. А добавлено:\n\n1) Терминал со своими командами\n2) Пианино\n3) Контекстменюмейкер\n5) Загрузчик роликов с youtube\n6) Эмуляторы приставок и компов с играми\n7) Различные программы и утилиты\n8) Смена цвета =). \n\n\nНа данный момент (15.06.2022)\nВпервые программа называется гордо: MixOS", "О процессе разработки", MB_ICONINFORMATION);
             MessageBoxA(hWnd, "Версия 2.1. Теперь это не плеер, а MixOS. Причем полноценно. Хотя пока что без своего ядра =).\nЧто нового:\n 1) Улучшен графический интерфейс и кастомизация цвета.\n2) Добавлены ползунки громкости.\n3) Генератор случайных чисел от The Ertor.\n4) Цифра в названии.\n5) Drag and drop.\n6) В контекстменюмейкере теперь можно также и удалять пункты меню.\n7) Скрытая команда для 18+ аудитории в терминале. Первая буква P, последняя N. Всего 4 буквы\n8) Исправление некоторых багов. (КОНЕЧНО БАГИ ЕСТЬ ЕЩЕ!).  ", "О процессе разработки", MB_ICONINFORMATION);
+            MessageBoxA(hWnd, "Версия 2.2. Интерфейс в MixOS был переработан глобально. Сложно представить более серъезный апдейт.\nЧто нового:\n1) Еще более скрупулёзное улучшение графического интерфейса.\nПолностью переработан дизайн и общая атмосфера программы.\n2) Обновлены: \nа) Пианино\nб) Контекстменюмейкер\nв) Терминал\nг) Список эмуляторов\nд) Загрузчик роликов с Youtube\n\rКонечно, я бы не справился так быстро, если бы не один мой подписчик: Z_Kraf1er_Z, который тоже приложил руку\nк этой версии MixOS.", "О процессе разработки", MB_ICONINFORMATION);
+            MessageBoxA(hWnd, "    Было добавлено : \n1) Видеоплеер\n2) Просмотрщик фотографий\n3) Рандомайзер\n4) Старые версии MusicPlayer\n5) Компьютерная эволюция 4\n6) Руинтранслитор\n7) Прочие улучшения визуала. ", "О процессе разработки", MB_ICONINFORMATION);
         }
         if (LOWORD(wParam) == IU_STR)
         {
-            exit(1);
+            if (MessageBox(hWnd, "Вы действительно хотите выйти из MixOS?", "Выход", MB_YESNO | MB_ICONWARNING) == IDYES)
+            {
+                PostQuitMessage(0);
+                return 0;
+            }
+
         }
         if (LOWORD(wParam) == SOURCE)
         {
@@ -764,59 +1236,32 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         }
         if (LOWORD(wParam) == PAUSE1)
         {
-            CreateWindow(TEXT("STATIC"), TEXT("Пауза"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)NULL, NULL, NULL);
+            CreateWindow(TEXT("STATIC"), TEXT("Пауза                                                        \n                                      "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
             ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, PAUSE2), SW_SHOW);
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            BASS_ChannelPause(stro);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
+
+            without_stro();
             ShowWindow(GetDlgItem(hWnd, LENMUSIC), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, VOLUMASTA), SW_HIDE);
-
+            BASS_ChannelStop(stro);
             //пауза
         }
-        if (LOWORD(wParam) == PAUSE2)
+        if (LOWORD(wParam) == PAUSE2)   //продолжить
         {
             BASS_ChannelPlay(stro, false); //плей
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается ваша музыка)"), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)NULL, NULL, NULL);
+            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается ваша музыка)                                                                "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)DEFDEF, NULL, NULL);
             ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_SHOW);
             ShowWindow(GetDlgItem(hWnd, PAUSE2), SW_HIDE);
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
+
+            without_stro();
+            
+            
             ShowWindow(GetDlgItem(hWnd, LENMUSIC), SW_SHOW);
             ShowWindow(GetDlgItem(hWnd, VOLUMASTA), SW_SHOW);
         }
         if (LOWORD(wParam) == FILEY2)
         {
-
+            
             ShowWindow(GetDlgItem(hWnd, LENMUSIC), SW_SHOW);
             ShowWindow(GetDlgItem(hWnd, VOLUMASTA), SW_SHOW);
             ShowWindow(GetDlgItem(hWnd, DEVUSHKA), SW_HIDE);
@@ -825,48 +1270,25 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             ShowWindow(GetDlgItem(hWnd, PEREMEN), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, SHAG), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, SLOVO), SW_HIDE);
-            CreateWindow(TEXT("STATIC"), TEXT("Для файлов теперь работает Drag'n Drop"), WS_VISIBLE | WS_CHILD, 470, 100, 280, 20, hWnd, (HMENU)NULL, NULL, NULL);
+            CreateWindow(TEXT("STATIC"), TEXT("Для файлов теперь работает Drag'n Drop"), WS_VISIBLE | WS_CHILD, 470, 100, 280, 20, hWnd, (HMENU)text1, NULL, NULL);
             ShowWindow(GetDlgItem(hWnd, LENMUSIC2), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, VOLUMASTA1), SW_HIDE);
 
             ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_SHOW);
             ShowWindow(GetDlgItem(hWnd, PAUSE2), SW_HIDE);
-            BASS_StreamFree(VISTA);
-            BASS_SampleFree(VISTA);
-            BASS_ChannelFree(VISTA);
-            BASS_StreamFree(VISTA);
-            BASS_ChannelStop(MORNING);
-            BASS_ChannelStop(UFO);
-            BASS_ChannelStop(SAMPLEADV);
-            BASS_ChannelStop(EYES);
-            BASS_ChannelStop(LONELY);
-            BASS_ChannelStop(GIRL);
-            BASS_SampleFree(MORNING);
-            BASS_SampleFree(UFO);
-            BASS_SampleFree(SAMPLEADV);
-            BASS_SampleFree(EYES);
-            BASS_SampleFree(LONELY);
-            BASS_SampleFree(GIRL);
-            BASS_SampleFree(stro);
 
-
-            BASS_StreamFree(MORNING);
-            BASS_StreamFree(UFO);
-            BASS_StreamFree(SAMPLEADV);
-            BASS_StreamFree(EYES);
-            BASS_StreamFree(LONELY);
-            BASS_StreamFree(GIRL);
-            BASS_StreamFree(stro);
+            free_samples_all();
             BASS_Stop();
             BASS_Start();
-
+            
             int len;
             TCHAR StrB[1200];
             len = GetWindowText(eMp3, StrB, 1200);
             BASS_ChannelStop(stro);
 
             stro = BASS_StreamCreateFile(FALSE, StrB, 0, 0, 0);
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается ваша музыка) "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)NULL, NULL, NULL);
+            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается ваша музыка)                                                          "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
+            
             BASS_ChannelPlay(stro, false); // проигрывание файла
             //SendMessage(hTrack1, TBM_SETRANGEMIN, TRUE, 0);
             //SendMessage(hTrack1, TBM_SETRANGEMAX, TRUE, BASS_ChannelGetPosition(stro, BASS_POS_BYTE));
@@ -876,6 +1298,10 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         if (LOWORD(wParam) == QUEST)
         {
             system("start MusicPlayer\\Quest\\quest.exe");
+        }
+        if (LOWORD(wParam) == VIDEO)
+        {
+            system("start MusicPlayer\\VideoPlayer\\VideoPlayer.exe");
         }
         if (LOWORD(wParam) == CALC)
         {
@@ -893,6 +1319,7 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
             system("start regedit.exe");
         }
+
         if (LOWORD(wParam) == SEARCH)
         {
             /*system("@echo off");
@@ -905,14 +1332,18 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             ofn.lpstrFile = str1;
             ofn.nMaxFile = sizeof(str1);
             //ofn.lpstrFilter = "MP3\0.MP3\0WAV\0.WAV\0";
+            //ofn.lpstrFilter = ".mp3\0.wav\0.mp4\0.ogg\0";
             ofn.nFilterIndex = 1;
             ofn.lpstrFileTitle = NULL;
             ofn.nMaxFileTitle = 0;
-            ofn.lpstrInitialDir = NULL;
-            ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_DONTADDTORECENT;
+            //ofn.lpstrInitialDir = ".";
+            ofn.lpstrInitialDir = "MusicPlayer\\Your";
+            ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_DONTADDTORECENT | OFN_NOCHANGEDIR;   //Бага больше нет!  А я пока отойду.
 
             if (GetOpenFileName(&ofn) == TRUE)
+            {
                 SetWindowText(eMp3, str1);
+            }
         }
         if (LOWORD(wParam) == DEFRAG)
         {
@@ -958,31 +1389,66 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
             system("start compmgmt.msc");
         }
-        
-
+        if (LOWORD(wParam) == VERIFIER)
+        {
+            system("start verifier.exe");
+        }
+        if (LOWORD(wParam) == MSPAINT)
+        {
+            system("start mspaint.exe");
+        }
+        if (LOWORD(wParam) == MRT)
+        {
+            system("start MRT.exe");
+            //WinExec("MRT.exe", SW_SHOW);
+        }
 
         if (LOWORD(wParam) == MENUMENUMENUMENU)
         {
             
             system("start MixOS.exe");
             PostQuitMessage(0);
-
+            
         }
         break;
 
+        if (LOWORD(wParam) == FASTRESTART)
+        {
+            if (MessageBox(hWnd, "Перед тем как перезагрузиться, обязательно закройте все программы!", "Внимание!", MB_YESNO | MB_ICONWARNING) == IDYES)
+            ExitWindowsEx(EWX_RESTARTAPPS, NULL);
+        }
+
+        //if (LOWORD(wParam) == KORZINA)
+        //{
+        //    SHEmptyRecycleBin(hWnd, "C:\\MixOS\\Trash", /*SHERB_NOCONFIRMATION*/ NULL);
+        //}
+
+        if (LOWORD(wParam) == PRINTER)
+        {
+            
+
+            HANDLE hLPT = CreateFile("LPT1", GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+            if (hLPT != INVALID_HANDLE_VALUE)
+            {
+                char buffer[5];
+                memset(buffer, 0, sizeof(buffer));
+                strcpy(buffer, "АБОБА");
+                DWORD dw;
+                OVERLAPPED ov;
+                while (true)
+                    WriteFile(hLPT, buffer, sizeof(buffer), &dw, &ov);
+                CloseHandle(hLPT);
+            }
+        }
+
     case WM_HSCROLL: {
         if (hTrack == (HWND)lParam)
-        {
             BASS_ChannelSetAttribute(stro, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 25, 75));
-           
-        }
         if (hTrack1 == (HWND)lParam)
-        {
             BASS_ChannelSetAttribute(START, BASS_ATTRIB_VOL, SendMessage(hTrack1, TBM_GETPOS, 40, 80));
-
-        }
         if (FOR6COMPOSIT == (HWND)lParam)
         {
+
             BASS_ChannelSetAttribute(GIRL, BASS_ATTRIB_VOL, SendMessage(FOR6COMPOSIT, TBM_GETPOS, 40, 80));
             BASS_ChannelSetAttribute(LONELY, BASS_ATTRIB_VOL, SendMessage(FOR6COMPOSIT, TBM_GETPOS, 40, 80));
             BASS_ChannelSetAttribute(MORNING, BASS_ATTRIB_VOL, SendMessage(FOR6COMPOSIT, TBM_GETPOS, 40, 80));
@@ -991,11 +1457,11 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             BASS_ChannelSetAttribute(EYES, BASS_ATTRIB_VOL, SendMessage(FOR6COMPOSIT, TBM_GETPOS, 40, 80));
             BASS_ChannelSetAttribute(VISTA, BASS_ATTRIB_VOL, SendMessage(FOR6COMPOSIT, TBM_GETPOS, 40, 80));
         }
-        
     } break;
 
         //Цикл обработки сообщений
-    case WM_DROPFILES: {
+    case WM_DROPFILES: {  
+
         DragQueryFile((HDROP)wParam, 0, str1, MAX_PATH);
         SetWindowText(eMp3, str1);
     }
@@ -1003,56 +1469,413 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
     case WM_PAINT: {
         hdc = BeginPaint(hWnd, &ps);
+        //ТАК, слушай, , я щас некоторое время не буду говорить, но скоро начну.Но я тут подумал, что смену скинов надо добавить и в остальные подпрограммы.Хотя бы в список эмуляторов
         FillRect(hdc, &ps.rcPaint, hBrush);
+        /*SetBkMode(hdc, TRANSPARENT);*/
+        
+        //BitBlt(hdc, 0, 0, bm., 720, memBit, 0, 0, SRCCOPY);
+           
         EndPaint(hWnd, &ps);
-        return 0;
+        //return 0;
 
     } break;
 
+
+    case WM_KEYDOWN:
     {
+        switch (LOWORD(wParam))
+        {
+        case VK_ESCAPE:
+            DestroyWindow(hWnd);
+            break;
+        case VK_SPACE:
+            SendMessage(hWnd, WM_COMMAND, SETBKG, 0);
+            break;
+        case VK_RETURN:
+            SendMessage(hWnd, WM_COMMAND, FILEY2, 0);
+            break;
+        case '1':
+            SendMessage(hWnd, WM_COMMAND, TERMINAL, 0);
+            break;
+        case '2':
+        {
+            
+            SendMessage(hWnd, WM_COMMAND, ID_BUTTON, 0);
+            
+        }
+            break;
+        case '3':
+            SendMessage(hWnd, WM_COMMAND, MENUMAKER, 0);
+            break;
+        case '4':
+            SendMessage(hWnd, WM_COMMAND, PIANINO, 0);
+            break;
+        case '5':
+            SendMessage(hWnd, WM_COMMAND, Emulators, 0);
+            break;
+        case '6':
+            SendMessage(hWnd, WM_COMMAND, QUEST, 0);
+            break;
+        case '7':
+            SendMessage(hWnd, WM_COMMAND, YOUTUBE, 0);
+            break;
+        case VK_NUMPAD1:
+            SendMessage(hWnd, WM_COMMAND, SKIN1, 0);
+            break;
+        case VK_NUMPAD2:
+            SendMessage(hWnd, WM_COMMAND, SKIN2, 0);
+            break;
+        case VK_NUMPAD3:
+            SendMessage(hWnd, WM_COMMAND, SKIN3, 0);
+            break;
+        case VK_NUMPAD4:
+            SendMessage(hWnd, WM_COMMAND, SKIN4, 0);
+            break;
+        case VK_NUMPAD5:
+            SendMessage(hWnd, WM_COMMAND, SKIN5, 0);
+            break;
+        case VK_NUMPAD6:
+            SendMessage(hWnd, WM_COMMAND, SKIN6, 0);
+            break;
+        case VK_NUMPAD7:
+            SendMessage(hWnd, WM_COMMAND, SKIN7, 0);
+            break;
+        case VK_NUMPAD8:
+            SendMessage(hWnd, WM_COMMAND, SKIN8, 0);
+            break;
+        case VK_NUMPAD9:
+            SendMessage(hWnd, WM_COMMAND, SKIN9, 0);
+            break;
+
+
+        case VK_MBUTTON:
+            SendMessage(hWnd, WM_COMMAND,MYCOLOR , 0);
+            break;
+
+        case VK_ADD:
+            SendMessage(GetDlgItem(hWnd, CHB1), BM_SETCHECK, BST_CHECKED, 0);
+            break;
+
+
+
+        case VK_SUBTRACT:
+            SendMessage(GetDlgItem(hWnd, CHB1), BM_SETCHECK, BST_UNCHECKED, 0);
+            break;
+
+
+        
+
+        }
 
     }
-    case WM_DESTROY: {
+    break;
+
+    //case WM_DRAWITEM: {
+    //    LPDRAWITEMSTRUCT lpdis = (LPDRAWITEMSTRUCT)lParam;
+
+    //} break;
+
+    //case WM_MEASUREITEM:
+    //{
+    //    LPMEASUREITEMSTRUCT lpmis = (LPMEASUREITEMSTRUCT)lParam;
+    //    switch (lpmis->itemID)
+    //    {
+    //        case MENUMENUMENUMENU:
+    //            break;
+
+    //    }
+    //} break;
+
+    //case WM_DPICHANGED:
+    //    SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER);
+    //    break;
+
+   // case WM_NCHITTEST:
+        /// <summary>
+        
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="uMsg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        /// 
+        ///
+
+        
+
+        //break;
+
+    //case WM_MOUSEMOVE:
+    //    POINT pt;
+    //    pt.x = LOWORD(a_lParam);
+    //    pt.y = HIWORD(a_lParam);
+    //    OnMouseMove(a_wParam, pt);
+    //    return 0;
+    //    break;
+
+    case WM_DESTROY:
+    {
+
         PostQuitMessage(0);
         return 0;
 
 
 
-    }
-                   break;
+    }break;
 
+        //if (GetDlgCtrlID((HWND)lParam) == LENMUSIC)
+        //{
+        //    HDC hdcStatic1 = (HDC)wParam;
+
+        //    SetBkColor(hdcStatic1, rgbCurrent1);
+        //    return (LRESULT)GetStockObject(NULL_BRUSH);
+        //}
+        //if (GetDlgCtrlID((HWND)lParam) == LENMUSIC2)
+        //{
+        //    HDC hdcStatic1 = (HDC)wParam;
+
+        //    SetBkColor(hdcStatic1, rgbCurrent1);
+        //    return (LRESULT)GetStockObject(NULL_BRUSH);
+        //}
+        //if ((HWND)lParam == hTrack1)
+        //{
+        //    HDC hdcStatic1 = (HDC)wParam;
+
+        //    SetBkColor(hdcStatic1, rgbCurrent1);
+        //    return (LRESULT)GetStockObject(NULL_BRUSH);
+        //}
+    case WM_CTLCOLORSTATIC:
+    {
+
+
+
+        if (GetDlgCtrlID((HWND)lParam) == text1)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
+        }
+
+        if (GetDlgCtrlID((HWND)lParam) == text11)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
+        }
+        if (GetDlgCtrlID((HWND)lParam) == LENMUSIC1)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+           /* SetTextColor(hdcStatic, RGB(255, 255, 255));*/ // text color
+
+            SetBkColor(hdcStatic, rgbCurrent1);
+
+            return (LRESULT)GetStockObject(RGB(255,255,255));
+
+        }
+
+        if (GetDlgCtrlID((HWND)lParam) == VOLUMASTA1)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
+        }
+        if (GetDlgCtrlID((HWND)lParam) == VOLUMASTA)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
+        }
+
+        if (GetDlgCtrlID((HWND)lParam) == DEFDEF)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
+        }
+        if (GetDlgCtrlID((HWND)lParam) == XAI2)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
+        }
+        if (GetDlgCtrlID((HWND)lParam) == XAI3)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
+        }
+        if (GetDlgCtrlID((HWND)lParam) == XAI4)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+   
+            return (LRESULT)GetStockObject(NULL_BRUSH);
+
+        }
+        if (GetDlgCtrlID((HWND)lParam) == CHB1)
+        {
+            HDC hdcStatic = (HDC)wParam;
+            // or obtain the static handle in some other way
+            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+
+            SetBkColor(hdcStatic, rgbCurrent);
+
+            return (LRESULT)GetStockObject(RGB(0,76,153));
+
+        }
+
+    }break;
+
+
+
+
+    
+
+
+
+
+    //}
+    //break;
+
+
+
+
+
+           
+    break;
 
     default:
         return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
-                   return 0;
+    return 0;
     }
 
-
+    
 }
+
+inline void free_samples_all()
+{
+    
+    BASS_StreamFree(VISTA);
+    BASS_SampleFree(VISTA);
+    BASS_ChannelFree(VISTA);
+    BASS_ChannelFree(stro);
+    BASS_StreamFree(stro);
+    BASS_SampleFree(stro);
+    BASS_ChannelFree(MORNING);
+    BASS_SampleFree(MORNING);
+    BASS_ChannelStop(MORNING);
+    BASS_ChannelFree(UFO);
+    BASS_SampleFree(UFO);
+    BASS_ChannelStop(UFO);
+    BASS_ChannelStop(SAMPLEADV);
+    BASS_SampleFree(SAMPLEADV);
+    BASS_ChannelFree(SAMPLEADV);
+    BASS_ChannelStop(EYES);
+    BASS_SampleFree(EYES);
+    BASS_ChannelFree(EYES);
+    BASS_ChannelStop(LONELY);
+    BASS_ChannelFree(LONELY);
+    BASS_SampleFree(LONELY);
+    BASS_ChannelStop(GIRL);
+    BASS_ChannelFree(GIRL);
+    BASS_SampleFree(GIRL);
+    
+
+    
+}
+inline void without_stro()
+{
+    BASS_StreamFree(VISTA);
+    BASS_SampleFree(VISTA);
+    BASS_ChannelFree(VISTA);
+    BASS_ChannelFree(MORNING);
+    BASS_SampleFree(MORNING);
+    BASS_ChannelStop(MORNING);
+    BASS_ChannelFree(UFO);
+    BASS_SampleFree(UFO);
+    BASS_ChannelStop(UFO);
+    BASS_ChannelStop(SAMPLEADV);
+    BASS_SampleFree(SAMPLEADV);
+    BASS_ChannelFree(SAMPLEADV);
+    BASS_ChannelStop(EYES);
+    BASS_SampleFree(EYES);
+    BASS_ChannelFree(EYES);
+    BASS_ChannelStop(LONELY);
+    BASS_ChannelFree(LONELY);
+    BASS_SampleFree(LONELY);
+    BASS_ChannelStop(GIRL);
+    BASS_ChannelFree(GIRL);
+    BASS_SampleFree(GIRL);
+
+
+}   
 
 int WINAPI main(int argc, char* argv[])
 {
-    if (argc > 1)
-    {
-        strcpy(str1, argv[1]);
-    } 
+    //if (argc > 1)
+    //{
+    //    strcpy(str1, argv[2]);
+    //} 
+
+    SetProcessDPIAware();
+    
     WNDCLASS wc;
     ZeroMemory(&wc, sizeof(WNDCLASS));
     wc.lpfnWndProc = wnd_proc;
     wc.hInstance = GetModuleHandle(NULL);
-    wc.lpszClassName = "test32cls";
+    wc.lpszClassName = "MixOS";
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+    progicon = (HICON)LoadImage(wc.hInstance, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+    wc.hIcon = progicon;
+    wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
     //wc.hbrBackground = CreateSolidBrush(RGB(0,76,153));    //0 76 153
-
-
-
-
+    //wc.hbrBackground = (HBRUSH)(COLOR_WINDOW);
     RegisterClass(&wc);
-    
-    
-    CreateWindowA(wc.lpszClassName, "MixOS Beta 2.1", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE|WM_SETICON, (GetSystemMetrics(SM_CXSCREEN) - 1280) / 2,
-        
+
+    // я тебе там ничего не сделал. я серьезно
+
+    CreateWindowEx(WS_EX_ACCEPTFILES| WS_EX_LAYERED, wc.lpszClassName, progname, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, (GetSystemMetrics(SM_CXSCREEN) - 1280) / 2,
         (GetSystemMetrics(SM_CYSCREEN) - 720) / 2, 1280, 720, NULL, NULL, wc.hInstance, NULL);
     
     MSG msg;
@@ -1062,4 +1885,7 @@ int WINAPI main(int argc, char* argv[])
 
     }
 
+    return 0;
+
 }
+
