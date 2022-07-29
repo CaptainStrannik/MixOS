@@ -38,7 +38,7 @@
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "bass")
 //#pragma comment(lib, "shlwapi.lib")
-
+#pragma comment(lib, "comctl32.lib")
 
 using namespace std;
 HWND eDit;
@@ -75,6 +75,8 @@ HFONT hFont;
 HWND hTrack;       
 HWND hTrack1;
 HWND FOR6COMPOSIT;
+
+HWND sbar;
 
 int skins;
 TCHAR StrT[MAX_PATH];
@@ -114,7 +116,7 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
         SetLayeredWindowAttributes(hWnd, NULL, 255, LWA_ALPHA);
 
-
+        
 
 
         NOTIFYICONDATA data;
@@ -268,7 +270,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
            /* SendMessage(hWnd, WM_SETICON, NULL, (LPARAM)hIcon2);*/
             DestroyWindow(hwall);
             //progname = "MixOS Beta 2.2";
-            TCHAR progname[] = _T("MixPlayer из MixOS Beta 2.2");
+            //TCHAR progname[] = _T("MixPlayer из MixOS Beta 2.2");
+            SetWindowText(hWnd, "MixPlayer из MixOS Beta 2.2");
             bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
 
             HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
@@ -383,7 +386,7 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             AppendMenu(hFile, MF_STRING /*| MF_OWNERDRAW*/, MENUMENUMENUMENU, "Вернуться в меню");
 
             AppendMenu(hFile, MF_STRING, SOURCE, "Исходный код");
-            AppendMenu(hFile, MF_STRING, FASTRESTART, _T("Быстрая перезагрузка Windows"));
+            AppendMenu(hFile, MF_STRING, FASTRESTART, "Быстрая перезагрузка Windows");
 
             AppendMenu(hAbout, MF_STRING, STRANNIK, "О программе");
             
@@ -631,7 +634,7 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             ShowWindow(GetDlgItem(hWnd, LENMUSIC2), SW_SHOW);
             ShowWindow(GetDlgItem(hWnd, VOLUMASTA1), SW_SHOW);
 
-
+            sbar = CreateStatusWindow(WS_CHILD | WS_VISIBLE, NULL, hWnd, 0);
 
            //if (PathFileExistsA(str1))
            //{
@@ -1090,7 +1093,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
             BASS_Start();
 
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - Morning                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)DEFDEF, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - Morning                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)DEFDEF, NULL, NULL);
+            SetWindowText(sbar, "Проигрывается Headless Nick - Morning");
             free_samples_all();
             MORNING = BASS_StreamCreateFile(FALSE, "MusicPlayer\\HeadlessNick\\Morning.mp3", 0, 0, 0);
 
@@ -1103,7 +1107,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             BASS_Stop();
             BASS_Start();
             ShowWindow(GetDlgItem(hWnd, DEFDEF), SW_HIDE);
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - UFO                                                               "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - UFO                                                               "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI, NULL, NULL);
+            SetWindowText(sbar, "Проигрывается Headless Nick - UFO ");
             free_samples_all();
             UFO = BASS_StreamCreateFile(FALSE, "MusicPlayer\\HeadlessNick\\UFO.mp3", 0, 0, 0);
 
@@ -1114,7 +1119,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
             BASS_Stop();
             BASS_Start();
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - Sample Adventures.mp3                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI1, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Headless Nick - Sample Adventures.mp3                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI1, NULL, NULL);
+            SetWindowText(sbar, "Проигрывается Headless Nick - Sample Adventures.mp3");
             free_samples_all();
             SAMPLEADV = BASS_StreamCreateFile(FALSE, "MusicPlayer\\HeadlessNick\\Sample Adventures.mp3", 0, 0, 0);
             
@@ -1128,7 +1134,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             BASS_SampleFree(VISTA);
             BASS_ChannelFree(VISTA);
             BASS_StreamFree(VISTA);
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Deteez - Above the Sky.mp3                                         "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI2, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Deteez - Above the Sky.mp3                                         "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI2, NULL, NULL);
+            SetWindowText(sbar, "Проигрывается Deteez - Above the Sky.mp3");
             free_samples_all();
             EYES = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Violet S\\Above the Sky.mp3", 0, 0, 0);
 
@@ -1139,7 +1146,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
             BASS_Stop();
             BASS_Start();
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Violet S - Lonely.mp3                                                         "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI3, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Violet S - Lonely.mp3                                                         "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI3, NULL, NULL);
+            SetWindowText(sbar, "Проигрывается Violet S - Lonely.mp3");
             free_samples_all();
             LONELY = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Violet S\\Lonely.mp3", 0, 0, 0);
 
@@ -1151,7 +1159,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             BASS_Stop();
             BASS_Start();
 
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Captain Strannik - Hard Thing.mp3           "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI4, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Проигрывается Captain Strannik - Hard Thing.mp3           "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)XAI4, NULL, NULL);
+            SetWindowText(sbar, "Проигрывается Captain Strannik - Hard Thing.mp3");
             free_samples_all();
             GIRL = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\HTM.mp3", 0, 0, 0);
 
@@ -1161,7 +1170,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         }
         if (LOWORD(wParam) == STOPS)
         {
-            CreateWindow(TEXT("STATIC"), TEXT("Музыка выключена                                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Музыка выключена                                                                 "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
+            SetWindowText(sbar, "Музыка выключена");
             //ShowWindow(GetDlgItem(hWnd, LENMUSIC2), SW_HIDE);
             //ShowWindow(GetDlgItem(hWnd, LENMUSIC), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_HIDE);
@@ -1236,7 +1246,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         }
         if (LOWORD(wParam) == PAUSE1)
         {
-            CreateWindow(TEXT("STATIC"), TEXT("Пауза                                                        \n                                      "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Пауза                                                        \n                                      "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
+            SetWindowText(sbar, "Пауза");
             ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_HIDE);
             ShowWindow(GetDlgItem(hWnd, PAUSE2), SW_SHOW);
 
@@ -1249,7 +1260,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         if (LOWORD(wParam) == PAUSE2)   //продолжить
         {
             BASS_ChannelPlay(stro, false); //плей
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается ваша музыка)                                                                "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)DEFDEF, NULL, NULL);
+            //CreateWindow(TEXT("STATIC"), TEXT("Проигрывается ваша музыка)                                                                "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)DEFDEF, NULL, NULL);
+            SetWindowText(sbar, "Проигрывается ваша музыка)");
             ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_SHOW);
             ShowWindow(GetDlgItem(hWnd, PAUSE2), SW_HIDE);
 
@@ -1287,8 +1299,8 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             BASS_ChannelStop(stro);
 
             stro = BASS_StreamCreateFile(FALSE, StrB, 0, 0, 0);
-            CreateWindow(TEXT("STATIC"), TEXT("Проигрывается ваша музыка)                                                          "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
-            
+            //CreateWindow(TEXT("STATIC"), TEXT("Проигрывается ваша музыка)                                                          "), WS_VISIBLE | WS_CHILD, 10, 600, 300, 50, hWnd, (HMENU)text1, NULL, NULL);
+            SetWindowText(sbar, "Проигрывается ваша музыка)");
             BASS_ChannelPlay(stro, false); // проигрывание файла
             //SendMessage(hTrack1, TBM_SETRANGEMIN, TRUE, 0);
             //SendMessage(hTrack1, TBM_SETRANGEMAX, TRUE, BASS_ChannelGetPosition(stro, BASS_POS_BYTE));
@@ -1410,12 +1422,10 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
             PostQuitMessage(0);
             
         }
-        break;
-
         if (LOWORD(wParam) == FASTRESTART)
         {
             if (MessageBox(hWnd, "Перед тем как перезагрузиться, обязательно закройте все программы!", "Внимание!", MB_YESNO | MB_ICONWARNING) == IDYES)
-            ExitWindowsEx(EWX_RESTARTAPPS, NULL);
+                ExitWindowsEx(EWX_RESTARTAPPS, NULL);
         }
 
         //if (LOWORD(wParam) == KORZINA)
@@ -1423,9 +1433,9 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
         //    SHEmptyRecycleBin(hWnd, "C:\\MixOS\\Trash", /*SHERB_NOCONFIRMATION*/ NULL);
         //}
 
-        if (LOWORD(wParam) == PRINTER)
+        /*if (LOWORD(wParam) == PRINTER)
         {
-            
+
 
             HANDLE hLPT = CreateFile("LPT1", GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
             if (hLPT != INVALID_HANDLE_VALUE)
@@ -1439,7 +1449,10 @@ static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPa
                     WriteFile(hLPT, buffer, sizeof(buffer), &dw, &ov);
                 CloseHandle(hLPT);
             }
-        }
+        }*/
+
+
+        break;
 
     case WM_HSCROLL: {
         if (hTrack == (HWND)lParam)
@@ -1868,14 +1881,15 @@ int WINAPI main(int argc, char* argv[])
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     progicon = (HICON)LoadImage(wc.hInstance, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
     wc.hIcon = progicon;
-    wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
+    //wc.style = CS_HREDRAW | CS_VREDRAW | CS_DROPSHADOW;
+    //wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
     //wc.hbrBackground = CreateSolidBrush(RGB(0,76,153));    //0 76 153
     //wc.hbrBackground = (HBRUSH)(COLOR_WINDOW);
     RegisterClass(&wc);
 
     // я тебе там ничего не сделал. я серьезно
 
-    CreateWindowEx(WS_EX_ACCEPTFILES| WS_EX_LAYERED, wc.lpszClassName, progname, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, (GetSystemMetrics(SM_CXSCREEN) - 1280) / 2,
+    CreateWindowEx(WS_EX_ACCEPTFILES| WS_EX_LAYERED, wc.lpszClassName, progname,/* WS_POPUPWINDOW |*/ WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, (GetSystemMetrics(SM_CXSCREEN) - 1280) / 2,
         (GetSystemMetrics(SM_CYSCREEN) - 720) / 2, 1280, 720, NULL, NULL, wc.hInstance, NULL);
     
     MSG msg;
