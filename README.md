@@ -10,37 +10,10 @@ The first of all. This is program for Windows VISTA-11. On linux you must to ins
 
 What functions does have my player? 
 Well
-![изображение](https://user-images.githubusercontent.com/47190179/158247217-265d050b-cead-4647-ae97-915b0cc09486.png)
+![изображение](https://user-images.githubusercontent.com/47190179/182655571-0f185dab-ddb5-416f-a3a8-73a81547867e.png)
 
-This is standart color. But you have so much colors. You need to click on the "Да" button. And you'll see player.
-![изображение](https://user-images.githubusercontent.com/47190179/158247442-4e678c61-470f-4fc0-a4ac-0e32ca1887a8.png)
-
-You can change the color on menu "Сменить Цвет". You can choose:
-
-RED ("Красный") 
-![изображение](https://user-images.githubusercontent.com/47190179/158247622-a3e9c364-4d1e-40fb-853c-2520d8b51433.png)
-
-ORANGE ("Оранжевый") 
-![изображение](https://user-images.githubusercontent.com/47190179/158247675-bab0622f-7eb4-455f-ba26-85762bce779b.png)
-
-YELLOW ("Жёлтый")
-![изображение](https://user-images.githubusercontent.com/47190179/158247756-3653e88b-bdc1-4520-9e85-3b0998efaa73.png)
-
-GREEN ("Зелёный")
-![изображение](https://user-images.githubusercontent.com/47190179/158247812-e428be6b-37ed-4de9-9706-35b3eeacc7cb.png)
-
-AZURE ("Голубой")
-![изображение](https://user-images.githubusercontent.com/47190179/158247879-71f2ee2a-0c93-4b46-bb5a-5e114e8041b9.png)
-
-BLUE ("Синий")
-![изображение](https://user-images.githubusercontent.com/47190179/158254438-ee51a26d-3240-44d7-ab67-05a8fd1e7449.png)
-
-
-VIOLET ("Фиолетовый")
-![изображение](https://user-images.githubusercontent.com/47190179/158247944-c27843f8-c843-403a-9d44-efc9826fa12d.png)
-
-
-
+This is standart color. But you can change colos and skins.
+![изображение](https://user-images.githubusercontent.com/47190179/182655724-e270906b-7ef4-4d75-96b6-e61881d0bf07.png)
 
 
 INTERESTING THINGS:
