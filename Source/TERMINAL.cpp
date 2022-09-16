@@ -26,22 +26,23 @@
 //
 //
 //HWND COM;
-//HSTREAM stroka;   
+//HSTREAM stroka;
 //HSTREAM CHASTUSHKI;
 //HSTREAM BONUS;
 //HSTREAM REMAX;
 //HSTREAM NYANCAT;
-//HSTREAM KILL; 
+//HSTREAM KILL;
 //HSTREAM IMPOTENT;
-//HSTREAM OXYENNA;     
+//HSTREAM OXYENNA;
 //HSTREAM LIRIKAHOI;
-//HSTREAM LJSPQK;   
-//HSTREAM AEZAKMI;  
+//HSTREAM LJSPQK;
+//HSTREAM AEZAKMI;
 //HSTREAM TITLED;
-//HDC hdc;  
+//HSTREAM Z_KRAF1ER_Z;
+//HDC hdc;
 //HICON progicon;
 //static DWORD rgbCurrent = RGB(0, 153, 0);
-//HBRUSH hBrush = CreateSolidBrush(RGB(0, 153, 0)); 
+//HBRUSH hBrush = CreateSolidBrush(RGB(0, 153, 0));
 //PAINTSTRUCT ps;
 //HWND hwall;
 //HANDLE bmpwall;
@@ -68,7 +69,7 @@
 //    case WM_CREATE: {
 //
 //
-// 
+//
 //        SetLayeredWindowAttributes(hWnd, NULL, 255, LWA_ALPHA);
 //        NOTIFYICONDATA data;
 //        ZeroMemory(&data, sizeof(NOTIFYICONDATA));
@@ -81,8 +82,8 @@
 //        data.uCallbackMessage = WM_USER_SHELLICON;
 //        data.hIcon = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\terminal.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //        data.uVersion = NOTIFYICON_VERSION;
-//        
-//   /*     strcpy(data.szInfoTitle, "Загрузчик видео с Youtube");*/
+//
+//        /*     strcpy(data.szInfoTitle, "Загрузчик видео с Youtube");*/
 //        strcpy(data.szTip, "Термнал из MixOS");
 //
 //
@@ -96,9 +97,9 @@
 //        ShowWindow(GetDlgItem(hWnd, YOUMUSIC), SW_HIDE);
 //
 //        DeleteObject((HBRUSH)SetClassLongPtr(hWnd, GCLP_HBRBACKGROUND, (LONG_PTR)CreateSolidBrush(RGB(70, 125, 0))));
-//        COM = CreateWindow(TEXT("EDIT"), TEXT(""), WS_CHILD | WS_VISIBLE /*| WS_THICKFRAME |WS_CAPTION*/| WS_VSCROLL | WS_HSCROLL | WS_BORDER | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE | ES_UPPERCASE, 10, 50, 350, 350, hWnd, (HMENU)WRITING, NULL, 0);
-//        CreateWindow(TEXT("STATIC"), TEXT("Введите команду, чит или что-то еще =)."), WS_VISIBLE|WS_CHILD, 35, 15, 280, 25, hWnd, (HMENU)text1, NULL, NULL);
-//        
+//        COM = CreateWindow(TEXT("EDIT"), TEXT(""), WS_CHILD | WS_VISIBLE /*| WS_THICKFRAME |WS_CAPTION*/ | WS_VSCROLL | WS_HSCROLL | WS_BORDER | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE | ES_UPPERCASE, 10, 50, 350, 350, hWnd, (HMENU)WRITING, NULL, 0);
+//        CreateWindow(TEXT("STATIC"), TEXT("Введите команду, чит или что-то еще =)."), WS_VISIBLE | WS_CHILD, 35, 15, 280, 25, hWnd, (HMENU)text1, NULL, NULL);
+//
 //
 //        HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
 //        HICON hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
@@ -129,8 +130,8 @@
 //        AppendMenu(hColor, MF_STRING, polupoff, "Выключить полупрозрачность");
 //
 //        SetMenu(hWnd, hMenubar);
-//        
-//        CreateWindowA(TEXT("BUTTON"), TEXT("Ввести команду"), WS_VISIBLE | WS_CHILD  , 400, 230, 150, 35, hWnd, (HMENU)COMMANDA, NULL, NULL);
+//
+//        CreateWindowA(TEXT("BUTTON"), TEXT("Ввести команду"), WS_VISIBLE | WS_CHILD, 400, 230, 150, 35, hWnd, (HMENU)COMMANDA, NULL, NULL);
 //
 //        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\terminal.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //        SendMessage(GetDlgItem(hWnd, COMMANDA), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
@@ -142,12 +143,12 @@
 //        SendMessage(GetDlgItem(hWnd, HELPAS), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
 //
-//        CreateWindowA(TEXT("BUTTON"), TEXT("Включить читы"), WS_VISIBLE | WS_CHILD, 10+160, 350+100, 150, 35, hWnd, (HMENU)GTX745, NULL, NULL);
+//        CreateWindowA(TEXT("BUTTON"), TEXT("Включить читы"), WS_VISIBLE | WS_CHILD, 10 + 160, 350 + 100, 150, 35, hWnd, (HMENU)GTX745, NULL, NULL);
 //
 //        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\cheat.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //        SendMessage(GetDlgItem(hWnd, GTX745), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
-//        CreateWindowA(TEXT("BUTTON"), TEXT("Windows 3.11"), WS_VISIBLE | WS_CHILD, 10, 350+100, 150, 35, hWnd, (HMENU)WIN311, NULL, NULL);
+//        CreateWindowA(TEXT("BUTTON"), TEXT("Windows 3.11"), WS_VISIBLE | WS_CHILD, 10, 350 + 100, 150, 35, hWnd, (HMENU)WIN311, NULL, NULL);
 //
 //        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\WIN95.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //        SendMessage(GetDlgItem(hWnd, WIN311), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
@@ -156,7 +157,7 @@
 //        break;
 //    }
 //
-//    case WM_COMMAND: 
+//    case WM_COMMAND:
 //    {
 //
 //
@@ -233,8 +234,8 @@
 //            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\white.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(TITLED, false);
 //
-//            
-//            
+//
+//
 //
 //            bmpwall = LoadImage(NULL, "MusicPlayer\\BMP\\MIXTERMINAL\\Terminal1.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
 //            bmpwall1 = LoadImage(NULL, "MusicPlayer\\BMP\\MIXSKIN\\clear.png", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT | LR_DEFAULTSIZE);
@@ -451,14 +452,17 @@
 //                BASS_ChannelFree(BONUS);
 //                BASS_ChannelFree(REMAX);
 //                BASS_ChannelFree(CHASTUSHKI);
+//                BASS_ChannelFree(Z_KRAF1ER_Z);
 //                BASS_StreamFree(NYANCAT);
 //                BASS_StreamFree(BONUS);
 //                BASS_StreamFree(REMAX);
 //                BASS_StreamFree(CHASTUSHKI);
+//                BASS_StreamFree(Z_KRAF1ER_Z);
 //                BASS_ChannelStop(CHASTUSHKI);
 //                BASS_ChannelStop(NYANCAT);
 //                BASS_ChannelStop(BONUS);
 //                BASS_ChannelStop(REMAX);
+//                BASS_ChannelStop(Z_KRAF1ER_Z);
 //                BASS_Stop();
 //                BASS_Start();
 //            }
@@ -836,14 +840,14 @@
 //            if (text == "DIR")
 //            {
 //                MessageBoxA(hWnd, "Вы решили посмотреть содержимое? Так нельзя. За это вам секретка полагается, команда SECRET", "Секретка", MB_ICONASTERISK);
-//               
+//
 //            }
 //            if (text == "SECRET")
 //            {
 //                MessageBoxA(hWnd, "Напишите слово ЧАСТУШКИ или CHASTUSHKI, предварительно включите громкость на полную и убедитесь, что родаки рядом.", "Я тоже хотю шокалудка!!!! =(", MB_ICONASTERISK);
-//                
+//
 //            }
-//            
+//
 //            if (text == "ЧАСТУШКИ" || text == "CHASTUSHKI")
 //            {
 //                BASS_StreamFree(CHASTUSHKI);
@@ -871,6 +875,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
+//                BASS_StreamFree(Z_KRAF1ER_Z);
+//                BASS_MusicFree(Z_KRAF1ER_Z);
+//                BASS_ChannelStop(Z_KRAF1ER_Z);
+//                BASS_SampleFree(Z_KRAF1ER_Z);
 //                CHASTUSHKI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Sektor\\Chastushki.mp3", 0, 0, 0);
 //
 //
@@ -940,6 +948,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
+//                BASS_StreamFree(Z_KRAF1ER_Z);
+//                BASS_MusicFree(Z_KRAF1ER_Z);
+//                BASS_ChannelStop(Z_KRAF1ER_Z);
+//                BASS_SampleFree(Z_KRAF1ER_Z);
 //                IMPOTENT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Sektor\\IMP.mp3", 0, 0, 0);
 //
 //
@@ -972,6 +984,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
+//                BASS_StreamFree(Z_KRAF1ER_Z);
+//                BASS_MusicFree(Z_KRAF1ER_Z);
+//                BASS_ChannelStop(Z_KRAF1ER_Z);
+//                BASS_SampleFree(Z_KRAF1ER_Z);
 //                OXYENNA = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Sektor\\VIA.mp3", 0, 0, 0);
 //
 //
@@ -1009,6 +1025,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
+//                BASS_StreamFree(Z_KRAF1ER_Z);
+//                BASS_MusicFree(Z_KRAF1ER_Z);
+//                BASS_ChannelStop(Z_KRAF1ER_Z);
+//                BASS_SampleFree(Z_KRAF1ER_Z);
 //                LIRIKAHOI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Sektor\\LIRIKA.mp3", 0, 0, 0);
 //
 //
@@ -1047,6 +1067,14 @@
 //                BASS_MusicFree(LJSPQK);
 //                BASS_ChannelStop(LJSPQK);
 //                BASS_SampleFree(LJSPQK);
+//                BASS_StreamFree(AEZAKMI);
+//                BASS_MusicFree(AEZAKMI);
+//                BASS_ChannelStop(AEZAKMI);
+//                BASS_SampleFree(AEZAKMI);
+//                BASS_StreamFree(Z_KRAF1ER_Z);
+//                BASS_MusicFree(Z_KRAF1ER_Z);
+//                BASS_ChannelStop(Z_KRAF1ER_Z);
+//                BASS_SampleFree(Z_KRAF1ER_Z);
 //                LJSPQK = BASS_StreamCreateFile(FALSE, "MusicPlayer\\GTA\\LJSPQK.mp3", 0, 0, 0);
 //                BASS_ChannelPlay(LJSPQK, false);
 //            }
@@ -1080,6 +1108,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
+//                BASS_StreamFree(Z_KRAF1ER_Z);
+//                BASS_MusicFree(Z_KRAF1ER_Z);
+//                BASS_ChannelStop(Z_KRAF1ER_Z);
+//                BASS_SampleFree(Z_KRAF1ER_Z);
 //                AEZAKMI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\GTA\\AEZAKMI.mp3", 0, 0, 0);
 //                BASS_ChannelPlay(AEZAKMI, false);
 //            }
@@ -1108,8 +1140,47 @@
 //            //    }
 //            //};
 //
+//            if (text == "Z_CRAF1ER_Z" || text == "Z_CRAFTER_Z" || text == "Z_KRAFTER_Z" || text == "Z_KRAFLER_Z" || text == "Z_CRAFLER_Z")
+//            {
+//                SetWindowText(COM, "Z_KRAF1ER_Z");
+//            }
 //
-//            
+//            if (text == "Z_KRAF1ER_Z")
+//            {
+//                BASS_StreamFree(CHASTUSHKI);
+//                BASS_MusicFree(CHASTUSHKI);
+//                BASS_ChannelStop(CHASTUSHKI);
+//                BASS_SampleFree(CHASTUSHKI);
+//                BASS_StreamFree(IMPOTENT);
+//                BASS_MusicFree(IMPOTENT);
+//                BASS_ChannelStop(IMPOTENT);
+//                BASS_SampleFree(IMPOTENT);
+//                BASS_StreamFree(OXYENNA);
+//                BASS_MusicFree(OXYENNA);
+//                BASS_ChannelStop(OXYENNA);
+//                BASS_SampleFree(OXYENNA);
+//                BASS_StreamFree(LIRIKAHOI);
+//                BASS_MusicFree(LIRIKAHOI);
+//                BASS_ChannelStop(LIRIKAHOI);
+//                BASS_SampleFree(LIRIKAHOI);
+//                BASS_StreamFree(LJSPQK);
+//                BASS_MusicFree(LJSPQK);
+//                BASS_ChannelStop(LJSPQK);
+//                BASS_SampleFree(LJSPQK);
+//                BASS_StreamFree(AEZAKMI);
+//                BASS_MusicFree(AEZAKMI);
+//                BASS_ChannelStop(AEZAKMI);
+//                BASS_SampleFree(AEZAKMI);
+//                BASS_StreamFree(Z_KRAF1ER_Z);
+//                BASS_MusicFree(Z_KRAF1ER_Z);
+//                BASS_ChannelStop(Z_KRAF1ER_Z);
+//                BASS_SampleFree(Z_KRAF1ER_Z);
+//                Z_KRAF1ER_Z = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Z_Kraf1er_Z\\Trespasser.mp3", 0, 0, 0);
+//
+//
+//                BASS_ChannelPlay(Z_KRAF1ER_Z, false);
+//            }
+//
 //
 //
 //            //if (text == "Z_KRAF1ER_Z")
@@ -1180,18 +1251,18 @@
 //
 //
 //
-//            }
+//        }
 //
 //
 //        break;
 //    }
 //    case WM_PAINT: {
-//    hdc = BeginPaint(hWnd, &ps);
-//    FillRect(hdc, &ps.rcPaint, hBrush);
-//    EndPaint(hWnd, &ps);
+//        hdc = BeginPaint(hWnd, &ps);
+//        FillRect(hdc, &ps.rcPaint, hBrush);
+//        EndPaint(hWnd, &ps);
 //
-//}
-//             break;
+//    }
+//                 break;
 //
 //    case WM_DESTROY: {
 //        PostQuitMessage(0);
@@ -1199,74 +1270,74 @@
 //
 //        break;
 //
-//    }  
-//       
+//    }
 //
 //
 //
 //
 //
-//                       case WM_KEYDOWN:
-//                       {
-//                           switch (LOWORD(wParam))
-//                           {
-//                           case VK_ESCAPE:
-//                               DestroyWindow(hWnd);
-//                               break;
-//                           case VK_SPACE:
-//                               SendMessage(hWnd, WM_COMMAND, SETBKG, 0);
-//                               break;
-//                           case VK_RETURN:
-//                               SendMessage(hWnd, WM_COMMAND, COMMANDA, 0);
-//                               break;
-//                           case VK_MBUTTON:
-//                               SendMessage(hWnd, WM_COMMAND, MYCOLOR, 0);
-//                               break;
 //
-//                           case VK_ADD:
-//                               SendMessage(GetDlgItem(hWnd, CHB1), BM_SETCHECK, BST_CHECKED, 0);
-//                               break;
-//                           case VK_NUMPAD1:
-//                               SendMessage(hWnd, WM_COMMAND, SKIN1, 0);
-//                               break;
-//                           case VK_NUMPAD3:
-//                               SendMessage(hWnd, WM_COMMAND, SKIN2, 0);
-//                               break;
-//                           case VK_NUMPAD2:
-//                               SendMessage(hWnd, WM_COMMAND, SKIN3, 0);
-//                               break;
-//                           case VK_SUBTRACT:
-//                               SendMessage(GetDlgItem(hWnd, CHB1), BM_SETCHECK, BST_UNCHECKED, 0);
-//                               break;
+//    case WM_KEYDOWN:
+//    {
+//        switch (LOWORD(wParam))
+//        {
+//        case VK_ESCAPE:
+//            DestroyWindow(hWnd);
+//            break;
+//        case VK_SPACE:
+//            SendMessage(hWnd, WM_COMMAND, SETBKG, 0);
+//            break;
+//        case VK_RETURN:
+//            SendMessage(hWnd, WM_COMMAND, COMMANDA, 0);
+//            break;
+//        case VK_MBUTTON:
+//            SendMessage(hWnd, WM_COMMAND, MYCOLOR, 0);
+//            break;
 //
-//                           }
-//                       }
-//                       break;
+//        case VK_ADD:
+//            SendMessage(GetDlgItem(hWnd, CHB1), BM_SETCHECK, BST_CHECKED, 0);
+//            break;
+//        case VK_NUMPAD1:
+//            SendMessage(hWnd, WM_COMMAND, SKIN1, 0);
+//            break;
+//        case VK_NUMPAD3:
+//            SendMessage(hWnd, WM_COMMAND, SKIN2, 0);
+//            break;
+//        case VK_NUMPAD2:
+//            SendMessage(hWnd, WM_COMMAND, SKIN3, 0);
+//            break;
+//        case VK_SUBTRACT:
+//            SendMessage(GetDlgItem(hWnd, CHB1), BM_SETCHECK, BST_UNCHECKED, 0);
+//            break;
 //
-//                           case WM_CTLCOLORSTATIC:
-//                           {
-//                       
-//                       
-//                       
-//                               if (GetDlgCtrlID((HWND)lParam) == text1)
-//                               {
-//                                   HDC hdcStatic = (HDC)wParam;
-//                                   // or obtain the static handle in some other way
-//                                   SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
-//                       
-//                                   SetBkColor(hdcStatic, rgbCurrent);
-//                       
-//                                   return (LRESULT)GetStockObject(NULL_BRUSH);
-//                               }
+//        }
+//    }
+//    break;
 //
-//                       
-//                           }break;
+//    case WM_CTLCOLORSTATIC:
+//    {
+//
+//
+//
+//        if (GetDlgCtrlID((HWND)lParam) == text1)
+//        {
+//            HDC hdcStatic = (HDC)wParam;
+//            // or obtain the static handle in some other way
+//            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+//
+//            SetBkColor(hdcStatic, rgbCurrent);
+//
+//            return (LRESULT)GetStockObject(NULL_BRUSH);
+//        }
+//
+//
+//    }break;
 //
 //    default:
 //        return DefWindowProc(hWnd, uMsg, wParam, lParam);
-//    }      
-//                   return 0;
 //    }
+//    return 0;
+//}
 //
 //
 //int WINAPI main()
@@ -1284,7 +1355,7 @@
 //    RegisterClass(&op);
 //
 //
-//    CreateWindowEx(WS_EX_LAYERED,op.lpszClassName, "Терминал StrannikCorp ver 1.2", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 800, 600, NULL, NULL, op.hInstance, NULL);
+//    CreateWindowEx(WS_EX_LAYERED, op.lpszClassName, "Терминал StrannikCorp ver 1.2", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 800, 600, NULL, NULL, op.hInstance, NULL);
 //    MSG msg;
 //    while (GetMessage(&msg, NULL, 0, 0)) {
 //        TranslateMessage(&msg);
