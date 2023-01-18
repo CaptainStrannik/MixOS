@@ -1,0 +1,98 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication16", "ConsoleApplication16.vcxproj", "{3C1C739C-6B65-4CAD-8140-41DBB27958CB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79} = {0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MixOSAPIDLL", "..\MixOSAPIDLL\MixOSAPIDLL.vcxproj", "{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+		ло|ARM = ло|ARM
+		ло|Win32 = ло|Win32
+		ло|x64 = ло|x64
+		ло|x86 = ло|x86
+		Ыекфттшл|ARM = Ыекфттшл|ARM
+		Ыекфттшл|Win32 = Ыекфттшл|Win32
+		Ыекфттшл|x64 = Ыекфттшл|x64
+		Ыекфттшл|x86 = Ыекфттшл|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Debug|ARM.ActiveCfg = Debug|ARM
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Debug|ARM.Build.0 = Debug|ARM
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Debug|Win32.Build.0 = Debug|Win32
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Debug|x64.ActiveCfg = Debug|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Debug|x86.ActiveCfg = Debug|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Release|ARM.ActiveCfg = Release|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Release|ARM.Build.0 = Release|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Release|Win32.ActiveCfg = Release|Win32
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Release|Win32.Build.0 = Release|Win32
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Release|x64.ActiveCfg = Release|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Release|x64.Build.0 = Release|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Release|x86.ActiveCfg = Release|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Release|x86.Build.0 = Release|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.ло|ARM.ActiveCfg = ло|ARM
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.ло|ARM.Build.0 = ло|ARM
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.ло|Win32.ActiveCfg = ло|Win32
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.ло|Win32.Build.0 = ло|Win32
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.ло|x64.ActiveCfg = ло|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.ло|x86.ActiveCfg = ло|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Ыекфттшл|ARM.ActiveCfg = Ыекфттшл|ARM
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Ыекфттшл|ARM.Build.0 = Ыекфттшл|ARM
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Ыекфттшл|Win32.ActiveCfg = Ыекфттшл|Win32
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Ыекфттшл|Win32.Build.0 = Ыекфттшл|Win32
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Ыекфттшл|x64.ActiveCfg = Ыекфттшл|x64
+		{3C1C739C-6B65-4CAD-8140-41DBB27958CB}.Ыекфттшл|x86.ActiveCfg = Ыекфттшл|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Debug|ARM.ActiveCfg = Debug|ARM
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Debug|ARM.Build.0 = Debug|ARM
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Debug|Win32.Build.0 = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Debug|x64.ActiveCfg = Debug|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Debug|x64.Build.0 = Debug|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Debug|x86.ActiveCfg = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Debug|x86.Build.0 = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Release|ARM.ActiveCfg = Release|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Release|ARM.Build.0 = Release|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Release|Win32.ActiveCfg = Release|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Release|Win32.Build.0 = Release|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Release|x64.ActiveCfg = Release|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Release|x64.Build.0 = Release|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Release|x86.ActiveCfg = Release|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Release|x86.Build.0 = Release|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.ло|ARM.ActiveCfg = Debug|ARM
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.ло|ARM.Build.0 = Debug|ARM
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.ло|Win32.ActiveCfg = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.ло|Win32.Build.0 = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.ло|x64.ActiveCfg = Debug|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.ло|x64.Build.0 = Debug|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.ло|x86.ActiveCfg = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.ло|x86.Build.0 = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Ыекфттшл|ARM.ActiveCfg = Debug|ARM
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Ыекфттшл|ARM.Build.0 = Debug|ARM
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Ыекфттшл|Win32.ActiveCfg = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Ыекфттшл|Win32.Build.0 = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Ыекфттшл|x64.ActiveCfg = Debug|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Ыекфттшл|x64.Build.0 = Debug|x64
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Ыекфттшл|x86.ActiveCfg = Debug|Win32
+		{0FF3650B-B7A0-44AB-9CDF-BD5F47E83A79}.Ыекфттшл|x86.Build.0 = Debug|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {855BEB3E-E8BE-46DE-A243-D81F7CCD086F}
+	EndGlobalSection
+EndGlobal

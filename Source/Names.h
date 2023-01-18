@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include<Mmeapi.h>
 
 
@@ -133,14 +133,14 @@
 #define DENDY 207
 #define SMS 208
 #define SG1000 209
-#define ATARI7800 210  //212 следующий
+#define ATARI7800 210  //212 
 #define GAMEBOYORIG 212
 
 
 
 
 
-                                                      
+
 #define COLORSRED 214
 #define MEGADRIVE 215
 #define PS1 216
@@ -212,7 +212,7 @@
 #define MYCOLOR 268
 #define COLORASTA 269
 #define MYFONT 270
-#define SAVEINI 271 // на заметку
+#define SAVEINI 271 // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 #define COLOREMU 272
 #define COLORYT 273
 #define LENMUSIC 274
@@ -441,3 +441,63 @@
             //tray.hIcon = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Youtube.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
             //tray.uID = 1;
             //tray.hBalloonIcon = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Youtube.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+#define SOUNDMASTA 461
+#define LENMUSIC3 462
+#define EVENTVWR 463
+#define SERVICES 464
+#define TASKSCHD 465
+#define MDSCHED 466
+
+#define PLSEL 467
+#define textdnd 468
+#define PLADD 469
+#define PLDEL 470
+#define PLOPEN 471
+#define PLSAVE 472
+#define PLUP 473
+#define PLVNIZ 474
+#define PLSORT 475
+#define textpl 476
+#define PLSEARCH 477
+
+#define LENMUSIC5 462
+#define SOUNDMASTA1 463
+
+#define UAORIG 500
+#define UAMETRO 501
+#define UAMETROGHOR 502
+#define UAMETROTAER 503
+#define UAORIGGHOR 504
+#define UAMENU 505
+#define CHANGEMUSIC 506
+#define MUA1 507
+#define MUA2 508
+#define MUA3 509
+#define MUA4 510
+#define MUA5 511
+#define MUA6 512
+#define MUA7 513
+#define MUA8 514
+#define MUA9 515
+#define STOPSOUNDUA 516
+#define PLAYSOUNDUA 517
+#define FIX 2
+
+#define PLUGPIANO 518
+#define PLUGTERMINAL 518
+#define PLUGCONVERT 519
+#define PLUGEMULATE 520
+#define PLUGMIX 521
+#define PLUGSUBS 522
+#define PLUGUA 523
+#define PLUGALL 524
+#define PLUGDEL 525
+
+
+
+#define RADIO 526
+
+#define UASEENENEMY 527
+#define UASEENENEMY1 528
+#define UASEENENEMY2 529
+#define UASEENENEMY3 530

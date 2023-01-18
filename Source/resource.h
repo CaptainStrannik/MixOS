@@ -13,8 +13,10 @@
 #define IDI_SMALL				108
 #define IDC_WINDOWSPROJECT5			109
 #define IDC_MYICON				2
-#ifndef IDC_STATIC
+#ifndef IDC_STATIC  
 #define IDC_STATIC				-1
+#define IDI_MY_ICON 1 
+
 #endif
 // Следующие стандартные значения для новых объектов
 //
