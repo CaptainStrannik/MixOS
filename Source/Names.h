@@ -1,9 +1,20 @@
 ﻿#pragma once
 #include<Mmeapi.h>
-
+#include<fileapi.h>
 
 //Peece of shit list of my defines...
 /*---------------------------------------------------------------------------------------------------------*/
+#define _AFXDLL
+
+
+
+
+
+#define MAIL 2
+
+
+
+
 
 #define ID_BUTTON 1
 #define STRANNIK 4
@@ -501,3 +512,78 @@
 #define UASEENENEMY1 528
 #define UASEENENEMY2 529
 #define UASEENENEMY3 530
+
+
+
+
+
+#define WINMENU 531
+
+
+
+
+
+
+
+#define WINDOWS1_0 600
+#define WINDOWS2_0 601
+#define WINDOWS3_0 602
+#define WINDOWS3_11 603
+ 
+
+
+#define WINDOWSNT3_1 604
+#define WINDOWSNT3_51 605
+#define WINDOWSNT4 606
+#define WINDOWSNT5 607
+
+#define WINDOWS2000 608
+#define WINDOWSXP 609
+#define WINDOWSVISTA 610
+#define WINDOWS7 611
+#define WINDOWS8 612
+#define WINDOWS10 613
+#define WINDOWS11 614
+
+
+
+#define WINDOWS_95 615
+#define WINDOWS_98 616
+#define WINDOWS_ME 617
+
+#define MYMUSIC 618
+
+
+
+
+
+
+
+#define LOGON3 620
+#define LOGON95 621
+#define LOGON98 622
+#define LOGONME 623
+#define LOGONNT3 624
+#define LOGONNT4 625
+#define LOGONNT5 626
+#define LOGON2000 627
+#define LOGONXP 628
+#define LOGONVISTA 629
+#define LOGON10 630
+#define LOGON11 631
+
+
+#define LOGOFF3 632
+#define LOGOFF95 633
+#define LOGOFF98 634
+#define LOGOFFME 635
+#define LOGOFFNT3 636
+#define LOGOFFNT4 637
+#define LOGOFFNT5 638
+#define LOGOFF2000 639
+#define LOGOFFXP 640
+#define LOGOFFVISTA 641
+#define LOGOFF10 642
+#define LOGOFF11 643
+
+#define WINDOWS_CE 644 

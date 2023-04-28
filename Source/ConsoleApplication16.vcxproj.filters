@@ -39,7 +39,7 @@
     <ClCompile Include="Youtube.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="вапвап1.cpp">
+    <ClCompile Include="MIXWIN.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="MixOS_API.cpp">
@@ -92,6 +92,9 @@
     <ClInclude Include="resource4.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="names2.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="bass\c\x64\bass.lib">
@@ -99,15 +102,13 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Resource.rc">
-      <Filter>Файлы ресурсов</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="C:\Users\Strannik\Desktop\icon2.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
     <Image Include="C:\Users\Strannik\Desktop\Main.ico">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="MusicPlayer\BMP\ico\WINXP.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>
