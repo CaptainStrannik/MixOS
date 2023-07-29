@@ -20,9 +20,10 @@
 //#include "bass.h"
 //#include <random>
 //#include <ctime>
+//#include <thread>
 //
-//
-//
+//#define text2 1537
+//HWND hTrack;
 //HSTREAM TERMINALERROR;
 //WIN32_FIND_DATA FindFileData;
 //HWND COM;
@@ -38,7 +39,6 @@
 //HSTREAM LJSPQK;
 //HSTREAM AEZAKMI;
 //HSTREAM TITLED;
-//HSTREAM Z_KRAF1ER_Z;
 //HDC hdc;
 //HICON progicon;
 //static DWORD rgbCurrent = RGB(0, 153, 0);
@@ -49,10 +49,13 @@
 //HANDLE bmpwall1;
 //HWND eMp3;
 //int skins;
+//HSTREAM YOUTUBER;
 //HINSTANCE hInst;
 //const TCHAR progname[] = _T("Терминал из MixOS");
 //TCHAR StrT[MAX_PATH];
 //char str1[MAX_PATH];
+////HWND hProgBar;
+////#define BARBARBA 50
 //#pragma comment(linker,"/manifestdependency:\"type='win32' \
 //                        name='Microsoft.Windows.Common-Controls' \
 //                        version='6.0.0.0' processorArchitecture='*'\
@@ -60,15 +63,21 @@
 //
 //#pragma comment(lib, "winmm.lib")
 //#pragma comment(lib, "bass")
+//#pragma comment (lib, "urlmon.lib")
 //using namespace std;
 //static COLORREF acrCustClr[16];
 //
-//
+//#define COMMANDA1 6145
+//#define QAQ 6144  // my birthday
 //static LRESULT CALLBACK wnd_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 //    switch (uMsg) {
 //    case WM_CREATE: {
 //
-//
+//        //InitCommonControls();
+//        //hProgBar = CreateWindowEx(0, PROGRESS_CLASS, NULL, WS_CHILD | WS_VISIBLE | WS_BORDER,5, 5, 150, 20, hWnd, (HMENU)BARBARBA, hInst, NULL);
+//        //SendMessage(hProgBar, PBM_SETRANGE, 0, (LPARAM)MAKELONG(0, 10));
+//        //SendMessage(hProgBar, PBM_SETSTEP, (WPARAM)1, 0);
+//        //UpdateWindow(hProgBar);
 //
 //        SetLayeredWindowAttributes(hWnd, NULL, 255, LWA_ALPHA);
 //        NOTIFYICONDATA data;
@@ -131,10 +140,25 @@
 //
 //        SetMenu(hWnd, hMenubar);
 //
+//        CreateWindowA(TEXT("BUTTON"), TEXT("Доп команды"), WS_VISIBLE | WS_CHILD, 400, 180, 150, 35, hWnd, (HMENU)COMMANDA1, NULL, NULL);
+//
+//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\terminal.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        SendMessage(GetDlgItem(hWnd, COMMANDA1), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//
+//
 //        CreateWindowA(TEXT("BUTTON"), TEXT("Ввести команду"), WS_VISIBLE | WS_CHILD, 400, 230, 150, 35, hWnd, (HMENU)COMMANDA, NULL, NULL);
 //
 //        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\terminal.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //        SendMessage(GetDlgItem(hWnd, COMMANDA), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//
+//
+//
+//        CreateWindowA(TEXT("BUTTON"), TEXT("Написать разработчику"), WS_VISIBLE | WS_CHILD, 10, 350 + 140, 310, 35, hWnd, (HMENU)QAQ, NULL, NULL);
+//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Youtube.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        SendMessage(GetDlgItem(hWnd, QAQ), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//
+//
+//        
 //
 //
 //        CreateWindowA(TEXT("BUTTON"), TEXT("Список команд"), WS_VISIBLE | WS_CHILD, 400, 130, 150, 35, hWnd, (HMENU)HELPAS, NULL, NULL);
@@ -153,9 +177,17 @@
 //        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\WIN95.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //        SendMessage(GetDlgItem(hWnd, WIN311), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
+//        hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | WS_VISIBLE, 350, 450, 400, 20, hWnd, (HMENU)VOLUMASTA, NULL, NULL);
+//        ShowWindow(GetDlgItem(hWnd, VOLUMASTA), SW_SHOW);
+//        /*ShowWindow(GetDlgItem(hWnd, LENMUSIC1), SW_SHOW);*/
+//        SendMessage(hTrack, TBM_SETPOS, 1, 9);
+//        SendMessage(hTrack, TBM_SETRANGEMAX, TRUE, 100);
 //
 //        break;
 //    }
+//
+//
+//
 //
 //    case WM_COMMAND:
 //    {
@@ -217,7 +249,6 @@
 //
 //            InvalidateRect(hWnd, NULL, FALSE);
 //
-//            // ТО АХРИНЕТЬ ОХУЕТЬ ТОЧНЕЕ. Теперь надо такое же добавить в Терминал... И в Пианино... И еще много куда...
 //        }
 //
 //
@@ -386,14 +417,31 @@
 //            ShowWindow(GetDlgItem(hWnd, WIN311), SW_HIDE);
 //        }
 //
+//        if (LOWORD(wParam) == COMMANDA1)
+//        {
+//            MessageBoxA(hWnd, "YOUTUBE - Запустить загрузчик роликов с Youtube\nMENUMAKER - Запустить контекстменюмейкер\nQUEST - Запустить шашнахме квест\nPIANO - Запустить пианино\nWINCOLLECTION - Запустить сборник ос WINDOWS\nUA - Запустить сборник Urban Assault\nEMULATE - Запустить сборник эмуляторов\nCSAS - Написать разработчику\n ПОЯСНЕНИЕ: CSAS = Captain Strannik Answer Service. ", "Дополнительные команды", MB_OK);
+//            
+//        }
 //
 //
 //
 //
 //
 //
+//        if (LOWORD(wParam) == QAQ)
+//        {
 //
-//
+//            BASS_StreamFree(YOUTUBER);
+//            BASS_ChannelStop(YOUTUBER);
+//            BASS_SampleFree(YOUTUBER);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_SHOW);
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            YOUTUBER = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title2.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(YOUTUBER, false);
+//            system("start https://lesergig.wixsite.com/strannikyt/voprosy-i-otvety");
+//        }
 //
 //
 //
@@ -423,6 +471,21 @@
 //                MessageBoxA(hWnd, "Самое трудное это найти все секретки.\nНо если вы уж совсем шашнахме в моем терминале, то советую сначала изучить мое tarkvara.\nИ почаще mangima в мой плеер. Тут есть почти что все =). От Сектора Газа, до WINDOWS...", "Помощь 1", MB_OK);
 //                MessageBoxA(hWnd, "MIXOS - перезапуск \"MixOS\" \nWINCOLLECTION - открыть сборник систем \nQUEST - открыть \"шашнахме квест\" \nYOUTUBE - открыть \"загрузчик роликов с ютуба\" \nEMULATE - открыть \"список эмуляторов\" \nPIANO - открыть \"Пианино\" \nPLD - открыть \"Загрузчик плагинов\"  \nTERMINAL - открыть \"Терминал MixOS\" \nUA - открыть \"Сборник Urban Assault\" \nMENUMAKER - открыть \"Контекстменюмейкер\" \nKILL - Воспроизведение музыки смерти Марио  \nNYANCAT - Проигрывание музыки няшного кота.  \nSTOPMUSIC - Выключение музыки.  \nНе пытайтесь ввести CON!!!\nОстальные команды в секрете, но их более 60 штук = ).", "Помощь 2", MB_OK);
 //            }
+//
+//            if (text == "CSAS")
+//            {
+//                
+//                BASS_StreamFree(YOUTUBER);
+//                BASS_ChannelStop(YOUTUBER);
+//                BASS_SampleFree(YOUTUBER);
+//                ShowWindow(GetDlgItem(hWnd, TITLE), SW_SHOW);
+//                ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//                BASS_Stop();
+//                BASS_Start();
+//                YOUTUBER = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title2.mp3", 0, 0, 0);
+//                BASS_ChannelPlay(YOUTUBER, false);
+//                system("start https://lesergig.wixsite.com/strannikyt/voprosy-i-otvety");
+//            }
 //            if (text == "INFO")
 //            {
 //                MessageBoxA(hWnd, "Это терминал. Графический терминал. \nВпервые появился в музыкальном плеере версии BETA 1.7.\nИ, честно, был добавлен по приколу. \nТут имеются команды, довольно прикольного типа. \nЧерез терминал почти невозможно убить винду, хотя я не пытался.", "Информация о терминале", MB_OK);
@@ -437,11 +500,6 @@
 //
 //                BASS_ChannelPlay(KILL, false);
 //
-//                if (LOWORD(wParam) == CLEARRAM)
-//                {
-//                    BASS_MusicFree(KILL);
-//                    BASS_StreamFree(KILL);
-//                }
 //
 //            }
 //            if (text == "NYANCAT")
@@ -481,17 +539,21 @@
 //                BASS_ChannelFree(BONUS);
 //                BASS_ChannelFree(REMAX);
 //                BASS_ChannelFree(CHASTUSHKI);
-//                BASS_ChannelFree(Z_KRAF1ER_Z);
+//               
 //                BASS_StreamFree(NYANCAT);
 //                BASS_StreamFree(BONUS);
 //                BASS_StreamFree(REMAX);
 //                BASS_StreamFree(CHASTUSHKI);
-//                BASS_StreamFree(Z_KRAF1ER_Z);
+//                
 //                BASS_ChannelStop(CHASTUSHKI);
 //                BASS_ChannelStop(NYANCAT);
 //                BASS_ChannelStop(BONUS);
 //                BASS_ChannelStop(REMAX);
-//                BASS_ChannelStop(Z_KRAF1ER_Z);
+//
+//                BASS_ChannelFree(YOUTUBER);
+//                BASS_StreamFree(YOUTUBER);
+//                BASS_ChannelStop(YOUTUBER);
+//
 //                BASS_Stop();
 //                BASS_Start();
 //            }
@@ -534,7 +596,65 @@
 //
 //            if (text == "QUEST")
 //            {
-//                system("start MusicPlayer\\Quest\\quest.exe");
+//quest:
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\Quest\\quest.exe", &EXAMPLE);
+//                if (INVALID_HANDLE_VALUE != hFind)
+//                {
+//
+//                    system("start MusicPlayer\\Quest\\quest.exe");
+//
+//                }
+//                else
+//                {
+//
+//                    MessageBox(hWnd, "Сейчас быстро скачается\nШашнахме квест.", "ВНИМАНИЕ", MB_OK | MB_ICONASTERISK);
+//                    URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/QUEST/Quest.zip", "MusicPlayer\\Quest.zip", 0, 0);
+//
+//
+//                    system("MusicPlayer\\QUEST.bat");
+//                    WIN32_FIND_DATA EXAMPLE;
+//                    HANDLE hFind = FindFirstFile("MusicPlayer\\Quest\\quest.exe", &EXAMPLE);
+//                    if (INVALID_HANDLE_VALUE != hFind)
+//                    {
+//
+//
+//                        MessageBoxA(hWnd, "Шашнахме квест успешно установлен!\nИграйте на здоровье!", "ОТЛИЧНО!!!", MB_ICONINFORMATION);
+//
+//
+//                    }
+//                    if (INVALID_HANDLE_VALUE == hFind)
+//                    {
+//
+//                        if (MessageBox(hWnd, "Не установился, возможно проблема с интернетом\nПопробовать ещё раз?", "Неудача  =(", MB_YESNO | MB_ICONQUESTION == IDYES))
+//                        {
+//                            goto quest;
+//                        }
+//                        else
+//                        {
+//                            return 0;
+//                        };
+//
+//                    }
+//
+//                };
+//
+//
+//                return false;
+//                FindClose(hFind);
+//
+//
+//
+//
+//
+//
+//
+//                
+//
+//
+//
+//
+//
 //            }
 //
 //
@@ -919,7 +1039,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
-//                CHASTUSHKI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Sektor\\Chastushki.mp3", 0, 0, 0);
+//                BASS_ChannelFree(YOUTUBER);
+//                BASS_StreamFree(YOUTUBER);
+//                BASS_ChannelStop(YOUTUBER);
+//                CHASTUSHKI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\TERMINAL\\Chastushki.mp3", 0, 0, 0);
 //
 //
 //                BASS_ChannelPlay(CHASTUSHKI, false);
@@ -988,7 +1111,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
-//                IMPOTENT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Sektor\\IMP.mp3", 0, 0, 0);
+//                BASS_ChannelFree(YOUTUBER);
+//                BASS_StreamFree(YOUTUBER);
+//                BASS_ChannelStop(YOUTUBER);
+//                IMPOTENT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\TERMINAL\\IMP.mp3", 0, 0, 0);
 //
 //
 //                BASS_ChannelPlay(IMPOTENT, false);
@@ -1020,7 +1146,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
-//                OXYENNA = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Sektor\\VIA.mp3", 0, 0, 0);
+//                BASS_ChannelFree(YOUTUBER);
+//                BASS_StreamFree(YOUTUBER);
+//                BASS_ChannelStop(YOUTUBER);
+//                OXYENNA = BASS_StreamCreateFile(FALSE, "MusicPlayer\\TERMINAL\\VIA.mp3", 0, 0, 0);
 //
 //
 //                BASS_ChannelPlay(OXYENNA, false);
@@ -1057,7 +1186,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
-//                LIRIKAHOI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Sektor\\LIRIKA.mp3", 0, 0, 0);
+//                BASS_ChannelFree(YOUTUBER);
+//                BASS_StreamFree(YOUTUBER);
+//                BASS_ChannelStop(YOUTUBER);
+//                LIRIKAHOI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\TERMINAL\\LIRIKA.mp3", 0, 0, 0);
 //
 //
 //                BASS_ChannelPlay(LIRIKAHOI, false);
@@ -1099,7 +1231,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
-//                LJSPQK = BASS_StreamCreateFile(FALSE, "MusicPlayer\\GTA\\LJSPQK.mp3", 0, 0, 0);
+//                BASS_ChannelFree(YOUTUBER);
+//                BASS_StreamFree(YOUTUBER);
+//                BASS_ChannelStop(YOUTUBER);
+//                LJSPQK = BASS_StreamCreateFile(FALSE, "MusicPlayer\\TERMINAL\\LJSPQK.mp3", 0, 0, 0);
 //                BASS_ChannelPlay(LJSPQK, false);
 //            }
 //            if (text == "AEZAKMI" || text == "IDOASIPLEASE")
@@ -1132,7 +1267,10 @@
 //                BASS_MusicFree(AEZAKMI);
 //                BASS_ChannelStop(AEZAKMI);
 //                BASS_SampleFree(AEZAKMI);
-//                AEZAKMI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\GTA\\AEZAKMI.mp3", 0, 0, 0);
+//                BASS_ChannelFree(YOUTUBER);
+//                BASS_StreamFree(YOUTUBER);
+//                BASS_ChannelStop(YOUTUBER);
+//                AEZAKMI = BASS_StreamCreateFile(FALSE, "MusicPlayer\\TERMINAL\\AEZAKMI.mp3", 0, 0, 0);
 //                BASS_ChannelPlay(AEZAKMI, false);
 //            }
 //            if (text == "GTX745" || text == "GTX 745" || text == "NVIDIA GTX 745")
@@ -1140,7 +1278,7 @@
 //                MessageBoxA(hWnd, "Верно, вот ее обзор", "Молодец", MB_ICONINFORMATION);
 //                system("start https://www.youtube.com/watch?v=900cJATeGQU");
 //            }
-//            if (text == "WIN" || text == "WIN.COM" /* || text == "Win" || text == "win"*/)
+//            if (text == "WIN" || text == "WIN.COM"  || text == "Win" || text == "win")
 //            {
 //                system("start MusicPlayer\\W311\\dosbox.exe -conf MusicPlayer\\W311\\dosbox.conf -noconsole");
 //            }
@@ -1153,32 +1291,32 @@
 //
 //
 //
-//            if (text == "MIXOS")
-//            {
-//                WIN32_FIND_DATA MixOS;
-//                HANDLE hFind = FindFirstFile("MusicPlayer\\Your\\Vista.mp3", &MixOS);
+//            //if (text == "MIXOS")
+//            //{
+//            //    WIN32_FIND_DATA MixOS;
+//            //    HANDLE hFind = FindFirstFile("MusicPlayer\\Your\\Vista.mp3", &MixOS);
 //
-//                if (INVALID_HANDLE_VALUE != hFind)
-//                {
-//                    system("start MixOS.exe");
-//                }
+//            //    if (INVALID_HANDLE_VALUE != hFind)
+//            //    {
+//            //        system("start MixOS.exe");
+//            //    }
 //
-//                if (INVALID_HANDLE_VALUE == hFind)
-//                {
-//                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
-//                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000001b \n(MixOS не нашла MixOS КАК ТАКОЕ ВОЗМОЖНО?)", "MixOS: MixOS NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
-//                    {
-//                        PostQuitMessage(0);
-//                    }
-//                }
+//            //    if (INVALID_HANDLE_VALUE == hFind)
+//            //    {
+//            //        TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
+//            //        BASS_ChannelPlay(TERMINALERROR, false);
+//            //        if (MessageBox(hWnd, "Ошибка с кодом 0xc000001b \n(MixOS не нашла MixOS КАК ТАКОЕ ВОЗМОЖНО?)", "MixOS: MixOS NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
+//            //        {
+//            //            PostQuitMessage(0);
+//            //        }
+//            //    }
 //
-//            }
+//            //}
 //
 //            if (text == "YOUTUBE")
 //            {
-//                WIN32_FIND_DATA Youtube;
-//                HANDLE hFind = FindFirstFile("MusicPlayer\\Youtube\\Youtube.exe", &Youtube);
+//                WIN32_FIND_DATA youtubckic;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\Youtube\\yt-dlp.exe", &youtubckic);
 //
 //                if (INVALID_HANDLE_VALUE != hFind)
 //                {
@@ -1186,21 +1324,38 @@
 //
 //                }
 //
-//                if (INVALID_HANDLE_VALUE == hFind)
+//                else
 //                {
 //                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
 //                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000002b \n(Загрузчик видео с Youtube не найден)", "MixOS: YOUTUBE NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
+//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000002b \n(Загрузчик видео с Youtube не найден)\nХотите установить и исправить ошибку?", "MixOS: YOUTUBE NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
 //                    {
-//                        PostQuitMessage(0);
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/YOUTUBE/Youtube.zip", "MusicPlayer\\Youtube.zip", 0, 0);
+//
+//                        system("MusicPlayer\\YT.bat");
+//                        WIN32_FIND_DATA youtubckic;
+//                        HANDLE hFind = FindFirstFile("MusicPlayer\\Youtube\\yt-dlp.exe", &youtubckic);
+//                        if (INVALID_HANDLE_VALUE != hFind)
+//                        {
+//                            MessageBoxA(hWnd, "Теперь можете пользоваться\nЗагрузчиком видеороликов\nОшибка исправлена!!", "Успех!", MB_ICONASTERISK);
+//                        }
+//                        else
+//                        {
+//                            MessageBoxA(hWnd, "Ошибка не была исправлена. Возможно проблема с интернетом. Либо пишите разработчику", "Неудача", MB_ICONASTERISK);
+//                        };
+//
 //                    }
-//                }
+//
+//                };
+//                return false;
+//                FindClose(hFind);
 //
 //            }
 //            if (text == "EMULATE")
 //            {
-//                WIN32_FIND_DATA Emulate;
-//                HANDLE hFind = FindFirstFile("MusicPlayer\\Emulators\\Emulate.exe", &Emulate);
+//
+//                WIN32_FIND_DATA WINCOLLECTION;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\Emulators\\Emulate.exe", &WINCOLLECTION);
 //
 //                if (INVALID_HANDLE_VALUE != hFind)
 //                {
@@ -1208,124 +1363,287 @@
 //
 //                }
 //
-//                if (INVALID_HANDLE_VALUE == hFind)
+//                else
 //                {
 //                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
 //                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000003b \n(Список эмуляторов не найден)", "MixOS: EMULATORS NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
+//                    if (MessageBox(hWnd, "Ошибка с кодом 0xс000009b \n(Установите Список Эмуляторов)\nХотите установить?", "MixOS: EMULATORS NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
 //                    {
-//                        PostQuitMessage(0);
-//                    }
-//                }
+//                        /*thread th(CreateWindow(TEXT("STATIC"), TEXT("Скачано 6,25%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)NULL, NULL, NULL));*/
+//                        MessageBoxA(hWnd, "Пока терминал будет скачивать,\nон зависнет, но доверьтесь и не закрывайте)", "ВНИМАНИЕ", MB_ICONASTERISK);
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/1.zip", "MusicPlayer\\1.zip", 0, 0);
+//                        
+//                        
+//                        /*SendMessage(eMp3, EM_SETCUEBANNER, 0, (LPARAM)L"Напишите название пункта меню");*/
+//                        /*SendMessage(hwall, EM_SETCUEBANNER, 0, (LPARAM)L"Напишите название пункта меню");*/
+//                        SendMessage(COM, EM_SETCUEBANNER, 0, (LPARAM)L"Напишите название пункта меню");
+//                        
+//                        /*SendMessage(hProgBar, PBM_STEPIT, 0, 0);*/
+//                        system("echo Скачивается 2.zip");
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/2.zip", "MusicPlayer\\2.zip", 0, 0);
+//                        
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 12,50%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)NULL, NULL, NULL);*/
+//                        
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/3.zip", "MusicPlayer\\3.zip", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 18,75%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)NULL, NULL, NULL);*/
+//                        
+//                       
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/4.zip", "MusicPlayer\\4.zip", 0, 0);
+//                       /* CreateWindow(TEXT("STATIC"), TEXT("Скачано 25,00%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/5.zip", "MusicPlayer\\5.zip", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 31,25"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/6.zip", "MusicPlayer\\6.zip", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 37,50%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        
 //
+//                        /*system("MusicPlayer\\emulate.bat");*/
+//                        /*URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/W311.zip", "MusicPlayer\\W311.zip", 0, 0);*/
+//                        system("MusicPlayer\\emulate2.bat");
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 42,50%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        /*URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/W311.zip", "MusicPlayer\\7.zip", 0, 0);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.001", "MusicPlayer\\W311.7z.001", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 43,75%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.002", "MusicPlayer\\W311.7z.002", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 50,00%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.003", "MusicPlayer\\W311.7z.003", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 56,25%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.004", "MusicPlayer\\W311.7z.004", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 62,50%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.005", "MusicPlayer\\W311.7z.005", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 68,75%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.006", "MusicPlayer\\W311.7z.006", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 75,00%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.007", "MusicPlayer\\W311.7z.007", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 81,25%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.008", "MusicPlayer\\W311.7z.008", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 87,5%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.009", "MusicPlayer\\W311.7z.009", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 93,75%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/R/W311.7z.010", "MusicPlayer\\W311.7z.010", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("Скачано 99,99%"), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/EMULATORS/8.zip", "MusicPlayer\\8.zip", 0, 0);
+//                        /*CreateWindow(TEXT("STATIC"), TEXT("              "), WS_VISIBLE | WS_CHILD, 400, 15, 280, 25, hWnd, (HMENU)text2, NULL, NULL);*/
+//
+//                        system("MusicPlayer\\emulate3.bat");
+//                        WIN32_FIND_DATA youtubckic;
+//                        HANDLE hFind = FindFirstFile("MusicPlayer\\Emulators\\Emulate.exe", &youtubckic);
+//                        if (INVALID_HANDLE_VALUE != hFind)
+//                        {
+//                            MessageBoxA(hWnd, "Теперь можете пользоваться Сборником Эмуляторов\nОшибка исправлена!!", "Успех!", MB_ICONASTERISK);
+//                        }
+//                        else
+//                        {
+//                            MessageBoxA(hWnd, "Ошибка не была исправлена. Возможно проблема с интернетом. Либо пишите разработчику", "Неудача", MB_ICONASTERISK);
+//                        };
+//
+//                    }
+//
+//                };
+//                return false;
+//                FindClose(hFind);
+//                
 //            }
 //            if (text == "WINCOLLECTION")
 //            {
 //
-//                WIN32_FIND_DATA WINCOLLECTION;
-//                HANDLE hFind = FindFirstFile("MusicPlayer\\SYSTEM\\WINDOWS\\MENU.exe", &WINCOLLECTION);
+//
+//                   WIN32_FIND_DATA WINCOLLECTION;
+//                   HANDLE hFind = FindFirstFile("MusicPlayer\\SYSTEM\\WINDOWS\\MENU.exe", &WINCOLLECTION);
+//
 //                if (INVALID_HANDLE_VALUE != hFind)
 //                {
 //                    system("start MusicPlayer\\SYSTEM\\WINDOWS\\MENU.exe");
 //
 //                }
-//                if (INVALID_HANDLE_VALUE == hFind)
+//
+//                else
 //                {
 //                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
 //                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xс000009b \n(Установите Сборник Windows)", "MixOS: WINCOLLECTION NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
+//                    if (MessageBox(hWnd, "Ошибка с кодом 0xс000009b \n(Установите Сборник Windows)\nХотите установить?", "MixOS: WINCOLLECTION NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
 //                    {
-//                        PostQuitMessage(0);
+//                        MessageBoxA(hWnd, "Пока терминал будет скачивать,\nон зависнет, но доверьтесь и не закрывайте)", "ВНИМАНИЕ", MB_ICONASTERISK);
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/SYSTEM/SBOROS.zip", "MusicPlayer\\SBOROS.zip", 0, 0);
+//
+//                        system("MusicPlayer\\SBOROS.bat");
+//                        WIN32_FIND_DATA youtubckic;
+//                        HANDLE hFind = FindFirstFile("MusicPlayer\\SYSTEM\\WINDOWS\\MENU.exe", &youtubckic);
+//                        if (INVALID_HANDLE_VALUE != hFind)
+//                        {
+//                            MessageBoxA(hWnd, "Теперь можете пользоваться сборником систем\nОшибка исправлена!!", "Успех!", MB_ICONASTERISK);
+//                        }
+//                        else
+//                        {
+//                            MessageBoxA(hWnd, "Ошибка не была исправлена. Возможно проблема с интернетом. Либо пишите разработчику", "Неудача", MB_ICONASTERISK);
+//                        };
+//
 //                    }
-//                }
+//
+//                };
+//                return false;
+//                FindClose(hFind);
+//
+//
+//
 //            }
 //            if (text == "PIANO")
 //            {
 //                WIN32_FIND_DATA Piano;
 //                HANDLE hFind = FindFirstFile("MusicPlayer\\Piano\\Piano.exe", &Piano);
 //
+//                //if (INVALID_HANDLE_VALUE != hFind)
+//                //{
+//                //    system("start MusicPlayer\\Piano\\Piano.exe");
+//
+//                //}
+//
+//                //if (INVALID_HANDLE_VALUE == hFind)
+//                //{
+//                //    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
+//                //    BASS_ChannelPlay(TERMINALERROR, false);
+//                //    if (MessageBox(hWnd, "Ошибка с кодом 0xс000004b \n(Установите пианино)", "MixOS: PIANO NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
+//                //    {
+//                //        PostQuitMessage(0);
+//                //    }
+//                //}
 //                if (INVALID_HANDLE_VALUE != hFind)
 //                {
 //                    system("start MusicPlayer\\Piano\\Piano.exe");
 //
 //                }
 //
-//                if (INVALID_HANDLE_VALUE == hFind)
+//                else
 //                {
 //                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
 //                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xс000004b \n(Установите пианино)", "MixOS: PIANO NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
+//                    if (MessageBox(hWnd, "Ошибка с кодом 0xс000004b \n(Установите пианино)\nЖелаете установить?", "MixOS: PIANO NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
 //                    {
-//                        PostQuitMessage(0);
+//                        MessageBoxA(hWnd, "Пока терминал будет скачивать,\nон зависнет, но доверьтесь и не закрывайте)", "ВНИМАНИЕ", MB_ICONASTERISK);
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/PIANO/Piano.zip", "MusicPlayer\\Piano.zip", 0, 0);
+//
+//                        system("MusicPlayer\\Piano.bat");
+//                        WIN32_FIND_DATA youtubckic;
+//                        HANDLE hFind = FindFirstFile("MusicPlayer\\Piano\\Piano.exe", &youtubckic);
+//                        if (INVALID_HANDLE_VALUE != hFind)
+//                        {
+//                            MessageBoxA(hWnd, "Теперь можете пользоваться пианино\nОшибка исправлена!!", "Успех!", MB_ICONASTERISK);
+//                        }
+//                        else
+//                        {
+//                            MessageBoxA(hWnd, "Ошибка не была исправлена. Возможно проблема с интернетом. Либо пишите разработчику", "Неудача", MB_ICONASTERISK);
+//                        };
+//
 //                    }
-//                }
 //
+//                };
+//                return false;
+//                FindClose(hFind);
 //            }
-//            if (text == "PLD")
-//            {
-//                WIN32_FIND_DATA PLD;
-//                HANDLE hFind = FindFirstFile("MusicPlayer\\DWL\\MixDownload.exe", &PLD);
+//            //if (text == "PLD")
+//            //{
+//            //    WIN32_FIND_DATA PLD;
+//            //    HANDLE hFind = FindFirstFile("MusicPlayer\\DWL\\MixDownload.exe", &PLD);
 //
-//                if (INVALID_HANDLE_VALUE != hFind)
-//                {
-//                    system("start MusicPlayer\\DWL\\MixDownload.exe");
+//            //    if (INVALID_HANDLE_VALUE != hFind)
+//            //    {
+//            //        system("start MusicPlayer\\DWL\\MixDownload.exe");
 //
-//                }
+//            //    }
 //
-//                if (INVALID_HANDLE_VALUE == hFind)
-//                {
-//                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
-//                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000005b \n(Установите загрузчик плагинов)", "MixOS: PLD NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
-//                    {
-//                        PostQuitMessage(0);
-//                    }
-//                }
+//            //    if (INVALID_HANDLE_VALUE == hFind)
+//            //    {
+//            //        TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
+//            //        BASS_ChannelPlay(TERMINALERROR, false);
+//            //        if (MessageBox(hWnd, "Ошибка с кодом 0xc000005b \n(Установите загрузчик плагинов)", "MixOS: PLD NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
+//            //        {
+//            //            PostQuitMessage(0);
+//            //        }
+//            //    }
 //
-//            }
+//            //}
 //
-//            if (text == "TERMINAL")
-//            {
-//                WIN32_FIND_DATA TERMINALIC;
-//                HANDLE hFind = FindFirstFile("MusicPlayer\\TERMINAL\\TERMINAL.exe", &TERMINALIC);
+//            //if (text == "TERMINAL")
+//            //{
+//            //    WIN32_FIND_DATA TERMINALIC;
+//            //    HANDLE hFind = FindFirstFile("MusicPlayer\\TERMINAL\\TERMINAL.exe", &TERMINALIC);
 //
-//                if (INVALID_HANDLE_VALUE != hFind)
-//                {
-//                    system("start MusicPlayer\\TERMINAL\\TERMINAL.exe");
+//            //    if (INVALID_HANDLE_VALUE != hFind)
+//            //    {
+//            //        system("start MusicPlayer\\TERMINAL\\TERMINAL.exe");
 //
-//                }
+//            //    }
 //
-//                if (INVALID_HANDLE_VALUE == hFind)
-//                {
-//                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
-//                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000006b \n(Установите терминал)", "MixOS: TERMINAL NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
-//                    {
-//                        PostQuitMessage(0);
-//                    }
-//                }
+//            //    if (INVALID_HANDLE_VALUE == hFind)
+//            //    {
+//            //        TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
+//            //        BASS_ChannelPlay(TERMINALERROR, false);
+//            //        if (MessageBox(hWnd, "Ошибка с кодом 0xc000006b \n(Установите терминал)", "MixOS: TERMINAL NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
+//            //        {
+//            //            PostQuitMessage(0);
+//            //        }
+//            //    }
 //
-//            }
+//            //}
 //            if (text == "UA")
 //            {
-//                WIN32_FIND_DATA UA;
-//                HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAMENU.exe", &UA);
+// UAFULL:
 //
+//
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAMENU.exe", &EXAMPLE);
 //                if (INVALID_HANDLE_VALUE != hFind)
 //                {
+//
 //                    system("start MusicPlayer\\UA\\UAMENU.exe");
 //
 //                }
-//
-//                if (INVALID_HANDLE_VALUE == hFind)
+//                else
 //                {
-//                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
-//                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000007b \n(Установите Urban Assault)", "MixOS: UA NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
+//
+//                    MessageBox(hWnd, "Сейчас программа будет скачивать сборник игр\nНа это уйдёт время и программа будет выглядеть зависшей\nПросьба не выключать программу и довериться!!!\nРазработчик пытался решить проблему, но не вышло.\nЖдите обновления, когда это пофиксят)", "ВНИМАНИЕ", MB_OK | MB_ICONASTERISK);
+//                    URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UA.zip", "MusicPlayer\\UA.zip", 0, 0);
+//                    
+//
+//                    system("MusicPlayer\\UAFULL.bat");
+//                    WIN32_FIND_DATA EXAMPLE;
+//                    HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAMENU.exe", &EXAMPLE);
+//                    if (INVALID_HANDLE_VALUE != hFind)
 //                    {
-//                        PostQuitMessage(0);
+//
+//
+//                        MessageBoxA(hWnd, "Сборник Urban Assault установлен!\nИграйте на здоровье!", "ОТЛИЧНО!!!", MB_ICONINFORMATION);
+//
+//
 //                    }
-//                }
+//                    if (INVALID_HANDLE_VALUE == hFind)
+//                    {
+//
+//                        if (MessageBox(hWnd, "Не установилась, возможно проблема с интернетом\nПопробовать ещё раз?", "Неудача  =(", MB_YESNO | MB_ICONQUESTION == IDYES))
+//                        {
+//                            goto UAFULL;
+//                        }
+//                        else
+//                        {
+//                            return 0;
+//                        };
+//
+//                    }
+//
+//                };
+//
+//
+//                return false;
+//                FindClose(hFind);
+//
+//
+//
+//
+//
+//
+//
 //
 //            }
 //
@@ -1340,15 +1658,40 @@
 //
 //                }
 //
-//                if (INVALID_HANDLE_VALUE == hFind)
+//
+//                       
+//
+//
+//
+//
+//
+//
+//
+//                else
 //                {
 //                    TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
 //                    BASS_ChannelPlay(TERMINALERROR, false);
-//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000008b \n(Установите контекстменюмейкер)", "MixOS: MENUMAKER NOT FOUND", MB_OK | MB_ICONERROR) != IDOK)
+//                    if (MessageBox(hWnd, "Ошибка с кодом 0xc000008b \n(Установите контекстменюмейкер)\nХотите установить и исправить ошибку?", "MixOS: YOUTUBE NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
 //                    {
-//                        PostQuitMessage(0);
+//                        URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/MENUMAKER/MENUMAKER.zip", "MusicPlayer\\MENUMAKER.zip", 0, 0);
+//
+//                        system("MusicPlayer\\MENUMAKER.bat");
+//                        WIN32_FIND_DATA youtubckic;
+//                        HANDLE hFind = FindFirstFile("MusicPlayer\\MENUMAKER\\MENUMAKER.exe", &youtubckic);
+//                        if (INVALID_HANDLE_VALUE != hFind)
+//                        {
+//                            MessageBoxA(hWnd, "Теперь можете пользоваться\nКонтекстменюмейкером\nОшибка исправлена!!", "Успех!", MB_ICONASTERISK);
+//                        }
+//                        else
+//                        {
+//                            MessageBoxA(hWnd, "Ошибка не была исправлена. Возможно проблема с интернетом. Либо пишите разработчику", "Неудача", MB_ICONASTERISK);
+//                        };
+//
 //                    }
-//                }
+//
+//                };
+//                return false;
+//                FindClose(hFind);
 //
 //            }
 //
@@ -1373,8 +1716,30 @@
 //
 //    }
 //
+//    case WM_HSCROLL:
+//    {
+//        if (hTrack == (HWND)lParam /*&& wParam != 0*/)
+//        {
+//            int volume = SendMessage(hTrack, TBM_GETPOS, 0, 0);
+//            BASS_ChannelSetAttribute(YOUTUBER, BASS_ATTRIB_VOL, (float)volume / 100);
+//            BASS_ChannelSetAttribute(NYANCAT, BASS_ATTRIB_VOL, (float)volume / 100);
+//            BASS_ChannelSetAttribute(BONUS, BASS_ATTRIB_VOL, (float)volume / 100);
+//            BASS_ChannelSetAttribute(REMAX, BASS_ATTRIB_VOL, (float)volume / 100);
+//            BASS_ChannelSetAttribute(CHASTUSHKI, BASS_ATTRIB_VOL, (float)volume / 100);
+//            BASS_ChannelSetAttribute(NYANCAT, BASS_ATTRIB_VOL, (float)volume / 100);
+//            BASS_ChannelSetAttribute(YOUTUBER, BASS_ATTRIB_VOL, (float)volume / 100);
+//            BASS_ChannelSetAttribute(NYANCAT, BASS_ATTRIB_VOL, (float)volume / 100);
+//            BASS_ChannelSetAttribute(TITLED, BASS_ATTRIB_VOL, (float)volume / 100);
+//        }
 //
 //
+//
+//    }
+//    break;
+//
+// /*   case WM_LBUTTONDOWN:
+//        SendMessage(hProgBar, PBM_STEPIT, 0, 0);
+//        break;*/
 //
 //
 //
@@ -1429,8 +1794,32 @@
 //            SetBkColor(hdcStatic, rgbCurrent);
 //
 //            return (LRESULT)GetStockObject(NULL_BRUSH);
-//        }
 //
+//        }
+//        if (GetDlgCtrlID((HWND)lParam) == LENMUSIC)
+//        {
+//            HDC hdcStatic = (HDC)wParam;
+//            // or obtain the static handle in some other way
+//            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+//
+//            SetBkColor(hdcStatic, RGB(255, 255, 255));
+//
+//
+//            return (LRESULT)(COLOR_WINDOW + 1);
+//
+//        }
+//        if (GetDlgCtrlID((HWND)lParam) == VOLUMASTA)
+//        {
+//            HDC hdcStatic = (HDC)wParam;
+//            // or obtain the static handle in some other way
+//            SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+//
+//            SetBkColor(hdcStatic, RGB(255, 255, 255));
+//
+//
+//            return (LRESULT)(COLOR_WINDOW + 1);
+//
+//        }
 //
 //    }break;
 //
@@ -1456,7 +1845,7 @@
 //    RegisterClass(&op);
 //
 //
-//    CreateWindowEx(WS_EX_LAYERED, op.lpszClassName, "MixTerminal VER. 1.4", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 800, 600, NULL, NULL, op.hInstance, NULL);
+//    CreateWindowEx(WS_EX_LAYERED, op.lpszClassName, "MixTerminal VER. 1.4.1", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 800, 600, NULL, NULL, op.hInstance, NULL);
 //    MSG msg;
 //    while (GetMessage(&msg, NULL, 0, 0)) {
 //        TranslateMessage(&msg);

@@ -5,7 +5,7 @@
 #include "resource.h"
 #include "Names.h"
 
-#define MIXOS_VER		"Beta 2.2"
+#define MIXOS_VER		"Beta 2.5"
 #define MP_VER			MIXOS_VER
 //#define TERMINAL_VER	"Beta 1.2"
 //#define PIANO_VER		"Beta 1.1"

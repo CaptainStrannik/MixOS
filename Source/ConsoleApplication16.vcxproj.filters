@@ -54,6 +54,9 @@
     <ClCompile Include="PLD.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Sourc33.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -95,6 +98,9 @@
     <ClInclude Include="names2.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="resource5.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="bass\c\x64\bass.lib">
@@ -102,14 +108,22 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="C:\Users\Strannik\Desktop\icon2.ico">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="C:\Users\Strannik\Desktop\Main.ico">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
     <Image Include="MusicPlayer\BMP\ico\WINXP.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="icon1.ico">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="MusicPlayer\BMP\ico\MixOS.ico">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="MusicPlayer\BMP\ico\CURSOR.ico">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ConsoleApplication16.rc">
+      <Filter>Файлы ресурсов</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

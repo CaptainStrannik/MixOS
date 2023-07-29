@@ -25,10 +25,11 @@
 //                        name='Microsoft.Windows.Common-Controls' \
 //                        version='6.0.0.0' processorArchitecture='*'\
 // publicKeyToken='6595b64144ccf1df' language='*'\"")
-//
+//#pragma comment (lib, "urlmon.lib")
 //using namespace std;
 //char str1[1024];
 //
+//HSTREAM TERMINALERROR;
 //HSTREAM TITLED;
 //HSTREAM HAHA;
 //HSTREAM ROBOCOP;
@@ -139,11 +140,11 @@
 //
 //
 //        SetClassLong(hWnd, GCL_STYLE, GetClassLong(hWnd, GCL_STYLE));
-//        CreateWindow(TEXT("STATIC"), TEXT("Список эмуляторов версия 2.2"), WS_VISIBLE | WS_CHILD, 500, 18, 210-5, 18, hWnd, (HMENU)text1, NULL, NULL);
+//        CreateWindow(TEXT("STATIC"), TEXT("Список эмуляторов версия 2.5"), WS_VISIBLE | WS_CHILD, 500, 18, 210-5, 18, hWnd, (HMENU)text1, NULL, NULL);
 //        SetMenu(hWnd, hMenubar);
 //        BASS_Init(-1, 44100, 0, 0, NULL);
 //
-//        CreateWindow(TEXT("STATIC"), TEXT("Программы от подписчиков v.1.2"), WS_VISIBLE | WS_CHILD, 500-10, 600, 228, 18, hWnd, (HMENU)text1, NULL, NULL);
+//        /*CreateWindow(TEXT("STATIC"), TEXT("Программы от подписчиков v.1.2"), WS_VISIBLE | WS_CHILD, 500-10, 600, 228, 18, hWnd, (HMENU)text1, NULL, NULL);*/
 //
 //        CreateWindow(TEXT("STATIC"), TEXT("Мой сборник игры детства"), WS_VISIBLE | WS_CHILD, 500 - 10+500-40+20-30+15-2, 600, 228, 18, hWnd, (HMENU)text1, NULL, NULL);
 //
@@ -308,23 +309,11 @@
 //        SendMessage(GetDlgItem(hWnd, WIN86), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
 //
-//        CreateWindow(TEXT("BUTTON"), TEXT("Windows 8 [IGORPC]"), WS_VISIBLE | WS_CHILD, 180 + 360 - 20, 640 + 40, 150 + 20, 35, hWnd, (HMENU)WIN8, NULL, NULL);
-//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Win8.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //
-//        SendMessage(GetDlgItem(hWnd, WIN8), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//        //CreateWindow(TEXT("BUTTON"), TEXT("GENERATOR [ERTOR]"), WS_VISIBLE | WS_CHILD, 180+360-20+175-60, 640, 150+20, 35, hWnd, (HMENU)ERTOR, NULL, NULL);
+//        //hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Ertor.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //
-//        CreateWindow(TEXT("BUTTON"), TEXT("Self-ratingUP"), WS_VISIBLE | WS_CHILD, 180 + 360 - 20, 640, 150 + 20, 35, hWnd, (HMENU)SELFUP, NULL, NULL);
-//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\love.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
-//
-//        SendMessage(GetDlgItem(hWnd, SELFUP), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
-//
-//
-//        // 180+360-20, 640, 150+20, 35
-//
-//        CreateWindow(TEXT("BUTTON"), TEXT("GENERATOR [ERTOR]"), WS_VISIBLE | WS_CHILD, 180+360-20+175, 640, 150+20, 35, hWnd, (HMENU)ERTOR, NULL, NULL);
-//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Ertor.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
-//
-//        SendMessage(GetDlgItem(hWnd, ERTOR), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//        //SendMessage(GetDlgItem(hWnd, ERTOR), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
 //
 //
@@ -335,27 +324,19 @@
 //
 //
 //
-//        CreateWindow(TEXT("BUTTON"), TEXT("VideoPlayer[Z_Kraf1er_Z]"), WS_VISIBLE | WS_CHILD, 180 + 360 - 20-190, 640 + 40, 150 + 20+10+5, 35, hWnd, (HMENU)VIDEO, NULL, NULL);
-//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\VideoPlayer.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        //CreateWindow(TEXT("BUTTON"), TEXT("PhotoViewer[CreeperLife]"), WS_VISIBLE | WS_CHILD, 180 + 360 - 20 - 190+60, 640 + 40-40, 150 + 20 + 10 + 5, 35, hWnd, (HMENU)PHOTOVIEWER, NULL, NULL);
+//        //hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Photo.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //
-//        SendMessage(GetDlgItem(hWnd, VIDEO), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
-//
-//
-//
-//
-//        CreateWindow(TEXT("BUTTON"), TEXT("PhotoViewer[CreeperLife]"), WS_VISIBLE | WS_CHILD, 180 + 360 - 20 - 190, 640 + 40-40, 150 + 20 + 10 + 5, 35, hWnd, (HMENU)PHOTOVIEWER, NULL, NULL);
-//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Photo.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
-//
-//        SendMessage(GetDlgItem(hWnd, PHOTOVIEWER), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//        //SendMessage(GetDlgItem(hWnd, PHOTOVIEWER), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
 //
 //
 //         
-//        CreateWindow(TEXT("BUTTON"), TEXT("RU4EN [NBR]"), WS_VISIBLE | WS_CHILD, 180 + 360 - 20+175, 640 + 40, 150 + 20, 35, hWnd, (HMENU)TRANSLATE, NULL, NULL);
+//        //CreateWindow(TEXT("BUTTON"), TEXT("RU4EN [NBR]"), WS_VISIBLE | WS_CHILD, 180 + 360 - 20+175-120, 640 + 40, 150 + 20, 35, hWnd, (HMENU)TRANSLATE, NULL, NULL);
 //
-//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\NBR.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        //hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\NBR.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //
-//        SendMessage(GetDlgItem(hWnd, TRANSLATE), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//        //SendMessage(GetDlgItem(hWnd, TRANSLATE), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
 //
 //
@@ -375,8 +356,18 @@
 //
 //        SendMessage(GetDlgItem(hWnd, WINMENU), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
+//        CreateWindow(TEXT("BUTTON"), TEXT("Дистрибутивы LINUX (БЕТА)"), WS_VISIBLE | WS_CHILD|WS_DISABLED, 180 + 360 - 20 + 175 + 350 - 100 - 900+240, 640, 150 + 20 + 60, 60 + 10 + 10 - 5, hWnd, (HMENU)NULL, NULL, NULL);
+//        hIconAll = (HICON)LoadImage(hInst, "", IMAGE_ICON, 32, 32, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //
+//        /*SendMessage(GetDlgItem(hWnd, WINMENU), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);*/
 //
+//        CreateWindow(TEXT("BUTTON"), TEXT("Написать разработчику"), WS_VISIBLE | WS_CHILD , 180 + 360 - 20 + 175 + 350 - 100 - 900 + 240+240, 640, 150 + 20 + 60, 60 + 10 + 10 - 5, hWnd, (HMENU)MAIL, NULL, NULL);
+//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\computer.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        SendMessage(GetDlgItem(hWnd, MAIL), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//
+//        CreateWindow(TEXT("BUTTON"), TEXT("Свой плагин"), WS_VISIBLE | WS_CHILD, 180 + 360 - 20 + 175 + 350 - 100 - 900 + 240 + 240+240, 640, 150 , 60 + 10 + 10 - 5, hWnd, (HMENU)MINESOFT, NULL, NULL);
+//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\desktop.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        SendMessage(GetDlgItem(hWnd, MINESOFT), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //
 //
 //       
@@ -384,9 +375,7 @@
 //        hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS  | TBS_VERT|TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND | WS_VISIBLE, 1100, 111, 25, 235, hWnd, (HMENU)LENMUSIC, NULL, NULL);
 //        CreateWindow(TEXT("STATIC"), TEXT("Громкость"), WS_VISIBLE | WS_CHILD, 1140, 130, 70, 18, hWnd, (HMENU)MAKEMAKE, NULL, NULL);    //Это не бегунок, а текст      //MAX VOLUME почему-то внизу.
 //
-//        // Не...
-//        // Можешь тогда сделать так, чтобы окно по центру экрана спавнилось?
-//        // покажи   ОООЛ ПОЛУЧИЛОСЬ   Вот только звук и его громкость не меняется
+//
 //
 //        eMp3 = CreateWindow(TEXT("Edit"), NULL, WS_EX_CLIENTEDGE | WS_BORDER | WS_CHILD | WS_VISIBLE, 120, 50, 1000 + 30, 20, hWnd, (HMENU)SKINSSTRO, NULL, 0);
 //        ShowWindow(GetDlgItem(hWnd, SKINSSTRO), SW_HIDE);
@@ -461,6 +450,24 @@
 //        {
 //            system("start MusicPlayer\\PhotoViewer\\CreeperPhotoViewer.exe");
 //        }
+//        if (LOWORD(wParam) == MINESOFT)
+//        {
+//            WIN32_FIND_DATA MXS;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\POLZ\\PLUGIN.EXE", &MXS);
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//                
+//                
+//                system("start MusicPlayer\\POLZ\\PLUGIN.EXE");
+//            }
+//            else
+//            {
+//
+//                system("start notepad MusicPlayer\\POLZ\\MXS.TXT");
+//
+//            };
+//            
+//        }
 //
 //
 //        if (LOWORD(wParam) == PS2)
@@ -528,7 +535,46 @@
 //        }
 //        if (LOWORD(wParam) == W311)
 //        {
-//            system("start MusicPlayer\\W311\\dosbox.exe -conf MusicPlayer\\W311\\dosbox.conf -noconsole");
+//            WIN32_FIND_DATA win3;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\SYSTEM\\WINDOWS\\WIN80286\\WIN3.11\\WIN31.mixos", &win3);
+//
+//
+//
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//
+//                FindClose(hFind);
+//                BASS_StreamFree(TITLED);
+//                BASS_ChannelStop(TITLED);
+//                BASS_SampleFree(TITLED);
+//                BASS_Stop();
+//                BASS_Start();
+//                TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\LOGON\\Win3.mp3", 0, 0, 0);
+//                BASS_ChannelPlay(TITLED, false);
+//                system("start MusicPlayer\\W311\\dosbox.exe -conf MusicPlayer\\W311\\dosbox.conf -noconsole");
+//            }
+//            else
+//            {
+//
+//                URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/SYSTEM/WIN3.11", "MusicPlayer\\SYSTEM\\WINDOWS\\WIN3.11.zip", 0, 0);
+//                system("MusicPlayer\\SYSTEM\\WINDOWS\\WIN3.11.bat");
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\SYSTEM\\WINDOWS\\WIN80286\\WIN3.11\\WIN31.mixos", &EXAMPLE);
+//                FindClose(hFind);
+//                BASS_StreamFree(TITLED);
+//                BASS_ChannelStop(TITLED);
+//                BASS_SampleFree(TITLED);
+//                BASS_Stop();
+//                BASS_Start();
+//                TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\LOGON\\Win3.mp3", 0, 0, 0);
+//                BASS_ChannelPlay(TITLED, false);
+//                system("start MusicPlayer\\W311\\dosbox.exe -conf MusicPlayer\\W311\\dosbox.conf -noconsole");
+//
+//
+//            };
+//
+//            return false;
+//            FindClose(hFind);
 //        }
 //
 //        if (LOWORD(wParam) == VIDEO)
@@ -783,6 +829,19 @@
 //            hBrush = CreateSolidBrush(RGB(51, 0, 102));
 //            InvalidateRect(hWnd, NULL, FALSE);
 //        }
+//        if (LOWORD(wParam) == MAIL)
+//        {
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_SHOW);
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title8.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//            system("start https://lesergig.wixsite.com/strannikyt/voprosy-i-otvety");
+//        }
 //        if (LOWORD(wParam) == STANDARTA)
 //        {
 //            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_SHOW);
@@ -861,7 +920,7 @@
 //                rgbCurrent = cc.rgbResult;
 //            }
 //
-//            InvalidateRect(hWnd, NULL, FALSE);   // ТО АХРИНЕТЬ ОХУЕТЬ ТОЧНЕЕ. Теперь надо такое же добавить в Терминал... И в Пианино... И еще много куда...
+//            InvalidateRect(hWnd, NULL, FALSE);   
 //
 //            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
 //            ShowWindow(GetDlgItem(hWnd, TITLE), SW_HIDE);
@@ -879,12 +938,107 @@
 //
 //        if (LOWORD(wParam) == UAMENU)
 //        {
-//            system("start MusicPlayer\\UA\\UAMENU.exe");
+//        UAFULL:
+//            BASS_StreamFree(TITLED);
+//            BASS_ChannelStop(TITLED);
+//            BASS_SampleFree(TITLED);
+//            TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\1B161.WAV", 0, 0, 0);
+//            BASS_ChannelPlay(TITLED, false);
+//
+//            WIN32_FIND_DATA EXAMPLE;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAMENU.exe", &EXAMPLE);
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//
+//                system("start MusicPlayer\\UA\\UAMENU.exe");
+//
+//            }
+//            else
+//            {
+//                BASS_StreamFree(TITLED);
+//                BASS_ChannelStop(TITLED);
+//                BASS_SampleFree(TITLED);
+//                TITLED = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\1A141.WAV", 0, 0, 0);
+//                BASS_ChannelPlay(TITLED, false);
+//                MessageBox(hWnd, "Сейчас программа будет скачивать сборник игр\nНа это уйдёт время и программа будет выглядеть зависшей\nПросьба не выключать программу и довериться!!!\nРазработчик пытался решить проблему, но не вышло.\nЖдите обновления, когда это пофиксят)", "ВНИМАНИЕ", MB_OK | MB_ICONASTERISK);
+//                URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UA.zip", "MusicPlayer\\UA.zip", 0, 0);
+//
+//
+//                system("MusicPlayer\\UAFULL.bat");
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAMENU.exe", &EXAMPLE);
+//                if (INVALID_HANDLE_VALUE != hFind)
+//                {
+//
+//
+//                    MessageBoxA(hWnd, "Сборник Urban Assault установлен!\nИграйте на здоровье!", "ОТЛИЧНО!!!", MB_ICONINFORMATION);
+//
+//
+//                }
+//                if (INVALID_HANDLE_VALUE == hFind)
+//                {
+//                    
+//                        if (MessageBox(hWnd, "Не установилась, возможно проблема с интернетом\nПопробовать ещё раз?", "Неудача  =(", MB_YESNO | MB_ICONQUESTION == IDYES))
+//                        {
+//                            goto UAFULL;
+//                        }
+//                        else
+//                        {
+//                            return 0;
+//                        };
+//
+//                }
+//
+//            };
+//
+//
+//            return false;
+//            FindClose(hFind);
+//
+//
+//
+//
 //        }
 //
 //        if (LOWORD(wParam) == WINMENU)
 //        {
-//            system("start MusicPlayer\\SYSTEM\\WINDOWS\\MENU.exe");
+//            WIN32_FIND_DATA WINCOLLECTION;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\SYSTEM\\WINDOWS\\MENU.exe", &WINCOLLECTION);
+//
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//                system("start MusicPlayer\\SYSTEM\\WINDOWS\\MENU.exe");
+//
+//            }
+//
+//            else
+//            {
+//                TERMINALERROR = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\xp.mp3", 0, 0, 0);
+//                BASS_ChannelPlay(TERMINALERROR, false);
+//                if (MessageBox(hWnd, "Ошибка с кодом 0xс000009b \n(Установите Сборник Windows)\nХотите установить?", "MixOS: WINCOLLECTION NOT FOUND", MB_OK | MB_ICONERROR) == IDOK)
+//                {
+//                    MessageBoxA(hWnd, "Пока терминал будет скачивать,\nон зависнет, но доверьтесь и не закрывайте)", "ВНИМАНИЕ", MB_ICONASTERISK);
+//                    URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/SYSTEM/SBOROS.zip", "MusicPlayer\\SBOROS.zip", 0, 0);
+//
+//                    system("MusicPlayer\\SBOROS.bat");
+//                    WIN32_FIND_DATA youtubckic;
+//                    HANDLE hFind = FindFirstFile("MusicPlayer\\SYSTEM\\WINDOWS\\MENU.exe", &youtubckic);
+//                    if (INVALID_HANDLE_VALUE != hFind)
+//                    {
+//                        MessageBoxA(hWnd, "Теперь можете пользоваться сборником систем\nОшибка исправлена!!", "Успех!", MB_ICONASTERISK);
+//                    }
+//                    else
+//                    {
+//                        MessageBoxA(hWnd, "Ошибка не была исправлена. Возможно проблема с интернетом. Либо пишите разработчику", "Неудача", MB_ICONASTERISK);
+//                    };
+//
+//                }
+//
+//            };
+//            return false;
+//            FindClose(hFind);
+//
+//
 //        }
 //
 //
@@ -907,7 +1061,7 @@
 //            ofnn.nMaxFileTitle = 0;
 //            //ofn.lpstrInitialDir = ".";
 //            ofnn.lpstrInitialDir = "MusicPlayer\\BMP\\MIXEMULATE";
-//            ofnn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_DONTADDTORECENT | OFN_NOCHANGEDIR;   //Бага больше нет!  А я пока отойду.
+//            ofnn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_DONTADDTORECENT | OFN_NOCHANGEDIR;   
 //
 //            if (GetOpenFileName(&ofnn) == TRUE)
 //            {
@@ -928,25 +1082,13 @@
 //                    SendMessage(hwall, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpwall);
 //
 //                }
-//                /*CreateWindow(TEXT("BUTTON"), TEXT("Установить"), WS_VISIBLE | WS_CHILD, 460, 500, 300, 70, hWnd, (HMENU)INSTBKG, NULL, NULL);*/
+//
 //            }
 //
 //
 //             
 //                   
-//                    /*CreateWindow(TEXT("BUTTON"), TEXT("Установить"), WS_VISIBLE | WS_CHILD, 460, 500, 300, 70, hWnd, (HMENU)INSTBKG, NULL, NULL);*/
-//                
 //
-//
-//
-//
-//        // if (LOWORD(wParam) == CLEARSKIN)
-//
-//        //{
-//        //    DestroyWindow(hwall);
-//
-//
-//        //}
 //
 //
 //
@@ -1103,13 +1245,13 @@
 //                }
 //            }
 //
-//        case WM_VSCROLL: {    //Короче, бегунок работает, но макс громкость та, что внизу... надо поменять, как-то...
+//        case WM_VSCROLL: {   
+//            int volume = SendMessage(hTrack, TBM_GETPOS, 0, 0);
 //            if (hTrack == (HWND)lParam)
 //            {
-//
-//                BASS_ChannelSetAttribute(TITLED, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS,80,40)); //ПРОБОВАТЬ?
-//                /*BASS_ChannelSetAttribute(ROBOCOP, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 80, 100));*/
-//                //Типа это в целом не обязательно, учитывая, что до конца композициивсё равно никто не дожидается.. Но тип.. так чист на досуге посмотреть. А сейчас всё работает, просто координаты надо подобрать
+//                
+//                BASS_ChannelSetAttribute(TITLED, BASS_ATTRIB_VOL, (float)volume / 100); //ПРОБОВАТЬ?
+//                
 //
 //            }
 //        
@@ -1180,7 +1322,7 @@
 //    RegisterClass(&op);
 //
 //
-//    //Вот тут видишь, всё работает исправно, и цвет меняется и всё остальное. И при этом звук не дублируется. По-любому, где- то в Youtube.cpp мы забыли BassSTOP
+//    
 //
 //    CreateWindowEx(WS_EX_LAYERED,op.lpszClassName, "Эмуляторы", WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, 100, 100, 1280, 800, NULL, NULL, op.hInstance, NULL);
 //    MSG msg;

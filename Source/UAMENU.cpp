@@ -17,8 +17,9 @@
 //#include "Names.h"
 //#include "bass.h"  
 //#include "LoveInQuest.h"
+//#include "names2.h"
 //#define STRANNI 90     
-//
+//#pragma comment (lib, "urlmon.lib")
 //#pragma comment(lib, "winmm.lib")
 //#pragma comment(lib, "bass")
 //#pragma comment(linker,"/manifestdependency:\"type='win32' \
@@ -89,10 +90,11 @@
 //        HMENU hMenubar = CreateMenu();
 //        HMENU hAbout = CreateMenu();
 //        HMENU hOptions = CreateMenu();
-//
+//        HMENU hMods = CreateMenu();
 //
 //        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hAbout, "Справка");
 //        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hOptions, "Настройки");
+//        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hMods, "Модификации");
 //
 //
 //
@@ -103,10 +105,15 @@
 //        AppendMenu(hOptions, MF_STRING, MYCOLOR, "Сменить цвет");
 //        AppendMenu(hOptions, MF_SEPARATOR,MYCOLOR,0);
 //        AppendMenu(hOptions, MF_STRING, CHANGEMUSIC, "Сменить музыку");
+//        AppendMenu(hOptions, MF_SEPARATOR, MYCOLOR, 0);
+//        AppendMenu(hOptions, MF_STRING, UAKILL, "Удалить UA");
+//
+//        AppendMenu(hMods, MF_STRING, UADOMDOM, "UA DOMINATION");
 //
 //
 //        SetMenu(hWnd, hMenubar);
-//        BASS_Init(-1, 44100, 0, 0, NULL);
+//        BASS_Init(-1, 44100, 0, 0, 0);
+//        BASS_ChannelSetAttribute(UASSAULT, BASS_ATTRIB_VOL, 0.2F);
 //
 //        HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
 //        HICON hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
@@ -158,7 +165,7 @@
 //            BASS_Start();
 //            UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\UA.mp3", 0, 0, 0);
 //            BASS_ChannelPlay(UASSAULT, false);
-//
+//            
 //            CreateWindow(TEXT("BUTTON"), TEXT("1"), WS_VISIBLE | WS_CHILD, 30, 100, 30, 30, hWnd, (HMENU)MUA1, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("2"), WS_VISIBLE | WS_CHILD, 70, 100, 30, 30, hWnd, (HMENU)MUA2, NULL, NULL);
 //            CreateWindow(TEXT("BUTTON"), TEXT("3"), WS_VISIBLE | WS_CHILD, 110, 100, 30, 30, hWnd, (HMENU)MUA3, NULL, NULL);
@@ -220,6 +227,10 @@
 //
 //      /*  }*/
 //
+//        if (LOWORD(wParam) == UAKILL)
+//        {
+//            system("start MusicPlayer\\UA\\DELUA.bat");
+//        }
 //        if (LOWORD(wParam) == UASEENENEMY1)
 //        {
 //            BASS_StreamFree(ABOUT);
@@ -268,24 +279,298 @@
 //        }
 //        if (LOWORD(wParam) == UAORIG)
 //        {
-//            system("MusicPlayer\\UA\\StartOrig.bat");
-//            PostQuitMessage(0);
+// UAORIGINAL:
+//
+//
+//            WIN32_FIND_DATA EXAMPLE;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAORIG\\UA.mixos", &EXAMPLE);
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//                BASS_ChannelStop(UASSAULT);
+//                system("MusicPlayer\\UA\\StartOrig.bat");
+//
+//
+//            }
+//            else
+//            {
+//                UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\1A141.WAV", 0, 0, 0);
+//                BASS_ChannelPlay(UASSAULT, false);
+//                MessageBox(hWnd, "Сейчас программа будет скачивать образ игры\nНа это уйдёт время и программа будет выглядеть зависшей\nПросьба не выключать программу и довериться!!!\nРазработчик пытался решить проблему, но не вышло.\nЖдите обновления, когда это пофиксят)", "ВНИМАНИЕ", MB_OK | MB_ICONASTERISK);
+//                URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UAORIG.zip", "MusicPlayer\\UAORIG.zip", 0, 0);
+//                /*URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UA.mixos", "MusicPlayer\\UA\\UAORIG", 0, 0);*/
+//
+//                system("MusicPlayer\\UA.bat");
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAORIG\\UA.mixos", &EXAMPLE);
+//                if (INVALID_HANDLE_VALUE != hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\11221.WAV", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//
+//                    MessageBoxA(hWnd, "Urban Assault Успешно установлена\nВместе с дополнениями Metropolis Dawn\nИграйте на здоровье!", "ОТЛИЧНО!!!", MB_ICONINFORMATION);
+//
+//
+//                }
+//                if (INVALID_HANDLE_VALUE == hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\10.mp3", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//                    if (MessageBox(hWnd, "Не установилась, возможно проблема с интернетом\nПопробовать ещё раз?", "Неудача  =(", MB_YESNO | MB_ICONQUESTION == IDYES))
+//                    {
+//                        goto UAORIGINAL;
+//                    }
+//                    else
+//                    {
+//                        return 0;
+//                    };
+//
+//                }
+//
+//            };
+//         
+//
+//
+//            return false;
+//            FindClose(hFind);
 //        }
 //        if (LOWORD(wParam) == UAORIGGHOR)
 //        {
-//            system("MusicPlayer\\UA\\StartOrigGhor.bat");
-//            PostQuitMessage(0);
+//        UAORIGINALRED:
+//
+//
+//            WIN32_FIND_DATA EXAMPLE;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAORIGGHOR\\UA.mixos", &EXAMPLE);
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//                BASS_ChannelStop(UASSAULT);
+//                system("MusicPlayer\\UA\\StartOrigGhor.bat");
+//
+//
+//            }
+//            else
+//            {
+//                UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\1A141.WAV", 0, 0, 0);
+//                BASS_ChannelPlay(UASSAULT, false);
+//                MessageBox(hWnd, "Сейчас программа будет скачивать образ игры\nНа это уйдёт время и программа будет выглядеть зависшей\nПросьба не выключать программу и довериться!!!\nРазработчик пытался решить проблему, но не вышло.\nЖдите обновления, когда это пофиксят)", "ВНИМАНИЕ", MB_OK | MB_ICONASTERISK);
+//                URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UAORIGGHOR.zip", "MusicPlayer\\UAORIGGHOR.zip", 0, 0);
+//                /*URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UA.mixos", "MusicPlayer\\UA\\UAORIG", 0, 0);*/
+//
+//                system("MusicPlayer\\UA1.bat");
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAORIGGHOR\\UA.mixos", &EXAMPLE);
+//                if (INVALID_HANDLE_VALUE != hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\11221.WAV", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//
+//                    MessageBoxA(hWnd, "Мой мод на Urban Assault (HARD RED MODE) успешно установлен!\nИграйте на здоровье!", "ОТЛИЧНО!!!", MB_ICONINFORMATION);
+//
+//
+//                }
+//                if (INVALID_HANDLE_VALUE == hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\10.mp3", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//                    if (MessageBox(hWnd, "Не установилась, возможно проблема с интернетом\nПопробовать ещё раз?", "Неудача  =(", MB_YESNO | MB_ICONQUESTION == IDYES))
+//                    {
+//                        goto UAORIGINALRED;
+//                    }
+//                    else
+//                    {
+//                        return 0;
+//                    };
+//
+//                }
+//
+//            };
+//
+//
+//            return false;
+//            FindClose(hFind);
 //        }
 //        if (LOWORD(wParam) == UAMETROGHOR)
 //        {
-//            system("MusicPlayer\\UA\\StartMetroGhor.bat");
-//            PostQuitMessage(0);
+//            
+//            
+//   UAORIGINALGHOR:
+//
+//
+//            WIN32_FIND_DATA EXAMPLE;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAORIG\\UA.mixos", &EXAMPLE);
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//                BASS_ChannelStop(UASSAULT);
+//                system("MusicPlayer\\UA\\StartMetroGhor.bat");
+//
+//
+//            }
+//            else
+//            {
+//                UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\1A141.WAV", 0, 0, 0);
+//                BASS_ChannelPlay(UASSAULT, false);
+//                MessageBox(hWnd, "Сейчас программа будет скачивать образ игры\nНа это уйдёт время и программа будет выглядеть зависшей\nПросьба не выключать программу и довериться!!!\nРазработчик пытался решить проблему, но не вышло.\nЖдите обновления, когда это пофиксят)", "ВНИМАНИЕ", MB_OK | MB_ICONASTERISK);
+//                URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UAORIG.zip", "MusicPlayer\\UAORIG.zip", 0, 0);
+//                /*URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UA.mixos", "MusicPlayer\\UA\\UAORIG", 0, 0);*/
+//
+//                system("MusicPlayer\\UA.bat");
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAORIG\\UA.mixos", &EXAMPLE);
+//                if (INVALID_HANDLE_VALUE != hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\11221.WAV", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//
+//                    MessageBoxA(hWnd, "Urban Assault Успешно установлена\nВместе с дополнениями Metropolis Dawn\nИграйте на здоровье!", "ОТЛИЧНО!!!", MB_ICONINFORMATION);
+//
+//
+//                }
+//                if (INVALID_HANDLE_VALUE == hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\10.mp3", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//                    if (MessageBox(hWnd, "Не установилась, возможно проблема с интернетом\nПопробовать ещё раз?", "Неудача  =(", MB_YESNO | MB_ICONQUESTION == IDYES))
+//                    {
+//                        goto UAORIGINALGHOR;
+//                    }
+//                    else
+//                    {
+//                        return 0;
+//                    };
+//
+//                }
+//
+//            };
+//
+//
+//
+//            return false;
+//            FindClose(hFind);
+//
+//
 //        }
 //        if (LOWORD(wParam) == UAMETROTAER)
 //        {
-//            system("MusicPlayer\\UA\\StartMetroTaer.bat");
-//            PostQuitMessage(0);
+//
+//        UAORIGINALTAER:
+//
+//
+//            WIN32_FIND_DATA EXAMPLE;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UAORIG\\UA.mixos", &EXAMPLE);
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//                BASS_ChannelStop(UASSAULT);
+//                system("MusicPlayer\\UA\\StartMetroTaer.bat");
+//
+//
+//            }
+//            else
+//            {
+//                UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\1A141.WAV", 0, 0, 0);
+//                BASS_ChannelPlay(UASSAULT, false);
+//                MessageBox(hWnd, "Сейчас программа будет скачивать образ игры\nНа это уйдёт время и программа будет выглядеть зависшей\nПросьба не выключать программу и довериться!!!\nРазработчик пытался решить проблему, но не вышло.\nЖдите обновления, когда это пофиксят)", "ВНИМАНИЕ", MB_OK | MB_ICONASTERISK);
+//                URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UAORIG.zip", "MusicPlayer\\UAORIG.zip", 0, 0);
+//                URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/UA.mixos", "MusicPlayer\\UA\\UAORIG", 0, 0);
+//
+//                system("MusicPlayer\\UA.bat");
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\ORIG\\UA.mixos", &EXAMPLE);
+//                if (INVALID_HANDLE_VALUE != hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\11221.WAV", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//
+//                    MessageBoxA(hWnd, "Urban Assault Успешно установлена\nВместе с дополнениями Metropolis Dawn\nИграйте на здоровье!", "ОТЛИЧНО!!!", MB_ICONINFORMATION);
+//
+//
+//                }
+//                if (INVALID_HANDLE_VALUE == hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\10.mp3", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//                    if (MessageBox(hWnd, "Не установилась, возможно проблема с интернетом\nПопробовать ещё раз?", "Неудача  =(", MB_YESNO | MB_ICONQUESTION == IDYES))
+//                    {
+//                        goto UAORIGINALTAER;
+//                    }
+//                    else
+//                    {
+//                        return 0;
+//                    };
+//
+//                }
+//
+//
+//            }
+//
+//
+//            return false;
+//            FindClose(hFind);
+//
+//
 //        }
+//
+//
+//
+//        if (LOWORD(wParam) == UADOMDOM)
+//        {
+//
+//        UADOM:
+//
+//
+//            WIN32_FIND_DATA EXAMPLE;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UADOM\\UA.mixos", &EXAMPLE);
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//                BASS_ChannelStop(UASSAULT);
+//
+//                system("MusicPlayer\\UA\\StartDOM.bat");
+//
+//
+//            }
+//            else
+//            {
+//                UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\1A141.WAV", 0, 0, 0);
+//                BASS_ChannelPlay(UASSAULT, false);
+//                MessageBox(hWnd, "Сейчас программа будет скачивать образ игры\nНа это уйдёт время и программа будет выглядеть зависшей\nПросьба не выключать программу и довериться!!!\nРазработчик пытался решить проблему, но не вышло.\nЖдите обновления, когда это пофиксят)", "ВНИМАНИЕ", MB_OK | MB_ICONASTERISK);
+//                URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/UA/MODS/UADOM/UADOM.zip", "MusicPlayer\\UAORIG.zip", 0, 0);
+//                system("MusicPlayer\\UA.bat");
+//                WIN32_FIND_DATA EXAMPLE;
+//                HANDLE hFind = FindFirstFile("MusicPlayer\\UA\\UADOM\\UA.mixos", &EXAMPLE);
+//                if (INVALID_HANDLE_VALUE != hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\11221.WAV", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//
+//                    MessageBoxA(hWnd, "Мод UA DOMINATION успешно установлен\nИграйте на здоровье!", "ОТЛИЧНО!!!", MB_ICONINFORMATION);
+//
+//
+//                }
+//                if (INVALID_HANDLE_VALUE == hFind)
+//                {
+//                    UASSAULT = BASS_StreamCreateFile(FALSE, "MusicPlayer\\SYSTEM\\WINDOWS\\SOUNDS\\ERROR\\10.mp3", 0, 0, 0);
+//                    BASS_ChannelPlay(UASSAULT, false);
+//                    if (MessageBox(hWnd, "Не установилась, возможно проблема с интернетом\nПопробовать ещё раз?", "Неудача  =(", MB_YESNO | MB_ICONQUESTION == IDYES))
+//                    {
+//                        goto UADOM;
+//                    }
+//                    else
+//                    {
+//                        return 0;
+//                    };
+//
+//                }
+//
+//
+//            }
+//
+//
+//            return false;
+//            FindClose(hFind);
+//
+//
+//        }
+//
+//
+//
 //        if (LOWORD(wParam) == CHANGEMUSIC)
 //        {
 //

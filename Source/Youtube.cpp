@@ -1,8 +1,7 @@
 //#include <windows.h>
 //#include <cstring>
-//#include <cstdlib>                   //Всё нормально работает
-//// только у меня emulate.cpp нет     //А если я его просто открою, то ты увидишь?
-//// подожди 3 сек и открой
+//#include <cstdlib>                   
+//#include <urlmon.h>
 //#include <cstdio>
 //#include <tchar.h>
 //#include <wchar.h>
@@ -19,8 +18,8 @@
 //#include "Names.h"
 //#include "bass.h"
 //#include <fstream>
-//
-//
+//#include <afx.h>
+//#define YT 8192
 //
 //HWND MENUMENUMENU;
 //HWND MENUMENUMENU1;
@@ -40,9 +39,10 @@
 // publicKeyToken='6595b64144ccf1df' language='*'\"")
 //#pragma comment(lib, "winmm.lib")
 //#pragma comment(lib, "bass")
+//#pragma comment (lib, "urlmon.lib")
 //using namespace std;
 //char str1[1024];
-//
+//int a = 140;
 //HDC hdc;
 //PAINTSTRUCT ps;
 //HBRUSH hBrush = CreateSolidBrush(RGB(76,0 ,153));
@@ -59,20 +59,30 @@
 //    switch (uMsg) {
 //
 //    case WM_CREATE: {
-//
+//        //HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
+//        //HICON hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //        eMp3 = CreateWindow(TEXT("Edit"), NULL, WS_EX_CLIENTEDGE | WS_BORDER | WS_CHILD, 120, 50, 1000 + 30, 20, hWnd, (HMENU)SKINSSTRO, NULL, 0);
-//        int a = 140;
+//        
 //
 //        HMENU hMenubar = CreateMenu();
 //
 //        HMENU hAbout = CreateMenu();
 //        HMENU hColorYT = CreateMenu();
-//
+//        HMENU hOption = CreateMenu();
 //
 //        NOTIFYICONDATA data;
 //        ZeroMemory(&data, sizeof(NOTIFYICONDATA));
 //
+//        HINSTANCE hInst = (HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE);
 //
+// 
+//        HICON hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//
+//
+//        CreateWindow(TEXT("BUTTON"), TEXT("Написать разработчику"), WS_VISIBLE | WS_CHILD, 80 + a, 390, 180, 25, hWnd, (HMENU)MAIL, NULL, NULL);
+//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\MixOS.ico", IMAGE_ICON, 16, 16, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        SendMessage(GetDlgItem(hWnd, MAIL), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
+//        ShowWindow(GetDlgItem(hWnd,MAIL),SW_HIDE);
 //
 //
 //        SetLayeredWindowAttributes(hWnd, NULL, 255, LWA_ALPHA);
@@ -86,19 +96,19 @@
 //        data.hIcon = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\Youtube.ico", IMAGE_ICON, 48, 48, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
 //        data.uVersion = NOTIFYICON_VERSION;
 //        
-//   /*     strcpy(data.szInfoTitle, "Загрузчик видео с Youtube");*/
+// 
 //        strcpy(data.szTip, "Загрузчик видео с Youtube");
 //
 //        Shell_NotifyIcon(NIM_ADD, &data);
 //
 //        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hAbout, "Справка");
-//        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hColorYT, "Сменить цвет");
-//
+//        AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hColorYT, "Опции");
+//        //AppendMenu(hMenubar, MF_POPUP, (UINT_PTR)hOption, "Опции");
 //
 //
 //        CreateWindow(TEXT("BUTTON"), TEXT("Скачать ролик с Youtube"), WS_VISIBLE | WS_CHILD, 45 + a, 130, 240, 25, hWnd, (HMENU)MENUMAKER, NULL, NULL);
-//
-//
+//        hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\download.ico", IMAGE_ICON, 16, 16, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//        SendMessage(GetDlgItem(hWnd, MENUMAKER), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //        BASS_Init(-1, 44100, 0, 0, NULL); 
 //
 //
@@ -106,36 +116,29 @@
 //
 //
 //        AppendMenu(hAbout, MF_STRING, STRANNIK, "О программе");
+//
 //        AppendMenu(hColorYT, MF_STRING, COLORYT, "Мой цвет");
 //        AppendMenu(hColorYT, MF_STRING, SETBKG, "Мой скин");
 //        AppendMenu(hColorYT, MF_SEPARATOR, NULL, NULL);
 //        AppendMenu(hColorYT, MF_STRING, polupon, "Включить полупрозрачность");
 //        AppendMenu(hColorYT, MF_STRING, polupoff, "Выключить полупрозрачность");
 //
-//
+//        AppendMenu(hColorYT, MF_STRING, YT, "Скачать обновление");
 //
 //        SetMenu(hWnd, hMenubar); 
 //
 //
-//        BASS_Start();     //Вот таким образом я исправил баг. Ну типа теперь музыка играет только после нажатия на первую кнопку. При этом смена цвета работает исправно
-//        // лучше так чем никак    //Да, но не понятно, почему например в плеере такого бага нет? Наверное потому, что там музыка с самого начала не играет. Ну тогда почему в списке эмуляторов бага нет? Надо код emulate.cpp посмотреть.
-//        // только вот я не смогу открыть файл
-//        // я перезайду и пожалуста не открывай файлы так быстро 
+//        BASS_Start();     
+//
 //        YOUTUBER = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\Youtube.mp3", 0, 0, 0);
-//        BASS_ChannelPlay(YOUTUBER, false);// Вот теперь все ИДЕАЛЬНО работает. А что было то?
-//        // воспроизведение было в начале     Вот но что.... Понятно. Ну теперь все нормально работает.
-//        // а когда релиз будет???  Кхм а теперь баг вернулся Типа звук включается по нажатию на первую кнопку. Но это щас исправить можно удалением одной строчки. Щас
+//        BASS_ChannelPlay(YOUTUBER, false);
+//
 //
 //        break;
 //    }
 //    case WM_COMMAND:
-//            //теперь смена цвета не работает, а звук дублируется....
+//            
 //    {
-//
-//
-//
-//
-//
 //
 //
 //
@@ -163,21 +166,23 @@
 //        len90 = GetWindowText(MENUMENUMENU, video, 1200);
 //        if (LOWORD(wParam) == MENUMAKER)
 //        {
-//            int a = 140;   //Вот, теперь больше багов тут нет. теперь смотри. Надо добавить микшер громкости во все подпрограммы, где используется звук. =) Это Youtube.cpp Emulate.cpp, quest.cpp.  Но квест потом надо еще будет допиливать. Когда допилим, то думаю, что это можно уже как апдейт выпустить.
-//            // а меня в авторы добавишь???    //Я ж сказал, что добавлю, пока что как помощника, ибо всё равно тут пока больше моего кода, но если ты сделаешь отдельную подпрограммку, какую-нибудь, то считай сразу будешь разработчиком этой программы =).
-//            //ок
+//         
+//
+//            ShowWindow(GetDlgItem(hWnd, MAIL), SW_SHOW);
+//       
+//         
 //            MENUMENUMENU = CreateWindow(TEXT("EDIT"), TEXT("Ссылка на ролик на Youtube"), WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE, 10, 500, 605, 70, hWnd, (HMENU)WRITING, NULL, 0);
 //            CreateWindow(TEXT("BUTTON"), TEXT("Скачать"), WS_VISIBLE | WS_CHILD, 120 + a, 360, 100, 25, hWnd, (HMENU)MAKEMAKE, NULL, NULL);
+//            HICON hIconAll = (HICON)LoadImage(hInst, "MusicPlayer\\BMP\\ico\\download.ico", IMAGE_ICON, 16, 16, LR_LOADFROMFILE | LR_LOADTRANSPARENT);
+//            SendMessage(GetDlgItem(hWnd, MAKEMAKE), BM_SETIMAGE, IMAGE_ICON, (LPARAM)hIconAll);
 //            ShowWindow(GetDlgItem(hWnd, MENUMAKER), SW_HIDE);
 //            CreateWindow(TEXT("STATIC"), TEXT("                 Чтобы скачать ролик надо : \n\n1) Вставить ссылку на ролик в поле для ввода.\n2) Нажать кнопку << Скачать >> .\n\nP.S Радоваться, что вы не шашнахме = )\n\nP.S.S Беречь свои тонкие кости = ) "), WS_VISIBLE | WS_CHILD, 150, 90, 325, 140, hWnd, (HMENU)text1, NULL, NULL);
 //
-//            hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | LVS_EX_TRANSPARENTBKGND | WS_VISIBLE, 150, 250, 320, 30, hWnd, (HMENU)LENMUSIC, NULL, NULL);
+//            hTrack = CreateWindow(TRACKBAR_CLASS, "SOUND", WS_CHILD | TBS_AUTOTICKS | TBSTYLE_TOOLTIPS | WS_VISIBLE, 150, 250, 320, 30, hWnd, (HMENU)LENMUSIC, NULL, NULL);
 //            CreateWindow(TEXT("STATIC"), TEXT("Громкость"), WS_VISIBLE | WS_CHILD, 130 + a, 290, 70, 18, hWnd, (HMENU)text1, NULL, NULL);
-//                                            //PERFECT
-//                                            // PROFIT     Теперь такой же микшер в Emulate.cpp Только надо начальное значение микшера поставить скажем на 20
+//                                            
+//        }                     
 //        
-//        }                              //ЗАРАБОТАЛ СРАЗУ, Ток коорды надо другие поставить =)
-//        // Код универсален :)   ща коорды вычислю  По иксу будет также как и в Createwindowstext(static)
 //
 //
 //        if (LOWORD(wParam) == STRANNIK)
@@ -186,7 +191,23 @@
 //            MessageBoxA(hWnd, "Это программа для скачивания роликов с Youtube.\nСпасибо Daniel Myslivets за предоставленную консольную программку, для которой я просто сделал этот GUI", "Справка", MB_ICONASTERISK);
 //        
 //        }
+//        if (LOWORD(wParam) == YT)
+//        {
 //
+//            URLDownloadToFile(0, "https://cdn.lisikpng.com/MixOS/YOUTUBE/yt-dlp.exe", "MusicPlayer\\Youtube\\yt-dlp.exe", 0, 0);
+//            WIN32_FIND_DATA youtubckic;
+//            HANDLE hFind = FindFirstFile("MusicPlayer\\Youtube\\yt-dlp.exe", &youtubckic);
+//            if (INVALID_HANDLE_VALUE != hFind)
+//            {
+//                MessageBoxA(hWnd, "Обновление было скачано. Если не работает, пишите разработчику", "Успех!", MB_ICONASTERISK);
+//            }
+//            if (INVALID_HANDLE_VALUE == hFind)
+//            {
+//                MessageBoxA(hWnd, "Обновление не было скачано. Возможно проблема с интернетом. Либо пишите разработчику", "Неудача", MB_ICONASTERISK);
+//            }
+//
+//
+//        }
 //        if (LOWORD(wParam) == SETBKG)
 //        {
 //
@@ -234,6 +255,19 @@
 //            ShowWindow(GetDlgItem(hWnd, PAUSE1), SW_HIDE);
 //
 //        }
+//        if (LOWORD(wParam) == MAIL)
+//        {
+//            BASS_StreamFree(YOUTUBER);
+//            BASS_ChannelStop(YOUTUBER);
+//            BASS_SampleFree(YOUTUBER);
+//            ShowWindow(GetDlgItem(hWnd, TITLE), SW_SHOW);
+//            ShowWindow(GetDlgItem(hWnd, TITLESTOP), SW_HIDE);
+//            BASS_Stop();
+//            BASS_Start();
+//            YOUTUBER = BASS_StreamCreateFile(FALSE, "MusicPlayer\\Your\\title4.mp3", 0, 0, 0);
+//            BASS_ChannelPlay(YOUTUBER, false);
+//            system("start https://lesergig.wixsite.com/strannikyt/voprosy-i-otvety");
+//        }
 //        if (LOWORD(wParam) == MAKEMAKE)
 //        {
 //            
@@ -254,7 +288,8 @@
 //            system("MusicPlayer\\Youtube\\bat.bat");
 //            system("del MusicPlayer\\Youtube\\bat.bat");
 //            MessageBox(hWnd, _T("Ваше видео было скачано!\nСейчас оно лежит в папке с плеером"), _T("Успех!"), MB_ICONASTERISK);
-//    
+//            MessageBox(hWnd, _T("Проверьте наличие ролика в директории MixOS\nЕсли его там нет, то скачайте обновление для программы. "), _T("ВНИМАНИЕ"), MB_ICONWARNING);
+//            system("start explorer MusicPlayer");
 //        }
 //
 //                if (LOWORD(wParam) == COLORYT)
@@ -296,9 +331,12 @@
 //                break;
 //
 //        case WM_HSCROLL: {
+//            int volume = SendMessage(hTrack, TBM_GETPOS, 0, 0);
 //            if (hTrack == (HWND)lParam)
 //            {
-//                BASS_ChannelSetAttribute(YOUTUBER, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 80, 100));
+//                /*BASS_ChannelSetAttribute(YOUTUBER, BASS_ATTRIB_VOL, SendMessage(hTrack, TBM_GETPOS, 80, 100));*/
+//
+//                BASS_ChannelSetAttribute(YOUTUBER, BASS_ATTRIB_VOL, (float)volume / 100);
 //            }
 //        } break;
 //
@@ -324,6 +362,30 @@
 //                        return (LRESULT)GetStockObject(NULL_BRUSH);
 //
 //                    }
+//                    if (GetDlgCtrlID((HWND)lParam) == LENMUSIC)
+//                    {
+//                        HDC hdcStatic = (HDC)wParam;
+//                        // or obtain the static handle in some other way
+//                        SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+//
+//                        SetBkColor(hdcStatic, RGB(255, 255, 255));
+//
+//
+//                        return (LRESULT)(COLOR_WINDOW + 1);
+//
+//                    }
+//                    if (GetDlgCtrlID((HWND)lParam) == VOLUMASTA)
+//                    {
+//                        HDC hdcStatic = (HDC)wParam;
+//                        // or obtain the static handle in some other way
+//                        SetTextColor(hdcStatic, RGB(255, 255, 255)); // text color
+//
+//                        SetBkColor(hdcStatic, RGB(255, 255, 255));
+//
+//
+//                        return (LRESULT)(COLOR_WINDOW + 1);
+//
+//                    }
 //                }
 //                break;
 //
@@ -344,7 +406,8 @@
 //        return DefWindowProc(hWnd, uMsg, wParam, lParam);
 //    }
 //    return 0;
-//    }   
+//    }  
+//    return false;
 //}  
 //int WINAPI main()
 //{        

@@ -13,9 +13,6 @@
 #define MAIL 2
 
 
-
-
-
 #define ID_BUTTON 1
 #define STRANNIK 4
 #define DEVUSHKA 5
@@ -587,3 +584,41 @@
 #define LOGOFF11 643
 
 #define WINDOWS_CE 644 
+#define DELWIN 645
+
+
+
+
+
+#define MINESOFT 646
+#define STRELKA1 647
+#define STRELKA2 648
+#define WITCHER1 649
+#define WITCHER2 650
+#define FAST 651
+#define STR9 652
+#define ARK 653
+#define ROBI 654
+#define STRELKA3 655
+#define STRELKA4 656
+
+#define SSZ 657
+#define LRZ 658
+#define GHZ 659
+#define HPZ 660
+#define SBZ 661
+#define SPZ 662
+#define ICZ 663
+
+
+
+#define SFII 664
+#define ASI 665
+#define TMNT 666
+#define EJI 667
+#define SIII 668
+#define LKI 669
+
+#define STRELKA5 670
+#define STRELKA6 671
+#define UPDATEFIND 672

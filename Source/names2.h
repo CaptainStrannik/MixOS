@@ -9,3 +9,6 @@
 #define OSProg 1007
 #define UAProg 1008
 #define EmulateProg 1009
+#define PROG 1010
+#define UAKILL 1536
+#define UADOMDOM 1538

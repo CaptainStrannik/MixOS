@@ -2,7 +2,7 @@
 // Включаемый файл, созданный в Microsoft Visual C++.
 // Используется ConsoleApplication161.rc
 //
-#define IDI_ICON1 "MixOS.ico"                      
+#define IDI_ICON1 "MusicPlayer\\BMP\\ico\\MixOS.ico"                      
 #define IDI_ICON2 "MusicPlayer\\BMP\\ico\\WINXP.ico"                   
 
 // Next default values for new objects

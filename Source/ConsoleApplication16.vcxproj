@@ -151,6 +151,7 @@
     <ClCompile />
     <ClCompile>
       <AssemblerOutput>All</AssemblerOutput>
+      <AdditionalOptions>/analyze:stacksize 32768 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -183,6 +184,7 @@
     <ClCompile Include="MixOS_API.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PLD.cpp" />
+    <ClCompile Include="Sourc33.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Emulate.cpp" />
     <ClCompile Include="TERMINAL.cpp" />
@@ -203,6 +205,7 @@
     <ClInclude Include="resource2.h" />
     <ClInclude Include="resource3.h" />
     <ClInclude Include="resource4.h" />
+    <ClInclude Include="resource5.h" />
     <ClInclude Include="resource6.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="MixOS_API.h" />
@@ -211,9 +214,13 @@
     <Library Include="bass\c\x64\bass.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="C:\Users\Strannik\Desktop\icon2.ico" />
-    <Image Include="C:\Users\Strannik\Desktop\Main.ico" />
+    <Image Include="icon1.ico" />
+    <Image Include="MusicPlayer\BMP\ico\CURSOR.ico" />
+    <Image Include="MusicPlayer\BMP\ico\MixOS.ico" />
     <Image Include="MusicPlayer\BMP\ico\WINXP.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ConsoleApplication16.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
